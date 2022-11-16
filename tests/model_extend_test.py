@@ -26,19 +26,25 @@ def test_default_to_vis_set():
     for geo_obj in vis_set:
         assert isinstance(geo_obj, ContextGeometry)
         assert isinstance(geo_obj[0], DisplayMesh3D)
-    
+
     vis_set = parsed_model.to_vis_set('none')
     assert len(vis_set) == 1
     for geo_obj in vis_set:
         assert isinstance(geo_obj, ContextGeometry)
         assert isinstance(geo_obj[0], DisplayLineSegment3D)
-    
+
     vis_set = parsed_model.to_vis_set('boundary_condition', include_wireframe=False)
     print(len(vis_set))
     assert len(vis_set) == 4
     for geo_obj in vis_set:
         assert isinstance(geo_obj, ContextGeometry)
         assert isinstance(geo_obj[0], DisplayMesh3D)
+
+    vis_set = parsed_model.to_vis_set_wireframe()
+    assert len(vis_set) == 1
+    for geo_obj in vis_set:
+        assert isinstance(geo_obj, ContextGeometry)
+        assert isinstance(geo_obj[0], DisplayLineSegment3D)
 
 
 def test_room_attr_to_vis_set():
