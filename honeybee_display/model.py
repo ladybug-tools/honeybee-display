@@ -1,9 +1,14 @@
 """Method to translate a Model to a VisualizationSet."""
-from ladybug_geometry.geometry3d import Mesh3D
+import os
+import json
+
+from ladybug_geometry.geometry3d import Point3D, Mesh3D
+from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
 from ladybug_display.geometry3d import DisplayLineSegment3D, DisplayFace3D, \
     DisplayMesh3D
-from ladybug_display.visualization import VisualizationSet, ContextGeometry
+from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
+    AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
 from honeybee.facetype import Wall, RoofCeiling, Floor, AirBoundary
 from honeybee.colorobj import ColorRoom, ColorFace
@@ -37,7 +42,8 @@ BC_COLORS = {
 def model_to_vis_set(
         model, color_by='type', include_wireframe=True, use_mesh=True,
         room_attr=None, face_attr=None, room_text_labels=False, face_text_labels=False,
-        room_legend_par=None, face_legend_par=None):
+        room_legend_par=None, face_legend_par=None,
+        grid_data_path=None, grid_display_mode='Surface'):
     """Translate a Honeybee Model to a VisualizationSet.
 
     Args:
@@ -51,11 +57,11 @@ def model_to_vis_set(
 
             * type
             * boundary_condition
-            * none
+            * None
 
-        include_wireframe: Boolean to note whether a ContextGeometry dedicate to
+        include_wireframe: Boolean to note whether a ContextGeometry dedicated to
             the Model Wireframe (in DisplayLineSegment3D) should be included
-            in the output VisualizationSet. . (Default: True).
+            in the output VisualizationSet. (Default: True).
         use_mesh: Boolean to note whether the colored model geometries should
             be represented with joined DisplayMesh3D objects (True) instead of
             a list of DisplayFace3D objects (False). Meshes can usually be rendered
@@ -91,12 +97,31 @@ def model_to_vis_set(
         face_legend_par: An optional LegendParameter object to customize the display
             of the face_attr. When face_text_labels is True, only the text_height
             and font will be used to customize the text.
+        grid_data_path: An optional path to a folder containing data that aligns
+            with the SensorGrids in the model. Any sub folder within this path
+            that contains a grids_into.json (and associated CSV files) will be
+            converted to an AnalysisGeometry in the resulting VisualizationSet.
+            If a vis_metadata.json file is found within this sub-folder, the
+            information contained within it will be used to customize the
+            AnalysisGeometry. Note that it is acceptable if data and
+            grids_info.json exist in the root of this grid_data_path. Also
+            note that this argument has no impact if honeybee-radiance is not
+            installed and SensorGrids cannot be decoded. (Default: None).
+        grid_display_mode: Optional text to set the display_mode of the AnalysisGeometry
+            that is is generated from the grid_data_path above. Note that this
+            has no effect if there are no meshes associated with the model
+            SensorGrids. (Default: Surface). Choose from the following:
+
+            * Surface
+            * SurfaceWithEdges
+            * Wireframe
+            * Points
 
     Returns:
         A VisualizationSet object that represents the model.
     """
     # group the geometries according to typical ContextGeometry layers
-    color_by = color_by.lower()
+    color_by = str(color_by).lower()
     if color_by == 'type':
         # set up a dictionary to hold all geometries
         type_dict = {
@@ -251,6 +276,59 @@ def model_to_vis_set(
                 geo_obj.add_data_set(ra_a_geo[0])
             geo_objs.append(geo_obj)
 
+    # add grid data if requested
+    if grid_data_path is not None and os.path.isdir(grid_data_path):
+        # first try to get all of the Model sensor grids
+        try:
+            grids = {g.full_identifier: g for g in
+                     model.properties.radiance.sensor_grids}
+        except AttributeError:  # honeybee-radiance is not installed
+            grids = {}
+        if len(grids) != 0:
+            # gather all of the directories with results
+            gi_dirs, gi_file = [], 'grids_info.json'
+            root_gi_file = os.path.join(grid_data_path, gi_file)
+            if os.path.isfile(root_gi_file):
+                gi_dirs.append(grid_data_path)
+            for sub_f in os.listdir(grid_data_path):
+                sub_dir = os.path.join(grid_data_path, sub_f)
+                if os.path.isdir(sub_dir):
+                    sub_gi_file = os.path.join(sub_dir, gi_file)
+                    if os.path.isfile(sub_gi_file):
+                        gi_dirs.append(sub_dir)
+            # loop through the result directories and load the results
+            data_sets = []
+            for g_dir in gi_dirs:
+                g_values = _read_sensor_grid_result(g_dir)
+                meta_file = os.path.join(g_dir, 'vis_metadata.json')
+                if os.path.isfile(meta_file):
+                    with open(meta_file, 'r') as mf:
+                        m_data = json.load(mf)
+                    gm_data = VisualizationMetaData.from_dict(m_data)
+                    v_data = VisualizationData(
+                        g_values, gm_data.legend_parameters,
+                        gm_data.data_type, gm_data.unit)
+                    data_sets.append(v_data)
+                else:
+                    generic_type = GenericType(os.path.split(g_dir)[-1], '')
+                    v_data = VisualizationData(g_values, data_type=generic_type)
+                    data_sets.append(v_data)
+            # create the analysis geometry
+            if len(data_sets) != 0:
+                ex_gi_file = os.path.join(gi_dirs[0], gi_file)
+                with open(ex_gi_file) as json_file:
+                    grid_list = json.load(json_file)
+                grid_objs = [grids[g['full_id']] for g in grid_list]
+                grid_meshes = [g.mesh for g in grid_objs]
+                if all(m is not None for m in grid_meshes):
+                    a_geo = AnalysisGeometry('Grid_Data', grid_meshes, data_sets)
+                else:
+                    gr_pts = [Point3D(*pos) for gr in grid_objs for pos in gr.positions]
+                    a_geo = AnalysisGeometry('Grid_Data', gr_pts, data_sets)
+                a_geo.display_name = 'Grid Data'
+                a_geo.display_mode = grid_display_mode
+                geo_objs.append(a_geo)
+
     # add the wireframe if requested
     if include_wireframe:
         geo_objs.append(model_to_vis_set_wireframe(model)[0])
@@ -303,3 +381,47 @@ def model_to_vis_set_wireframe(model):
         model.identifier, [ContextGeometry('Wireframe', wireframe)])
     vis_set.display_name = model.display_name
     return vis_set
+
+
+def _read_sensor_grid_result(result_folder):
+    """Read results from files that align with sensor grids.
+
+    Args:
+        result_folder: Path to the folder containing the results.
+
+    Returns:
+        A matrix with each sub-list containing the values for each of the sensor grids.
+    """
+    # check that the required files are present
+    if not os.path.isdir(result_folder):
+        raise ValueError('Invalid result folder: %s' % result_folder)
+    grid_json = os.path.join(result_folder, 'grids_info.json')
+    if not os.path.isfile(grid_json):
+        raise ValueError('Result folder contains no grids_info.json.')
+
+    # load the list of grids and gather all of the results
+    with open(grid_json) as json_file:
+        grid_list = json.load(json_file)
+    results = []
+    for grid in grid_list:
+        grid_id = grid['full_id']
+        sensor_count = grid['count']
+        try:
+            st_ln = grid['start_ln']
+        except KeyError:
+            # older version of sensor info
+            st_ln = 0
+
+        # find the result file and append the results
+        result_file = None
+        for f in os.listdir(result_folder):
+            if f.startswith(grid_id):
+                result_file = os.path.join(result_folder, f)
+                break
+        if result_file is not None:
+            with open(result_file) as inf:
+                for _ in range(st_ln):
+                    next(inf)
+                for _ in range(sensor_count):
+                    results.append(float(next(inf)))
+    return results
