@@ -18,6 +18,9 @@ setuptools.setup(
     url="https://github.com/ladybug-tools/honeybee-display",
     packages=setuptools.find_packages(exclude=["tests*"]),
     install_requires=requirements,
+    entry_points={
+        "console_scripts": ["honeybee-display = honeybee_display.cli:display"]
+    },
     classifiers=[
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.7",
