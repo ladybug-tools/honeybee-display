@@ -2,7 +2,7 @@
 import os
 import json
 
-from ladybug_geometry.geometry3d import Point3D, Mesh3D
+from ladybug_geometry.geometry3d import Point3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
 from ladybug_display.geometry3d import DisplayLineSegment3D, DisplayFace3D, \
@@ -222,8 +222,8 @@ def model_to_vis_set(
         if len(geometries) != 0:
             col = TYPE_COLORS[geo_id] if color_by == 'type' else BC_COLORS[geo_id]
             if use_mesh:
-                mesh = Mesh3D.join_meshes([f.triangulated_mesh3d for f in geometries])
-                dis_geos = [DisplayMesh3D(mesh, color=col)]
+                dis_geos = [DisplayMesh3D(f.triangulated_mesh3d, color=col)
+                            for f in geometries]
             else:
                 dis_geos = []
                 for geo in geometries:
