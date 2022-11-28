@@ -4,7 +4,7 @@
 
 # honeybee-display
 
-Adds methods to translate honeybee objects to VisualizationSets.
+Adds methods and a CLI to translate honeybee objects to VisualizationSets.
 
 ## Installation
 ```console
