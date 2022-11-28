@@ -33,6 +33,5 @@ setuptools.setup(
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent"
     ],
-    license="AGPL-3.0",
-    zip_safe=False
+    license="AGPL-3.0"
 )
