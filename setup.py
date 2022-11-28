@@ -6,7 +6,9 @@ with open("README.md", "r") as fh:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-full_requirements = ['honeybee-energy', 'honeybee-radiance', 'ladybug-vtk']
+with open('extras-requirements.txt') as f:
+    extras_requirements = f.read().splitlines()
+
 
 setuptools.setup(
     name="honeybee-display",
@@ -20,9 +22,7 @@ setuptools.setup(
     url="https://github.com/ladybug-tools/honeybee-display",
     packages=setuptools.find_packages(exclude=["tests*"]),
     install_requires=requirements,
-    extras_require={
-        'full': full_requirements
-    },
+    extras_require={'full': extras_requirements},
     entry_points={
         "console_scripts": ["honeybee-display = honeybee_display.cli:display"]
     },
