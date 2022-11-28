@@ -87,10 +87,11 @@ def display():
     type=str, default='Surface', show_default=True)
 @click.option(
     '--output-format', '-of', help='Text for the output format of the resulting '
-    'VisualizationSet File (.vsf). Choose from: json, pkl, vtkjs. Note that '
-    'ladybug-vtk must be installed in order for the vtkjs option to be usable. Also '
-    'note that the vtkjs option requires an explicit --output-file to be specified.',
-    type=str, default='json', show_default=True)
+    'VisualizationSet File (.vsf). Choose from: vsf, pkl, vtkjs. Note that vsf .'
+    'refers to the JSON version of the VisualizationSet file. Also not that '
+    'ladybug-vtk must be installed in order for the vtkjs option to be usable. '
+    'The vtkjs option also requires an explicit --output-file to be specified.',
+    type=str, default='vsf', show_default=True)
 @click.option(
     '--output-file', help='Optional file to output the JSON string of '
     'the config object. By default, it will be printed out to stdout',
@@ -110,7 +111,7 @@ def model_to_vis_set(
             room_text_labels=text_labels, face_text_labels=text_labels,
             grid_data_path=grid_data, grid_display_mode=grid_display_mode)
         output_format = output_format.lower()
-        if output_format == 'json':
+        if output_format in ('vsf', 'json'):
             output_file.write(json.dumps(vis_set.to_dict()))
         elif output_format == 'pkl':
             if output_file.name != '<stdout>':
