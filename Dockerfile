@@ -8,7 +8,7 @@ ENV LIBRARYDIR="${HOMEDIR}/lib"
 ENV RUNDIR="${HOMEDIR}/run"
 
 RUN apt-get update \
-    && apt-get -y install --no-install-recommends git \
+    && apt-get -y install ffmpeg libsm6 libxext6 xvfb --no-install-recommends git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,7 +28,7 @@ COPY README.md ${LIBRARYDIR}
 COPY LICENSE ${LIBRARYDIR}
 
 USER root
-RUN pip3 install --no-cache-dir setuptools wheel\
+RUN pip3 install --no-cache-dir setuptools wheel xvfbwrapper \
     && pip3 install --no-cache-dir ${LIBRARYDIR}[full] \
     && apt-get -y --purge remove git \
     && apt-get -y clean \
