@@ -41,7 +41,8 @@ BC_COLORS = {
 
 def model_to_vis_set(
         model, color_by='type', include_wireframe=True, use_mesh=True,
-        room_attr=None, face_attr=None, room_text_labels=False, face_text_labels=False,
+        hide_color_by=False, room_attr=None, face_attr=None,
+        room_text_labels=False, face_text_labels=False,
         room_legend_par=None, face_legend_par=None,
         grid_data_path=None, grid_display_mode='Surface'):
     """Translate a Honeybee Model to a VisualizationSet.
@@ -69,6 +70,11 @@ def model_to_vis_set(
             (meaning that their wireframe in certain platforms might not appear ideal)
             and they cannot support the selection of individual Face3D geometries
             in the resulting visualization. (Default: True).
+        hide_color_by: Boolean to note whether the color_by geometry should be
+            hidden or shown by default. Hiding the color-by geometry is useful
+            when the primary purpose of the visualization is to display grid_data
+            or room/face attributes but it is still desirable to have the option
+            to turn on the geometry.
         room_attr: An optional text string of an attribute that the Model Rooms have,
             which will be used to construct a visualization of this attribute in the
             resulting VisualizationSet. This can also be a list of attribute strings and
@@ -229,6 +235,8 @@ def model_to_vis_set(
                 for geo in geometries:
                     dis_geos.append(DisplayFace3D(geo, col))
             con_geo = ContextGeometry(geo_id.replace(' ', '_'), dis_geos)
+            if hide_color_by:
+                con_geo.hidden = True
             con_geo.display_name = geo_id
             geo_objs.append(con_geo)
 

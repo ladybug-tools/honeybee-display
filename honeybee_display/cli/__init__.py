@@ -43,6 +43,12 @@ def display():
     'Also, merging the geometry into a single mesh means interfaces cannot support '
     'the selection of individual Face3D geometries.', default=True, show_default=True)
 @click.option(
+    '--show-color-by/--hide-color-by', ' /-hcb', help='Flag to note whether the '
+    'color-by geometry should be hidden or shown by default. Hiding the color-by '
+    'geometry is useful when the primary purpose of the visualization is to display '
+    'grid-data or room/face attributes but it is still desirable to have the option '
+    'to turn on the geometry.', default=True, show_default=True)
+@click.option(
     '--room-attr', '-r', help='An optional text string of an attribute that the Model '
     'Rooms have, which will be used to construct a visualization of this attribute '
     'in the resulting VisualizationSet. This can also be a list of attribute strings '
@@ -97,7 +103,8 @@ def display():
     'the config object. By default, it will be printed out to stdout',
     type=click.File('w'), default='-', show_default=True)
 def model_to_vis_set(
-        model_file, color_by, wireframe, mesh, room_attr, face_attr, color_attr,
+        model_file, color_by, wireframe, mesh, show_color_by,
+        room_attr, face_attr, color_attr,
         grid_data, grid_display_mode, output_format, output_file):
     """Get a JSON object with all configuration information"""
     try:
@@ -105,9 +112,10 @@ def model_to_vis_set(
         room_attr = None if len(room_attr) == 0 or room_attr[0] == '' else room_attr
         face_attr = None if len(face_attr) == 0 or face_attr[0] == '' else face_attr
         text_labels = not color_attr
+        hide_color_by = not show_color_by
         vis_set = model_obj.to_vis_set(
             color_by=color_by, include_wireframe=wireframe, use_mesh=mesh,
-            room_attr=room_attr, face_attr=face_attr,
+            hide_color_by=hide_color_by, room_attr=room_attr, face_attr=face_attr,
             room_text_labels=text_labels, face_text_labels=text_labels,
             grid_data_path=grid_data, grid_display_mode=grid_display_mode)
         output_format = output_format.lower()
