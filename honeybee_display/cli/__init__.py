@@ -51,7 +51,7 @@ def display():
 @click.option(
     '--room-attr', '-r', help='An optional text string of an attribute that the Model '
     'Rooms have, which will be used to construct a visualization of this attribute '
-    'in the resulting VisualizationSet. This can also be a list of attribute strings '
+    'in the resulting VisualizationSet. Multiple instances of this option can be passed '
     'and a separate VisualizationData will be added to the AnalysisGeometry that '
     'represents the attribute in the resulting VisualizationSet (or a separate '
     'ContextGeometry layer if room_text_labels is True). Room attributes '
@@ -61,8 +61,8 @@ def display():
 @click.option(
     '--face-attr', '-f', help='An optional text string of an attribute that the Model '
     'Faces have, which will be used to construct a visualization of this attribute in '
-    'the resulting VisualizationSet. This can also be a list of attribute strings and '
-    'a separate VisualizationData will be added to the AnalysisGeometry that '
+    'the resulting VisualizationSet. Multiple instances of this option can be passed and'
+    ' a separate VisualizationData will be added to the AnalysisGeometry that '
     'represents the attribute in the resulting VisualizationSet (or a separate '
     'ContextGeometry layer if face_text_labels is True). Face attributes '
     'input here can have . that separates the nested attributes from '
