@@ -5,8 +5,8 @@ import json
 from ladybug_geometry.geometry3d import Point3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
-from ladybug_display.geometry3d import DisplayLineSegment3D, DisplayFace3D, \
-    DisplayMesh3D
+from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
+    DisplayFace3D, DisplayMesh3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
@@ -44,12 +44,13 @@ def model_to_vis_set(
         hide_color_by=False, room_attr=None, face_attr=None,
         room_text_labels=False, face_text_labels=False,
         room_legend_par=None, face_legend_par=None,
-        grid_data_path=None, grid_display_mode='Surface'):
+        grid_display_mode='Default', hide_grid=True,
+        grid_data_path=None, grid_data_display_mode='Surface'):
     """Translate a Honeybee Model to a VisualizationSet.
 
     Args:
         model: A Honeybee Model object to be converted to a VisualizationSet.
-        color_by: Text for the property that dictates the colors of the Model geometry.
+        color_by: Text that dictates the colors of the Model geometry.
             If none, only a wireframe of the Model will be generated, assuming
             include_wireframe is True. This is useful when the primary purpose of
             the visualization is to display results in relation to the Model
@@ -103,6 +104,21 @@ def model_to_vis_set(
         face_legend_par: An optional LegendParameter object to customize the display
             of the face_attr. When face_text_labels is True, only the text_height
             and font will be used to customize the text.
+        grid_display_mode: Text that dictates how the ContextGeometry for Model
+            SensorGrids should display in the resulting visualization. The Default
+            option will draw sensor points whenever there is no grid_data_path and
+            won't draw them at all when grid data is provided, assuming the
+            AnalysisGeometry of the grids is sufficient. Choose from the following:
+
+            * Default
+            * Points
+            * Wireframe
+            * Surface
+            * SurfaceWithEdges
+            * None
+
+        hide_grid: Boolean to note whether the SensorGrid ContextGeometry should be
+            hidden or shown by default. (Default: True).
         grid_data_path: An optional path to a folder containing data that aligns
             with the SensorGrids in the model. Any sub folder within this path
             that contains a grids_into.json (and associated CSV files) will be
@@ -113,9 +129,9 @@ def model_to_vis_set(
             grids_info.json exist in the root of this grid_data_path. Also
             note that this argument has no impact if honeybee-radiance is not
             installed and SensorGrids cannot be decoded. (Default: None).
-        grid_display_mode: Optional text to set the display_mode of the AnalysisGeometry
-            that is is generated from the grid_data_path above. Note that this
-            has no effect if there are no meshes associated with the model
+        grid_data_display_mode: Optional text to set the display_mode of the
+            AnalysisGeometry that is is generated from the grid_data_path above. Note
+            that this has no effect if there are no meshes associated with the model
             SensorGrids. (Default: Surface). Choose from the following:
 
             * Surface
@@ -284,6 +300,40 @@ def model_to_vis_set(
                 geo_obj.add_data_set(ra_a_geo[0])
             geo_objs.append(geo_obj)
 
+    # add the sensor grid geometry if requested
+    gdm = grid_display_mode.lower()
+    default_exclude = gdm == 'default' and grid_data_path is not None and \
+        os.path.isdir(grid_data_path)
+    if gdm != 'none' and not default_exclude:
+        # get the sensor grids and evaluate whether they have meshes
+        try:
+            grid_objs = model.properties.radiance.sensor_grids
+        except AttributeError:  # honeybee-radiance is not installed
+            grid_objs = []
+        if len(grid_objs) != 0:
+            grid_meshes = [g.mesh for g in grid_objs]
+            g_meshes_avail = all(m is not None for m in grid_meshes)
+            # create the context geometry for the sensor grids
+            dis_geos = []
+            if gdm in ('default', 'points') or not g_meshes_avail:
+                for grid in grid_objs:
+                    for p in grid.positions:
+                        dis_geos.append(DisplayPoint3D(Point3D(*p)))
+            elif gdm == 'wireframe':
+                for mesh in grid_meshes:
+                    dis_geos.append(DisplayMesh3D(mesh, display_mode='Wireframe'))
+            elif gdm in ('surface', 'surfacewithedges'):
+                for mesh in grid_meshes:
+                    grey = Color(100, 100, 100)
+                    d_mesh = DisplayMesh3D(
+                        mesh, color=grey, display_mode=grid_display_mode)
+                    dis_geos.append(d_mesh)
+            con_geo = ContextGeometry('Sensor_Grids', dis_geos)
+            if hide_grid:
+                con_geo.hidden = True
+            con_geo.display_name = 'Sensor Grids'
+            geo_objs.append(con_geo)
+
     # add grid data if requested
     if grid_data_path is not None and os.path.isdir(grid_data_path):
         # first try to get all of the Model sensor grids
@@ -334,7 +384,7 @@ def model_to_vis_set(
                     gr_pts = [Point3D(*pos) for gr in grid_objs for pos in gr.positions]
                     a_geo = AnalysisGeometry('Grid_Data', gr_pts, data_sets)
                 a_geo.display_name = 'Grid Data'
-                a_geo.display_mode = grid_display_mode
+                a_geo.display_mode = grid_data_display_mode
                 geo_objs.append(a_geo)
 
     # add the wireframe if requested
