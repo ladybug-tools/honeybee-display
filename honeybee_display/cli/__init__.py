@@ -73,6 +73,18 @@ def display():
     'input room-attr and face-attr should be expressed as a colored AnalysisGeometry '
     'or a ContextGeometry as text labels.', default=True, show_default=True)
 @click.option(
+    '--grid-display-mode', '-m', help='Text that dictates how the ContextGeometry '
+    'for Model SensorGrids should display in the resulting visualization. The Default '
+    'option will draw sensor points whenever there is no grid_data_path and will not '
+    'draw them at all when grid data is provided, assuming the AnalysisGeometry of '
+    'the grids is sufficient. Choose from: Default, Points, Wireframe, Surface, '
+    'SurfaceWithEdges, None.',
+    type=str, default='Default', show_default=True)
+@click.option(
+    '--hide-grid/--show-grid', ' /-sg', help='Flag to note whether the SensorGrid '
+    'ContextGeometry should be hidden or shown by default.',
+    default=True, show_default=True)
+@click.option(
     '--grid-data', '-g', help='An optional path to a folder containing data that '
     'aligns with the SensorGrids in the model. Any sub folder within this path '
     'that contains a grids_into.json (and associated CSV files) will be '
@@ -86,7 +98,7 @@ def display():
     default=None, show_default=True,
     type=click.Path(file_okay=False, dir_okay=True, resolve_path=True))
 @click.option(
-    '--grid-display-mode', '-m', help='Text to set the display_mode of the '
+    '--grid-data-display-mode', '-dm', help='Text to set the display_mode of the '
     'AnalysisGeometry that is generated from the grid_data_path above. Note '
     'that this has no effect if there are no meshes associated with the model '
     'SensorGrids. Choose from: Surface, SurfaceWithEdges, Wireframe, Points',
@@ -104,8 +116,8 @@ def display():
     type=click.File('w'), default='-', show_default=True)
 def model_to_vis_set(
         model_file, color_by, wireframe, mesh, show_color_by,
-        room_attr, face_attr, color_attr,
-        grid_data, grid_display_mode, output_format, output_file):
+        room_attr, face_attr, color_attr, grid_display_mode, hide_grid,
+        grid_data, grid_data_display_mode, output_format, output_file):
     """Get a JSON object with all configuration information"""
     try:
         model_obj = Model.from_file(model_file)
@@ -117,7 +129,8 @@ def model_to_vis_set(
             color_by=color_by, include_wireframe=wireframe, use_mesh=mesh,
             hide_color_by=hide_color_by, room_attr=room_attr, face_attr=face_attr,
             room_text_labels=text_labels, face_text_labels=text_labels,
-            grid_data_path=grid_data, grid_display_mode=grid_display_mode)
+            grid_display_mode=grid_display_mode, hide_grid=hide_grid,
+            grid_data_path=grid_data, grid_data_display_mode=grid_data_display_mode)
         output_format = output_format.lower()
         if output_format in ('vsf', 'json'):
             output_file.write(json.dumps(vis_set.to_dict()))
