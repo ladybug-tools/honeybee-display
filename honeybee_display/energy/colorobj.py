@@ -1,15 +1,20 @@
 """Method to translate a Color Room/Face objects to a VisualizationSet."""
 import math
 
-from ladybug_geometry.geometry3d import Vector3D, Plane
+from ladybug_geometry.geometry3d import Vector3D, Point3D, Polyline3D, Plane, \
+    Face3D, Polyface3D
 from ladybug_display.geometry3d import DisplayText3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData
+from honeybee.units import conversion_factor_to_meters
+from honeybee.facetype import Floor
 
 from ..colorobj import _room_wireframe, _process_wireframe
 
 
-def energy_color_room_to_vis_set(color_room, include_wireframe=True, text_labels=False):
+def energy_color_room_to_vis_set(
+        color_room, include_wireframe=True, text_labels=False,
+        units=None, tolerance=0.01):
     """Translate a Honeybee-Energy ColorRoom to a VisualizationSet.
 
     Args:
@@ -20,6 +25,11 @@ def energy_color_room_to_vis_set(color_room, include_wireframe=True, text_labels
         text_labels: A boolean to note whether the results should be expressed
             as a colored AnalysisGeometry (False) or a ContextGeometry as text
             labels (True). (Default: False).
+        units: Optional text, which will be used to set the default maximum text
+            height and the distance of the text to the ground. If None, some
+            generic defaults will be used. (Default: None).
+        tolerance: Optional tolerance value, which is used to compute the text
+            label point for concave geometries. (Default: 0.01).
 
     Returns:
         A VisualizationSet object that represents the ColorRoom with an
@@ -35,16 +45,48 @@ def energy_color_room_to_vis_set(color_room, include_wireframe=True, text_labels
     if text_labels:
         txt_height, font, f_str = _process_leg_par_for_text(color_room)
         # loop through the rooms and create the text labels
+        max_txt_h = float('inf')
+        if units is not None:
+            fac_to_m = conversion_factor_to_meters(units)
+            max_txt_h = 0.25 / fac_to_m
+            max_txt_v = 1.0 / fac_to_m
         label_text = []
         for room_val, room in zip(color_room.matched_values, color_room.matched_rooms):
-            cent_pt = room.geometry.center  # base point for the text
-            base_plane = Plane(Vector3D(0, 0, 1), cent_pt)
             room_prop = f_str % room_val
+            # compute the center point for the text
+            if units is not None:
+                room_h = room.geometry.max.z - room.geometry.min.z
+                m_vec = Vector3D(0, 0, max_txt_v) if room_h > max_txt_v * 2 \
+                    else Vector3D(0, 0, room_h / 2)
+                floor_faces = [face.geometry for face in room.faces
+                               if isinstance(face.type, Floor)]
+                if len(floor_faces) == 1:
+                    flr_geo = floor_faces[0]
+                    base_pt = flr_geo.center if flr_geo.is_convex else \
+                        flr_geo.pole_of_inaccessibility(tolerance)
+                elif len(floor_faces) == 0:
+                    c_pt = room.geometry.center
+                    base_pt = Point3D(c_pt.x, c_pt.y, room.geometry.min.z)
+                else:
+                    floor_p_face = Polyface3D.from_faces(floor_faces, tolerance)
+                    ne = floor_p_face.naked_edges
+                    floor_outline = Polyline3D.join_segments(ne, tolerance)[0]
+                    flr_geo = Face3D(floor_outline.vertices[:-1])
+                    base_pt = flr_geo.center if flr_geo.is_convex else \
+                        flr_geo.pole_of_inaccessibility(tolerance)
+                base_pt = base_pt.move(m_vec)
+                base_plane = Plane(Vector3D(0, 0, 1), base_pt)
+            else:
+                base_pt = room.geometry.center
+            base_plane = Plane(Vector3D(0, 0, 1), base_pt)
+            # get the text height
             if txt_height is None:  # auto-calculate default text height
                 txt_len = len(room_prop) if len(room_prop) > 10 else 10
                 txt_h = (room.geometry.max.x - room.geometry.min.x) / txt_len
             else:
                 txt_h = txt_height
+            txt_h = max_txt_h if txt_h > max_txt_h else txt_h
+            # create the text label
             label = DisplayText3D(
                 room_prop, base_plane, txt_h, font=font,
                 horizontal_alignment='Center', vertical_alignment='Middle')
@@ -68,7 +110,9 @@ def energy_color_room_to_vis_set(color_room, include_wireframe=True, text_labels
     return vis_set
 
 
-def color_face_to_vis_set(color_face, include_wireframe=True, text_labels=False):
+def color_face_to_vis_set(
+        color_face, include_wireframe=True, text_labels=False,
+        units=None, tolerance=0.01):
     """Translate a Honeybee ColorFace to a VisualizationSet.
 
     Args:
@@ -78,6 +122,11 @@ def color_face_to_vis_set(color_face, include_wireframe=True, text_labels=False)
         text_labels: A boolean to note whether the attribute assigned to the
             ColorFace should be expressed as a colored AnalysisGeometry (False)
             or a ContextGeometry as text labels (True). (Default: False).
+        units: Optional text, which will be used to set the default maximum text
+            height and the distance of the text to the ground. If None, some
+            generic defaults will be used. (Default: None).
+        tolerance: Tolerance value, which is used to eliminate very small
+            text. (Default: 0.01).
 
     Returns:
         A VisualizationSet object that represents the ColorFace with an
@@ -91,6 +140,11 @@ def color_face_to_vis_set(color_face, include_wireframe=True, text_labels=False)
 
     # use text labels if requested
     if text_labels:
+        # set up default variables
+        max_txt_h = float('inf')
+        if units is not None:
+            fac_to_m = conversion_factor_to_meters(units)
+            max_txt_h = 0.25 / fac_to_m
         txt_height, font, f_str = _process_leg_par_for_text(color_face)
         # loop through the faces and create the text labels
         label_text = []
@@ -103,11 +157,17 @@ def color_face_to_vis_set(color_face, include_wireframe=True, text_labels=False)
                 base_plane = base_plane.rotate(base_plane.n, math.pi, base_plane.o)
             if txt_height is None:  # auto-calculate default text height
                 txt_len = len(face_prop) if len(face_prop) > 10 else 10
-                largest_dim = max(
-                    (f_geo.max.x - f_geo.min.x), (f_geo.max.y - f_geo.min.y))
-                txt_h = largest_dim / (txt_len * 2)
+                dims = [
+                    (f_geo.max.x - f_geo.min.x),
+                    (f_geo.max.y - f_geo.min.y),
+                    (f_geo.max.z - f_geo.min.z)]
+                dims.sort()
+                txt_h = dims[1] / (txt_len * 1.5)
             else:
                 txt_h = txt_height
+            if txt_h < tolerance:
+                continue
+            txt_h = max_txt_h if txt_h > max_txt_h else txt_h
             # move base plane origin a little to avoid overlaps of adjacent labels
             if base_plane.n.x != 0:
                 m_vec = base_plane.y if base_plane.n.x < 0 else -base_plane.y
