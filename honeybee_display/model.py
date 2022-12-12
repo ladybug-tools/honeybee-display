@@ -260,9 +260,11 @@ def model_to_vis_set(
     if room_attr is not None and len(room_attr) != 0 and len(model.rooms) != 0:
         room_attr = [room_attr] if isinstance(room_attr, str) else room_attr
         if room_text_labels:
+            units, tol = model.units, model.tolerance
             for r_attr in room_attr:
                 ra_col_obj = ColorRoom(model.rooms, r_attr, room_legend_par)
-                geo_objs.append(color_room_to_vis_set(ra_col_obj, False, True)[0])
+                geo_objs.append(
+                    color_room_to_vis_set(ra_col_obj, False, True, units, tol)[0])
         else:
             ra_col_obj = ColorRoom(model.rooms, room_attr[0], room_legend_par)
             geo_obj = color_room_to_vis_set(ra_col_obj, False, False)[0]
@@ -286,9 +288,11 @@ def model_to_vis_set(
         faces.extend(model.orphaned_doors)
         faces.extend(model.orphaned_shades)
         if face_text_labels:
+            units, tol = model.units, model.tolerance
             for f_attr in face_attr:
                 fa_col_obj = ColorFace(faces, f_attr, face_legend_par)
-                geo_objs.append(color_face_to_vis_set(fa_col_obj, False, True)[0])
+                geo_objs.append(
+                    color_face_to_vis_set(fa_col_obj, False, True, units, tol)[0])
         else:
             fa_col_obj = ColorFace(faces, face_attr[0], face_legend_par)
             geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
