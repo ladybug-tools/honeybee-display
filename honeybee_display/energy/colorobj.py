@@ -150,7 +150,8 @@ def color_face_to_vis_set(
         label_text = []
         face_zip_obj = zip(color_face.matched_values, color_face.matched_flat_geometry)
         for face_val, f_geo in face_zip_obj:
-            cent_pt = f_geo.center  # base point for the text
+            cent_pt = f_geo.center if f_geo.is_convex else \
+                f_geo.pole_of_inaccessibility(tolerance)
             base_plane = Plane(f_geo.normal, cent_pt)
             face_prop = f_str % face_val
             if base_plane.y.z < 0:  # base plane pointing downwards; rotate it
@@ -162,7 +163,7 @@ def color_face_to_vis_set(
                     (f_geo.max.y - f_geo.min.y),
                     (f_geo.max.z - f_geo.min.z)]
                 dims.sort()
-                txt_h = dims[1] / (txt_len * 1.5)
+                txt_h = dims[1] / txt_len
             else:
                 txt_h = txt_height
             if txt_h < tolerance:
