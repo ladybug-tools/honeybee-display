@@ -7,11 +7,22 @@
 Adds methods and a CLI to translate honeybee objects to VisualizationSets.
 
 ## Installation
+
 ```console
-pip install honeybee-display
+pip install -U honeybee-display
 ```
 
+If you want to also include all dependencies needed to produce VTK visualizations
+from honeybee Models use.
+
+```console
+pip install -U honeybee-display[full]
+```
+
+To check if the command line interface is installed correctly use `honeybee-display --help`
+
 ## QuickStart
+
 ```python
 import honeybee_display
 
@@ -20,6 +31,7 @@ import honeybee_display
 ## [API Documentation](http://ladybug-tools.github.io/honeybee-display/docs)
 
 ## Local Development
+
 1. Clone this repo locally
 ```console
 git clone git@github.com:ladybug-tools/honeybee-display
