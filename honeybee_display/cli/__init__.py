@@ -25,9 +25,9 @@ def display():
 @click.option(
     '--color-by', '-c', help='Text for the property that dictates the colors of '
     'the Model geometry. Choose from: type, boundary_condition, none. '
-    'If none, only a wireframe of the Model will be generated, assuming the '
-    '--exclude-wireframe option is not uses. None is useful when the primary purpose of '
-    'the visualization is to display results in relation to the Model '
+    'If none, only a wireframe of the Model will be generated (assuming the '
+    '--exclude-wireframe option is not used). None is useful when the primary '
+    'purpose of  the visualization is to display results in relation to the Model '
     'geometry or display some room_attr or face_attr as an AnalysisGeometry '
     'or Text labels.', type=str, default='type', show_default=True)
 @click.option(
@@ -118,7 +118,15 @@ def model_to_vis_set(
         model_file, color_by, wireframe, mesh, show_color_by,
         room_attr, face_attr, color_attr, grid_display_mode, hide_grid,
         grid_data, grid_data_display_mode, output_format, output_file):
-    """Get a JSON object with all configuration information"""
+    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
+
+    This command can also optionally translate the Honeybee Model to a .vtkjs file,
+    which can be visualized in the open source Visual ToolKit (VTK) platform.
+
+    \b
+    Args:
+        model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file.
+    """
     try:
         model_obj = Model.from_file(model_file)
         room_attr = None if len(room_attr) == 0 or room_attr[0] == '' else room_attr
