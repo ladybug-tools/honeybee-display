@@ -396,7 +396,7 @@ def model_to_vis_set(
         geo_objs.append(model_to_vis_set_wireframe(model)[0])
 
     # build the VisualizationSet and return it
-    vis_set = VisualizationSet(model.identifier, geo_objs)
+    vis_set = VisualizationSet(model.identifier, geo_objs, model.units)
     vis_set.display_name = model.display_name
     return vis_set
 
