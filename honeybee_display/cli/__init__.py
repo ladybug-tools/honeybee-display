@@ -103,10 +103,13 @@ def display():
     type=str, default='Surface', show_default=True)
 @click.option(
     '--output-format', '-of', help='Text for the output format of the resulting '
-    'VisualizationSet File (.vsf). Choose from: vsf, pkl, vtkjs. Note that vsf .'
-    'refers to the JSON version of the VisualizationSet file. Also not that '
-    'ladybug-vtk must be installed in order for the vtkjs option to be usable. '
-    'The vtkjs option also requires an explicit --output-file to be specified.',
+    'VisualizationSet File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note '
+    'that both vsf and json refer to the the JSON version of the VisualizationSet '
+    'file and the distinction between the two is only for help in coordinating file '
+    'extensions (since both .vsf and .json can be acceptable). Also note that '
+    'ladybug-vtk must be installed in order for the vtkjs or html options to be usable '
+    'and the html format refers to a web page with the vtkjs file embedded within it. '
+    'The vtkjs and html options also require an explicit --output-file to be specified.',
     type=str, default='vsf', show_default=True)
 @click.option(
     '--output-file', help='Optional file to output the JSON string of '
@@ -146,14 +149,19 @@ def model_to_vis_set(
                 vis_set.to_pkl(out_file, out_folder)
             else:
                 output_file.write(pickle.dumps(vis_set.to_dict()))
-        elif output_format == 'vtkjs':
+        elif output_format in ('vtkjs', 'html'):
             assert output_file.name != '<stdout>', \
                 'Must specify an --output-file to use --output-format vtkjs.'
             out_folder, out_file = os.path.split(output_file.name)
             try:
                 if out_file.endswith('.vtkjs'):
                     out_file = out_file[:-6]
-                vis_set.to_vtkjs(output_folder=out_folder, file_name=out_file)
+                elif out_file.endswith('.html'):
+                    out_file = out_file[:-5]
+                if output_format == 'vtkjs':
+                    vis_set.to_vtkjs(output_folder=out_folder, file_name=out_file)
+                if output_format == 'html':
+                    vis_set.to_html(output_folder=out_folder, file_name=out_file)
             except AttributeError as ae:
                 raise AttributeError(
                     'Ladybug-vtk must be installed in order to use --output-format '
