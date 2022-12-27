@@ -36,12 +36,10 @@ def display():
     'be included in the output VisualizationSet.', default=True, show_default=True)
 @click.option(
     '--mesh/--faces', help='Flag to note whether the colored model geometries should '
-    'be represented with joined DisplayMesh3D objects instead of '
-    'a list of DisplayFace3D objects. Meshes can usually be rendered '
-    'faster and they scale well for large models but all geometry is triangulated '
-    '(meaning that their wireframe in certain platforms might not appear ideal). '
-    'Also, merging the geometry into a single mesh means interfaces cannot support '
-    'the selection of individual Face3D geometries.', default=True, show_default=True)
+    'be represented with DisplayMesh3D objects instead of DisplayFace3D objects. '
+    'Meshes can usually be rendered  faster and they scale well for large models '
+    'but all geometry is triangulated (meaning that their wireframe in certain '
+    'platforms might not appear ideal).', default=True, show_default=True)
 @click.option(
     '--show-color-by/--hide-color-by', ' /-hcb', help='Flag to note whether the '
     'color-by geometry should be hidden or shown by default. Hiding the color-by '
