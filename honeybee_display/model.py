@@ -65,12 +65,10 @@ def model_to_vis_set(
             the Model Wireframe (in DisplayLineSegment3D) should be included
             in the output VisualizationSet. (Default: True).
         use_mesh: Boolean to note whether the colored model geometries should
-            be represented with joined DisplayMesh3D objects (True) instead of
-            a list of DisplayFace3D objects (False). Meshes can usually be rendered
-            faster and they scale well for large models but all geometry is triangulated
-            (meaning that their wireframe in certain platforms might not appear ideal)
-            and they cannot support the selection of individual Face3D geometries
-            in the resulting visualization. (Default: True).
+            be represented with DisplayMesh3D objects (True) instead of DisplayFace3D
+            objects (False). Meshes can usually be rendered faster and they scale
+            well for large models but all geometry is triangulated (meaning that
+            the wireframe in certain platforms might not appear ideal). (Default: True).
         hide_color_by: Boolean to note whether the color_by geometry should be
             hidden or shown by default. Hiding the color-by geometry is useful
             when the primary purpose of the visualization is to display grid_data
