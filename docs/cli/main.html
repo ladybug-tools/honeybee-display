@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>main &#8212; honeybee display  documentation</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="honeybee_display" href="../modules.html" />
+    <link rel="prev" title="CLI Docs" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          honeybee display</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">CLI Docs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#commands">Commands</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">main</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#honeybee-display">honeybee-display</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#honeybee-display-model-to-vis">model-to-vis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">honeybee_display</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../honeybee_display.html">honeybee_display package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../honeybee_display.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.cli.html">honeybee_display.cli package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../honeybee_display.cli.html#module-honeybee_display.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.energy.html">honeybee_display.energy package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../honeybee_display.energy.html#submodules">Submodules</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../honeybee_display.energy.colorobj.html">honeybee_display.energy.colorobj module</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../honeybee_display.energy.html#module-honeybee_display.energy">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.radiance.html">honeybee_display.radiance package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../honeybee_display.radiance.html#module-honeybee_display.radiance">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../honeybee_display.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.aperture.html">honeybee_display.aperture module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.colorobj.html">honeybee_display.colorobj module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.door.html">honeybee_display.door module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.face.html">honeybee_display.face module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.model.html">honeybee_display.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.room.html">honeybee_display.room module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../honeybee_display.shade.html">honeybee_display.shade module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../honeybee_display.html#module-honeybee_display">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">CLI Docs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#commands">Commands</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">main</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#honeybee-display">honeybee-display</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#honeybee-display-model-to-vis">model-to-vis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">honeybee_display</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: CLI Docs"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; CLI Docs</span>
+    </a>
+  </li>
+  <li>
+    <a href="../modules.html" title="Next Chapter: honeybee_display"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">honeybee_display &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/cli/main.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">CLI Docs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#installation">Installation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#commands">Commands</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">main</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#honeybee-display">honeybee-display</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#honeybee-display-model-to-vis">model-to-vis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">honeybee_display</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <section id="main">
+<h1>main<a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h1>
+<section id="honeybee-display">
+<h2>honeybee-display<a class="headerlink" href="#honeybee-display" title="Permalink to this headline">¶</a></h2>
+<p>honeybee display commands.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>honeybee-display <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-version">
+<code class="sig-name descname">--version</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the version and exit.</p>
+</dd></dl>
+
+<section id="honeybee-display-model-to-vis">
+<h3>model-to-vis<a class="headerlink" href="#honeybee-display-model-to-vis" title="Permalink to this headline">¶</a></h3>
+<p>Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).</p>
+<p>This command can also optionally translate the Honeybee Model to a .vtkjs file,
+which can be visualized in the open source Visual ToolKit (VTK) platform.</p>
+<div class="line-block">
+<div class="line">Args:</div>
+<div class="line-block">
+<div class="line">model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file.</div>
+</div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>honeybee-display model-to-vis <span class="o">[</span>OPTIONS<span class="o">]</span> MODEL_FILE
+</pre></div>
+</div>
+<p class="rubric">Options</p>
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-c">
+<span id="cmdoption-honeybee-display-model-to-vis-color-by"></span><code class="sig-name descname">-c</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--color-by</code><code class="sig-prename descclassname"> &lt;color_by&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text for the property that dictates the colors of the Model geometry. Choose from: type, boundary_condition, none. If none, only a wireframe of the Model will be generated (assuming the –exclude-wireframe option is not used). None is useful when the primary purpose of  the visualization is to display results in relation to the Model geometry or display some room_attr or face_attr as an AnalysisGeometry or Text labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-wireframe">
+<span id="cmdoption-honeybee-display-model-to-vis-xw"></span><span id="cmdoption-honeybee-display-model-to-vis-exclude-wireframe"></span><code class="sig-name descname">--wireframe</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">-xw</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--exclude-wireframe</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-wireframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to note whether a ContextGeometry dedicated to the Model Wireframe (in DisplayLineSegment3D) should be included in the output VisualizationSet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-mesh">
+<span id="cmdoption-honeybee-display-model-to-vis-faces"></span><code class="sig-name descname">--mesh</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--faces</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-mesh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to note whether the colored model geometries should be represented with DisplayMesh3D objects instead of DisplayFace3D objects. Meshes can usually be rendered  faster and they scale well for large models but all geometry is triangulated (meaning that their wireframe in certain platforms might not appear ideal).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-show-color-by">
+<span id="cmdoption-honeybee-display-model-to-vis-hcb"></span><span id="cmdoption-honeybee-display-model-to-vis-hide-color-by"></span><code class="sig-name descname">--show-color-by</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">-hcb</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--hide-color-by</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-show-color-by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to note whether the color-by geometry should be hidden or shown by default. Hiding the color-by geometry is useful when the primary purpose of the visualization is to display grid-data or room/face attributes but it is still desirable to have the option to turn on the geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-r">
+<span id="cmdoption-honeybee-display-model-to-vis-room-attr"></span><code class="sig-name descname">-r</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--room-attr</code><code class="sig-prename descclassname"> &lt;room_attr&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-r" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional text string of an attribute that the Model Rooms have, which will be used to construct a visualization of this attribute in the resulting VisualizationSet. Multiple instances of this option can be passed and a separate VisualizationData will be added to the AnalysisGeometry that represents the attribute in the resulting VisualizationSet (or a separate ContextGeometry layer if room_text_labels is True). Room attributes input here can have . that separates the nested attributes from one another. For example, properties.energy.program_type.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-f">
+<span id="cmdoption-honeybee-display-model-to-vis-face-attr"></span><code class="sig-name descname">-f</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--face-attr</code><code class="sig-prename descclassname"> &lt;face_attr&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-f" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional text string of an attribute that the Model Faces have, which will be used to construct a visualization of this attribute in the resulting VisualizationSet. Multiple instances of this option can be passed and a separate VisualizationData will be added to the AnalysisGeometry that represents the attribute in the resulting VisualizationSet (or a separate ContextGeometry layer if face_text_labels is True). Face attributes input here can have . that separates the nested attributes from one another. For example, properties.energy.construction.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-color-attr">
+<span id="cmdoption-honeybee-display-model-to-vis-text-attr"></span><code class="sig-name descname">--color-attr</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--text-attr</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-color-attr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to note whether to note whether the input room-attr and face-attr should be expressed as a colored AnalysisGeometry or a ContextGeometry as text labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-m">
+<span id="cmdoption-honeybee-display-model-to-vis-grid-display-mode"></span><code class="sig-name descname">-m</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--grid-display-mode</code><code class="sig-prename descclassname"> &lt;grid_display_mode&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-m" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text that dictates how the ContextGeometry for Model SensorGrids should display in the resulting visualization. The Default option will draw sensor points whenever there is no grid_data_path and will not draw them at all when grid data is provided, assuming the AnalysisGeometry of the grids is sufficient. Choose from: Default, Points, Wireframe, Surface, SurfaceWithEdges, None.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>Default</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-hide-grid">
+<span id="cmdoption-honeybee-display-model-to-vis-sg"></span><span id="cmdoption-honeybee-display-model-to-vis-show-grid"></span><code class="sig-name descname">--hide-grid</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">-sg</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--show-grid</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-hide-grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag to note whether the SensorGrid ContextGeometry should be hidden or shown by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>True</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-g">
+<span id="cmdoption-honeybee-display-model-to-vis-grid-data"></span><code class="sig-name descname">-g</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--grid-data</code><code class="sig-prename descclassname"> &lt;grid_data&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-g" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional path to a folder containing data that aligns with the SensorGrids in the model. Any sub folder within this path that contains a grids_into.json (and associated CSV files) will be converted to an AnalysisGeometry in the resulting VisualizationSet. If a vis_metadata.json file is found within this sub-folder, the information contained within it will be used to customize the AnalysisGeometry. Note that it is acceptable if data and grids_info.json exist in the root of this grid_data_path. Also note that this argument has no impact if honeybee-radiance is not installed and SensorGrids cannot be decoded.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-dm">
+<span id="cmdoption-honeybee-display-model-to-vis-grid-data-display-mode"></span><code class="sig-name descname">-dm</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--grid-data-display-mode</code><code class="sig-prename descclassname"> &lt;grid_data_display_mode&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-dm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text to set the display_mode of the AnalysisGeometry that is generated from the grid_data_path above. Note that this has no effect if there are no meshes associated with the model SensorGrids. Choose from: Surface, SurfaceWithEdges, Wireframe, Points</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>Surface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-of">
+<span id="cmdoption-honeybee-display-model-to-vis-output-format"></span><code class="sig-name descname">-of</code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname">, </code><code class="sig-name descname">--output-format</code><code class="sig-prename descclassname"> &lt;output_format&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-of" title="Permalink to this definition">¶</a></dt>
+<dd><p>Text for the output format of the resulting VisualizationSet File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note that both vsf and json refer to the the JSON version of the VisualizationSet file and the distinction between the two is only for help in coordinating file extensions (since both .vsf and .json can be acceptable). Also note that ladybug-vtk must be installed in order for the vtkjs or html options to be usable and the html format refers to a web page with the vtkjs file embedded within it. The vtkjs and html options also require an explicit –output-file to be specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><p>vsf</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-output-file">
+<code class="sig-name descname">--output-file</code><code class="sig-prename descclassname"> &lt;output_file&gt;</code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-output-file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optional file to output the JSON string of the config object. By default, it will be printed out to stdout</p>
+<dl class="field-list simple">
+<dt class="field-odd">Default</dt>
+<dd class="field-odd"><ul class="simple">
+<li></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Arguments</p>
+<dl class="std option">
+<dt id="cmdoption-honeybee-display-model-to-vis-arg-MODEL_FILE">
+<span id="cmdoption-honeybee-display-model-to-vis-arg-model-file"></span><code class="sig-name descname">MODEL_FILE</code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-honeybee-display-model-to-vis-arg-MODEL_FILE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Required argument</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2022, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
