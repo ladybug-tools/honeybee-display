@@ -285,22 +285,23 @@ def model_to_vis_set(
         faces.extend(model.orphaned_apertures)
         faces.extend(model.orphaned_doors)
         faces.extend(model.orphaned_shades)
-        if face_text_labels:
-            units, tol = model.units, model.tolerance
-            for f_attr in face_attr:
-                fa_col_obj = ColorFace(faces, f_attr, face_legend_par)
-                geo_objs.append(
-                    color_face_to_vis_set(fa_col_obj, False, True, units, tol)[0])
-        else:
-            fa_col_obj = ColorFace(faces, face_attr[0], face_legend_par)
-            geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
-            geo_obj.identifier = 'Face_Attributes'
-            geo_obj.display_name = 'Face Attributes'
-            for r_attr in face_attr[1:]:
-                fa_col_obj = ColorFace(faces, r_attr, face_legend_par)
-                ra_a_geo = color_face_to_vis_set(fa_col_obj, False, False)[0]
-                geo_obj.add_data_set(ra_a_geo[0])
-            geo_objs.append(geo_obj)
+        if len(faces) != 0 :
+            if face_text_labels:
+                units, tol = model.units, model.tolerance
+                for f_attr in face_attr:
+                    fa_col_obj = ColorFace(faces, f_attr, face_legend_par)
+                    geo_objs.append(
+                        color_face_to_vis_set(fa_col_obj, False, True, units, tol)[0])
+            else:
+                fa_col_obj = ColorFace(faces, face_attr[0], face_legend_par)
+                geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
+                geo_obj.identifier = 'Face_Attributes'
+                geo_obj.display_name = 'Face Attributes'
+                for r_attr in face_attr[1:]:
+                    fa_col_obj = ColorFace(faces, r_attr, face_legend_par)
+                    ra_a_geo = color_face_to_vis_set(fa_col_obj, False, False)[0]
+                    geo_obj.add_data_set(ra_a_geo[0])
+                geo_objs.append(geo_obj)
 
     # add the sensor grid geometry if requested
     gdm = grid_display_mode.lower()
@@ -391,7 +392,9 @@ def model_to_vis_set(
 
     # add the wireframe if requested
     if include_wireframe:
-        geo_objs.append(model_to_vis_set_wireframe(model)[0])
+        wf_geo = model_to_vis_set_wireframe(model)
+        if wf_geo is not None:
+            geo_objs.append(wf_geo[0])
 
     # build the VisualizationSet and return it
     vis_set = VisualizationSet(model.identifier, geo_objs, model.units)
@@ -437,6 +440,8 @@ def model_to_vis_set_wireframe(model):
         _process_wireframe(shd.geometry, wireframe, lw)
 
     # build the VisualizationSet and return it
+    if len(wireframe) == 0:
+        return None
     vis_set = VisualizationSet(
         model.identifier, [ContextGeometry('Wireframe', wireframe)])
     vis_set.display_name = model.display_name
