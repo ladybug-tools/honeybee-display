@@ -285,7 +285,7 @@ def model_to_vis_set(
         faces.extend(model.orphaned_apertures)
         faces.extend(model.orphaned_doors)
         faces.extend(model.orphaned_shades)
-        if len(faces) != 0 :
+        if len(faces) != 0:
             if face_text_labels:
                 units, tol = model.units, model.tolerance
                 for f_attr in face_attr:
