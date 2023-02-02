@@ -45,7 +45,7 @@ def model_to_vis_set(
         room_text_labels=False, face_text_labels=False,
         room_legend_par=None, face_legend_par=None,
         grid_display_mode='Default', hide_grid=True,
-        grid_data_path=None, grid_data_display_mode='Surface'):
+        grid_data_path=None, grid_data_display_mode='Surface', active_grid_data=None):
     """Translate a Honeybee Model to a VisualizationSet.
 
     Args:
@@ -136,6 +136,11 @@ def model_to_vis_set(
             * SurfaceWithEdges
             * Wireframe
             * Points
+
+        active_grid_data: Optional text to specify the active data in the
+            AnalysisGeometry. This should match the name of the sub-folder
+            within the grid_data_path that should be active. If None, the
+            first data set in the grid_data_path with be active. (Default: None).
 
     Returns:
         A VisualizationSet object that represents the model.
@@ -347,7 +352,7 @@ def model_to_vis_set(
             grids = {}
         if len(grids) != 0:
             # gather all of the directories with results
-            gi_dirs, gi_file = [], 'grids_info.json'
+            gi_dirs, gi_file, act_data, cur_data = [], 'grids_info.json', 0, 0
             root_gi_file = os.path.join(grid_data_path, gi_file)
             if os.path.isfile(root_gi_file):
                 gi_dirs.append(grid_data_path)
@@ -357,6 +362,10 @@ def model_to_vis_set(
                     sub_gi_file = os.path.join(sub_dir, gi_file)
                     if os.path.isfile(sub_gi_file):
                         gi_dirs.append(sub_dir)
+                        if active_grid_data is not None and \
+                                sub_f.lower() == active_grid_data.lower():
+                            act_data = cur_data
+                        cur_data += 1
             # loop through the result directories and load the results
             data_sets = []
             for g_dir in gi_dirs:
@@ -388,6 +397,7 @@ def model_to_vis_set(
                     a_geo = AnalysisGeometry('Grid_Data', gr_pts, data_sets)
                 a_geo.display_name = 'Grid Data'
                 a_geo.display_mode = grid_data_display_mode
+                a_geo.active_data = act_data
                 geo_objs.append(a_geo)
 
     # add the wireframe if requested
