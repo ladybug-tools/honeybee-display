@@ -102,6 +102,12 @@ def display():
     'SensorGrids. Choose from: Surface, SurfaceWithEdges, Wireframe, Points',
     type=str, default='Surface', show_default=True)
 @click.option(
+    '--active-grid-data', '-ad', help='Text to specify the active data in the '
+    'AnalysisGeometry. This should match the name of the sub-folder '
+    'within the grid_data_path that should be active. If unspecified, the '
+    'first data set in the grid-data with be active.',
+    type=str, default=None, show_default=True)
+@click.option(
     '--output-format', '-of', help='Text for the output format of the resulting '
     'VisualizationSet File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note '
     'that both vsf and json refer to the the JSON version of the VisualizationSet '
@@ -118,7 +124,7 @@ def display():
 def model_to_vis_set(
         model_file, color_by, wireframe, mesh, show_color_by,
         room_attr, face_attr, color_attr, grid_display_mode, hide_grid,
-        grid_data, grid_data_display_mode, output_format, output_file):
+        grid_data, grid_data_display_mode, active_grid_data, output_format, output_file):
     """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
 
     This command can also optionally translate the Honeybee Model to a .vtkjs file,
@@ -139,7 +145,8 @@ def model_to_vis_set(
             hide_color_by=hide_color_by, room_attr=room_attr, face_attr=face_attr,
             room_text_labels=text_labels, face_text_labels=text_labels,
             grid_display_mode=grid_display_mode, hide_grid=hide_grid,
-            grid_data_path=grid_data, grid_data_display_mode=grid_data_display_mode)
+            grid_data_path=grid_data, grid_data_display_mode=grid_data_display_mode,
+            active_grid_data=active_grid_data)
         output_format = output_format.lower()
         if output_format in ('vsf', 'json'):
             output_file.write(json.dumps(vis_set.to_dict()))
