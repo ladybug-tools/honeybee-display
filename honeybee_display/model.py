@@ -427,8 +427,8 @@ def model_to_vis_set_wireframe(model):
         for seg in face3d.boundary_segments:
             wireframe.append(DisplayLineSegment3D(seg, line_width=line_width))
         if face3d.has_holes:
-            for hole in face3d.holes:
-                for seg in face3d.boundary_segments:
+            for hole in face3d.hole_segments:
+                for seg in hole:
                     wireframe.append(DisplayLineSegment3D(seg, line_width=line_width))
 
     # loop through all of the objects and add their wire frames
