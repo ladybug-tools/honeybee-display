@@ -6,7 +6,7 @@ from ladybug_geometry.geometry3d import Vector3D, Point3D, Polyline3D, Plane, \
 from ladybug_display.geometry3d import DisplayText3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData
-from honeybee.units import conversion_factor_to_meters
+from honeybee.units import conversion_factor_to_meters, parse_distance_string
 from honeybee.facetype import Floor
 
 from ..colorobj import _room_wireframe, _process_wireframe
@@ -45,11 +45,12 @@ def energy_color_room_to_vis_set(
     if text_labels:
         txt_height, font, f_str = _process_leg_par_for_text(color_room)
         # loop through the rooms and create the text labels
-        max_txt_h = float('inf')
+        max_txt_h, p_tol = float('inf'), 0.01
         if units is not None:
             fac_to_m = conversion_factor_to_meters(units)
             max_txt_h = 0.25 / fac_to_m
             max_txt_v = 1.0 / fac_to_m
+            p_tol = parse_distance_string('0.01m', units)
         label_text = []
         for room_val, room in zip(color_room.matched_values, color_room.matched_rooms):
             room_prop = f_str % room_val
@@ -63,7 +64,7 @@ def energy_color_room_to_vis_set(
                 if len(floor_faces) == 1:
                     flr_geo = floor_faces[0]
                     base_pt = flr_geo.center if flr_geo.is_convex else \
-                        flr_geo.pole_of_inaccessibility(tolerance)
+                        flr_geo.pole_of_inaccessibility(p_tol)
                 elif len(floor_faces) == 0:
                     c_pt = room.geometry.center
                     base_pt = Point3D(c_pt.x, c_pt.y, room.geometry.min.z)
@@ -73,7 +74,7 @@ def energy_color_room_to_vis_set(
                     floor_outline = Polyline3D.join_segments(ne, tolerance)[0]
                     flr_geo = Face3D(floor_outline.vertices[:-1])
                     base_pt = flr_geo.center if flr_geo.is_convex else \
-                        flr_geo.pole_of_inaccessibility(tolerance)
+                        flr_geo.pole_of_inaccessibility(p_tol)
                 base_pt = base_pt.move(m_vec)
                 base_plane = Plane(Vector3D(0, 0, 1), base_pt)
             else:
@@ -141,17 +142,18 @@ def color_face_to_vis_set(
     # use text labels if requested
     if text_labels:
         # set up default variables
-        max_txt_h = float('inf')
+        max_txt_h, p_tol = float('inf'), 0.01
         if units is not None:
             fac_to_m = conversion_factor_to_meters(units)
             max_txt_h = 0.25 / fac_to_m
+            p_tol = parse_distance_string('0.01m', units)
         txt_height, font, f_str = _process_leg_par_for_text(color_face)
         # loop through the faces and create the text labels
         label_text = []
         face_zip_obj = zip(color_face.matched_values, color_face.matched_flat_geometry)
         for face_val, f_geo in face_zip_obj:
             cent_pt = f_geo.center if f_geo.is_convex else \
-                f_geo.pole_of_inaccessibility(tolerance)
+                f_geo.pole_of_inaccessibility(p_tol)
             base_plane = Plane(f_geo.normal, cent_pt)
             face_prop = f_str % face_val
             if base_plane.y.z < 0:  # base plane pointing downwards; rotate it
