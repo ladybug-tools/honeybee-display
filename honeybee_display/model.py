@@ -490,7 +490,7 @@ def _read_sensor_grid_result(result_folder):
         # find the result file and append the results
         result_file = None
         for f in os.listdir(result_folder):
-            if f.startswith(grid_id):
+            if f.startswith(grid_id) and not f.endswith('.json'):
                 result_file = os.path.join(result_folder, f)
                 break
         if result_file is not None:
