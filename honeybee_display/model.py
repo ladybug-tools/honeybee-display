@@ -16,6 +16,7 @@ from honeybee.shade import Shade
 from honeybee.colorobj import ColorRoom, ColorFace
 
 from .colorobj import color_room_to_vis_set, color_face_to_vis_set
+from .attr import FaceAttribute, RoomAttribute
 
 TYPE_COLORS = {
     'Wall': Color(230, 180, 60),
@@ -44,11 +45,8 @@ BC_COLORS = {
 def model_to_vis_set(
         model, color_by='type', include_wireframe=True, use_mesh=True,
         hide_color_by=False, room_attr=None, face_attr=None,
-        room_text_labels=False, face_text_labels=False,
-        room_legend_par=None, face_legend_par=None,
         grid_display_mode='Default', hide_grid=True,
-        grid_data_path=None, grid_data_display_mode='Surface', active_grid_data=None,
-        face_attr_types=None):
+        grid_data_path=None, grid_data_display_mode='Surface', active_grid_data=None):
     """Translate a Honeybee Model to a VisualizationSet.
 
     Args:
@@ -77,34 +75,8 @@ def model_to_vis_set(
             when the primary purpose of the visualization is to display grid_data
             or room/face attributes but it is still desirable to have the option
             to turn on the geometry.
-        room_attr: An optional text string of an attribute that the Model Rooms have,
-            which will be used to construct a visualization of this attribute in the
-            resulting VisualizationSet. This can also be a list of attribute strings and
-            a separate VisualizationData will be added to the AnalysisGeometry that
-            represents the attribute in the resulting VisualizationSet (or a separate
-            ContextGeometry layer if room_text_labels is True). Room attributes
-            input here can have '.' that separates the nested attributes from
-            one another. For example, 'properties.energy.program_type'.
-        face_attr: An optional text string of an attribute that the Model Faces have,
-            which will be used to construct a visualization of this attribute in the
-            resulting VisualizationSet. This can also be a list of attribute strings and
-            a separate VisualizationData will be added to the AnalysisGeometry that
-            represents the attribute in the resulting VisualizationSet (or a separate
-            ContextGeometry layer if face_text_labels is True). Face attributes
-            input here can have '.' that separates the nested attributes from
-            one another. For example, 'properties.energy.construction'.
-        room_text_labels: A boolean to note whether the input room_attr should
-            be expressed as a colored AnalysisGeometry (False) or a ContextGeometry
-            as text labels (True). (Default: False).
-        face_text_labels: A boolean to note whether the input face_attr should
-            be expressed as a colored AnalysisGeometry (False) or a ContextGeometry
-            as text labels (True). (Default: False).
-        room_legend_par: An optional LegendParameter object to customize the display
-            of the room_attr. When room_text_labels is True, only the text_height
-            and font will be used to customize the text.
-        face_legend_par: An optional LegendParameter object to customize the display
-            of the face_attr. When face_text_labels is True, only the text_height
-            and font will be used to customize the text.
+        room_attr: An optional list of room attribute objects.
+        face_attr: An optional list of face attribute objects.
         grid_display_mode: Text that dictates how the ContextGeometry for Model
             SensorGrids should display in the resulting visualization. The Default
             option will draw sensor points whenever there is no grid_data_path and
@@ -144,16 +116,6 @@ def model_to_vis_set(
             AnalysisGeometry. This should match the name of the sub-folder
             within the grid_data_path that should be active. If None, the
             first data set in the grid_data_path with be active. (Default: None).
-        face_attr_types: List of face types to be included in the visualization set. By
-            default all the faces will be exported to visualization set when face_attr
-            is set. Valid values are:
-
-            * Wall
-            * RoofCeiling
-            * Floor
-            * AirBoundary
-            * Aperture
-            * Shade
 
     Returns:
         A VisualizationSet object that represents the model.
@@ -273,28 +235,29 @@ def model_to_vis_set(
             geo_objs.append(con_geo)
 
     # add room attributes to the VisualizationSet if requested
-    if room_attr is not None and len(room_attr) != 0 and len(model.rooms) != 0:
-        room_attr = [room_attr] if isinstance(room_attr, str) else room_attr
-        if room_text_labels:
-            units, tol = model.units, model.tolerance
-            for r_attr in room_attr:
-                ra_col_obj = ColorRoom(model.rooms, r_attr, room_legend_par)
-                geo_objs.append(
-                    color_room_to_vis_set(ra_col_obj, False, True, units, tol)[0])
-        else:
-            ra_col_obj = ColorRoom(model.rooms, room_attr[0], room_legend_par)
-            geo_obj = color_room_to_vis_set(ra_col_obj, False, False)[0]
-            geo_obj.identifier = 'Room_Attributes'
-            geo_obj.display_name = 'Room Attributes'
-            for r_attr in room_attr[1:]:
-                ra_col_obj = ColorRoom(model.rooms, r_attr, room_legend_par)
-                ra_a_geo = color_room_to_vis_set(ra_col_obj, False, False)[0]
-                geo_obj.add_data_set(ra_a_geo[0])
-            geo_objs.append(geo_obj)
+    if room_attr and len(model.rooms) != 0:
+        for rm_attr in room_attr:
+            attrs = rm_attr.attr
+            if rm_attr.text:
+                units, tol = model.units, model.tolerance
+                for r_attr in attrs:
+                    ra_col_obj = ColorRoom(model.rooms, r_attr, rm_attr.legend_par)
+                    geo_objs.append(
+                        color_room_to_vis_set(ra_col_obj, False, True, units, tol)[0])
+            if rm_attr.color:
+                ra_col_obj = ColorRoom(model.rooms, attrs[0], rm_attr.legend_par)
+                geo_obj = color_room_to_vis_set(ra_col_obj, False, False)[0]
+                geo_obj.display_name = rm_attr.name
+                # TODO: pass the display name to the function that validates it
+                geo_obj.identifier = rm_attr.name
+                for r_attr in attrs[1:]:
+                    ra_col_obj = ColorRoom(model.rooms, r_attr, rm_attr.legend_par)
+                    ra_a_geo = color_room_to_vis_set(ra_col_obj, False, False)[0]
+                    geo_obj.add_data_set(ra_a_geo[0])
+                geo_objs.append(geo_obj)
 
     # add face attributes to the VisualizationSet if requested
     if face_attr is not None and len(face_attr) != 0:
-        face_attr = [face_attr] if isinstance(face_attr, str) else face_attr
         faces = []
         for room in model.rooms:
             faces.extend(room.faces)
@@ -304,32 +267,38 @@ def model_to_vis_set(
         faces.extend(model.orphaned_apertures)
         faces.extend(model.orphaned_doors)
         faces.extend(model.orphaned_shades)
-
-        if face_attr_types:
-            face_attr_types = tuple(face_attr_types)
-            faces = [
-                face for face in faces
-                if isinstance(face, face_attr_types) or
-                isinstance(face.type, face_attr_types)
-            ]
-
         if len(faces) != 0:
-            if face_text_labels:
-                units, tol = model.units, model.tolerance
-                for f_attr in face_attr:
-                    fa_col_obj = ColorFace(faces, f_attr, face_legend_par)
-                    geo_objs.append(
-                        color_face_to_vis_set(fa_col_obj, False, True, units, tol)[0])
-            else:
-                fa_col_obj = ColorFace(faces, face_attr[0], face_legend_par)
-                geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
-                geo_obj.identifier = 'Face_Attributes'
-                geo_obj.display_name = 'Face Attributes'
-                for r_attr in face_attr[1:]:
-                    fa_col_obj = ColorFace(faces, r_attr, face_legend_par)
-                    ra_a_geo = color_face_to_vis_set(fa_col_obj, False, False)[0]
-                    geo_obj.add_data_set(ra_a_geo[0])
-                geo_objs.append(geo_obj)
+            for ff_attr in face_attr:
+                ff_attr: FaceAttribute
+                if ff_attr.face_types:
+                    face_attr_types = tuple(ff_attr.face_types)
+                    f_faces = [
+                        face for face in faces
+                        if isinstance(face, face_attr_types) or
+                        isinstance(face.type, face_attr_types)
+                    ]
+                else:
+                    f_faces = faces
+
+                if ff_attr.text:
+                    units, tol = model.units, model.tolerance
+                    for f_attr in ff_attr.attr:
+                        fa_col_obj = ColorFace(f_faces, f_attr, ff_attr.legend_par)
+                        geo_objs.append(
+                            color_face_to_vis_set(
+                                fa_col_obj, False, True, units, tol)[0]
+                        )
+                if ff_attr.color:
+                    fa_col_obj = ColorFace(f_faces, ff_attr.attr[0], ff_attr.legend_par)
+                    geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
+                    # TODO: pass the display name through a validator
+                    geo_obj.identifier = ff_attr.name
+                    geo_obj.display_name = ff_attr.name
+                    for r_attr in ff_attr.attr[1:]:
+                        fa_col_obj = ColorFace(f_faces, r_attr, ff_attr.legend_par)
+                        ra_a_geo = color_face_to_vis_set(fa_col_obj, False, False)[0]
+                        geo_obj.add_data_set(ra_a_geo[0])
+                    geo_objs.append(geo_obj)
 
     # add the sensor grid geometry if requested
     gdm = grid_display_mode.lower()
