@@ -11,6 +11,8 @@ from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
 from honeybee.facetype import Wall, RoofCeiling, Floor, AirBoundary
+from honeybee.aperture import Aperture
+from honeybee.shade import Shade
 from honeybee.colorobj import ColorRoom, ColorFace
 
 from .colorobj import color_room_to_vis_set, color_face_to_vis_set
@@ -45,7 +47,8 @@ def model_to_vis_set(
         room_text_labels=False, face_text_labels=False,
         room_legend_par=None, face_legend_par=None,
         grid_display_mode='Default', hide_grid=True,
-        grid_data_path=None, grid_data_display_mode='Surface', active_grid_data=None):
+        grid_data_path=None, grid_data_display_mode='Surface', active_grid_data=None,
+        face_attr_types=None):
     """Translate a Honeybee Model to a VisualizationSet.
 
     Args:
@@ -141,6 +144,16 @@ def model_to_vis_set(
             AnalysisGeometry. This should match the name of the sub-folder
             within the grid_data_path that should be active. If None, the
             first data set in the grid_data_path with be active. (Default: None).
+        face_attr_types: List of face types to be included in the visualization set. By
+            default all the faces will be exported to visualization set when face_attr
+            is set. Valid values are:
+
+            * Wall
+            * RoofCeiling
+            * Floor
+            * AirBoundary
+            * Aperture
+            * Shade
 
     Returns:
         A VisualizationSet object that represents the model.
@@ -285,11 +298,21 @@ def model_to_vis_set(
         faces = []
         for room in model.rooms:
             faces.extend(room.faces)
+            faces.extend(room.apertures)
             faces.extend(room.shades)
         faces.extend(model.orphaned_faces)
         faces.extend(model.orphaned_apertures)
         faces.extend(model.orphaned_doors)
         faces.extend(model.orphaned_shades)
+
+        if face_attr_types:
+            face_attr_types = tuple(face_attr_types)
+            faces = [
+                face for face in faces
+                if isinstance(face, face_attr_types) or
+                isinstance(face.type, face_attr_types)
+            ]
+
         if len(faces) != 0:
             if face_text_labels:
                 units, tol = model.units, model.tolerance
