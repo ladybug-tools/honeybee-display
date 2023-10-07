@@ -11,12 +11,10 @@ from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
 from honeybee.facetype import Wall, RoofCeiling, Floor, AirBoundary
-from honeybee.aperture import Aperture
-from honeybee.shade import Shade
 from honeybee.colorobj import ColorRoom, ColorFace
+from honeybee.shade import Shade
 
 from .colorobj import color_room_to_vis_set, color_face_to_vis_set
-from .attr import FaceAttribute, RoomAttribute
 
 TYPE_COLORS = {
     'Wall': Color(230, 180, 60),
@@ -269,7 +267,6 @@ def model_to_vis_set(
         faces.extend(model.orphaned_shades)
         if len(faces) != 0:
             for ff_attr in face_attr:
-                ff_attr: FaceAttribute
                 if ff_attr.face_types:
                     face_attr_types = tuple(ff_attr.face_types)
                     f_faces = [
@@ -279,6 +276,17 @@ def model_to_vis_set(
                     ]
                 else:
                     f_faces = faces
+
+                if ff_attr.boundary_conditions:
+                    bcs = tuple(ff_attr.boundary_conditions)
+                    f_faces = [
+                        face for face in f_faces if
+                        isinstance(face, Shade) or
+                        isinstance(face.boundary_condition, bcs)
+                    ]
+
+                if not f_faces:
+                    continue
 
                 if ff_attr.text:
                     units, tol = model.units, model.tolerance
