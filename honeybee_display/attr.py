@@ -1,4 +1,8 @@
 """Display attribute objects for creating visualization sets."""
+from honeybee.facetype import Wall, RoofCeiling, Floor, AirBoundary
+from honeybee.aperture import Aperture
+from honeybee.shade import Shade
+from honeybee.boundarycondition import Outdoors, Surface, Ground
 
 
 class RoomAttribute(object):
@@ -14,13 +18,10 @@ class RoomAttribute(object):
             ContextGeometry layer if color is True). Attributes input here can have '.'
             that separates the nested attributes from one another. For example,
             'properties.energy.construction' or 'user_data.tag'
-
         color: A boolean to note whether the input room_attr should be expressed as a
             colored AnalysisGeometry. (Default: True)
-
         text: A boolean to note whether the input room_attr should be expressed as a
             a ContextGeometry as text labels. (Default: False)
-
         legend_par:An optional LegendParameter object to customize the display of the
             attribute. For text attribute only the text_height and font will be used to
             customize the text.
@@ -34,6 +35,46 @@ class RoomAttribute(object):
         self.color = color
         self.text = text
         self.legend_par = legend_par
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def attr(self):
+        return self._attr
+
+    @attr.setter
+    def attr(self, value):
+        self._attr = value
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = value
+
+    @property
+    def text(self):
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        self._text = value
+
+    @property
+    def legend_par(self):
+        return self._legend_par
+
+    @legend_par.setter
+    def legend_par(self, value):
+        self._legend_par = value
 
 
 class FaceAttribute(RoomAttribute):
@@ -71,8 +112,45 @@ class FaceAttribute(RoomAttribute):
             * Aperture
             * Shade
 
+        boundary_conditions: List of face boundary conditions to be included in the
+            visualization set. This condition will be applied as a secondary check for
+            the face_types that are set using the face_types argument. Valid values 
+            are:
+
+            * Outdoors
+            * Surface
+            * Ground
+
     """
 
-    def __init__(self, name, attr, color=True, text=False, legend_par=None, face_types=None):
+    def __init__(
+        self, name, attr, color=True, text=False, legend_par=None, face_types=None,
+            boundary_conditions=None):
         super().__init__(name, attr, color, text, legend_par)
         self.face_types = face_types
+        self.boundary_conditions = boundary_conditions
+
+    @property
+    def face_types(self):
+        return self._face_types
+
+    @face_types.setter
+    def face_types(self, types):
+        types = types or []
+        for type in types:
+            assert type in (Wall, RoofCeiling, Floor, AirBoundary, Aperture, Shade), \
+                f'Invalid face type: {type}'
+        self._face_types = types
+
+    @property
+    def boundary_conditions(self):
+        return self._boundary_conditions
+
+    @boundary_conditions.setter
+    def boundary_conditions(self, bcs):
+        bcs = bcs or []
+        for bc in bcs:
+            assert bc in (Outdoors, Surface, Ground), \
+                f'Invalid face boundary condition: {bc}. Valid values are Outdoors, ' \
+                'Surface and Ground.'
+        self._boundary_conditions = bcs
