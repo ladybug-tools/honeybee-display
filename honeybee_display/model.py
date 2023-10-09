@@ -13,6 +13,7 @@ from honeybee.boundarycondition import Outdoors, Ground, Surface
 from honeybee.facetype import Wall, RoofCeiling, Floor, AirBoundary
 from honeybee.colorobj import ColorRoom, ColorFace
 from honeybee.shade import Shade
+from honeybee.typing import clean_string
 
 from .colorobj import color_room_to_vis_set, color_face_to_vis_set
 
@@ -246,8 +247,7 @@ def model_to_vis_set(
                 ra_col_obj = ColorRoom(model.rooms, attrs[0], rm_attr.legend_par)
                 geo_obj = color_room_to_vis_set(ra_col_obj, False, False)[0]
                 geo_obj.display_name = rm_attr.name
-                # TODO: pass the display name to the function that validates it
-                geo_obj.identifier = rm_attr.name
+                geo_obj.identifier = clean_string(rm_attr.name)
                 for r_attr in attrs[1:]:
                     ra_col_obj = ColorRoom(model.rooms, r_attr, rm_attr.legend_par)
                     ra_a_geo = color_room_to_vis_set(ra_col_obj, False, False)[0]
@@ -299,8 +299,7 @@ def model_to_vis_set(
                 if ff_attr.color:
                     fa_col_obj = ColorFace(f_faces, ff_attr.attr[0], ff_attr.legend_par)
                     geo_obj = color_face_to_vis_set(fa_col_obj, False, False)[0]
-                    # TODO: pass the display name through a validator
-                    geo_obj.identifier = ff_attr.name
+                    geo_obj.identifier = clean_string(ff_attr.name)
                     geo_obj.display_name = ff_attr.name
                     for r_attr in ff_attr.attr[1:]:
                         fa_col_obj = ColorFace(f_faces, r_attr, ff_attr.legend_par)
