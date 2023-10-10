@@ -153,11 +153,12 @@ def color_face_to_vis_set(
     # use text labels if requested
     if text_labels:
         # set up default variables
-        max_txt_h, p_tol = float('inf'), 0.01
+        max_txt_h, p_tol, offset_from_base = float('inf'), 0.01, 0.005
         if units is not None:
             fac_to_m = conversion_factor_to_meters(units)
             max_txt_h = 0.25 / fac_to_m
             p_tol = parse_distance_string('0.01m', units)
+            offset_from_base = parse_distance_string('0.005m', units)
         label_text = []
         txt_height = None if color_face.legend_parameters.is_text_height_default \
             else color_face.legend_parameters.text_height
@@ -167,6 +168,7 @@ def color_face_to_vis_set(
             if face_prop != 'N/A':
                 cent_pt = f_geo.center if f_geo.is_convex else \
                     f_geo.pole_of_inaccessibility(p_tol)
+                cent_pt = cent_pt.move(f_geo.normal * offset_from_base)
                 base_plane = Plane(f_geo.normal, cent_pt)
                 if base_plane.y.z < 0:  # base plane pointing downwards; rotate it
                     base_plane = base_plane.rotate(base_plane.n, math.pi, base_plane.o)
