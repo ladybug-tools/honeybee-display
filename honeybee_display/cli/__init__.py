@@ -9,6 +9,8 @@ import pickle
 from honeybee.model import Model
 from honeybee.cli import main
 
+from honeybee_display.attr import FaceAttribute, RoomAttribute
+
 _logger = logging.getLogger(__name__)
 
 
@@ -136,16 +138,27 @@ def model_to_vis_set(
     """
     try:
         model_obj = Model.from_file(model_file)
-        room_attr = None if len(room_attr) == 0 or room_attr[0] == '' else room_attr
-        face_attr = None if len(face_attr) == 0 or face_attr[0] == '' else face_attr
+        room_attrs = [] if len(room_attr) == 0 or room_attr[0] == '' else room_attr
+        face_attrs = [] if len(face_attr) == 0 or face_attr[0] == '' else face_attr
         text_labels = not color_attr
         hide_color_by = not show_color_by
+
+        face_attributes = []
+        for fa in face_attrs:
+            faa = FaceAttribute(name=fa, attrs=[fa], color=color_attr, text=text_labels)
+            face_attributes.append(faa)
+
+        room_attributes = []
+        for ra in room_attrs:
+            raa = RoomAttribute(name=ra, attrs=[ra], color=color_attr, text=text_labels)
+            room_attributes.append(raa)
+
         vis_set = model_obj.to_vis_set(
             color_by=color_by, include_wireframe=wireframe, use_mesh=mesh,
-            hide_color_by=hide_color_by, room_attr=room_attr, face_attr=face_attr,
-            room_text_labels=text_labels, face_text_labels=text_labels,
-            grid_display_mode=grid_display_mode, hide_grid=hide_grid,
-            grid_data_path=grid_data, grid_data_display_mode=grid_data_display_mode,
+            hide_color_by=hide_color_by, room_attrs=room_attributes,
+            face_attrs=face_attributes, grid_display_mode=grid_display_mode,
+            hide_grid=hide_grid, grid_data_path=grid_data,
+            grid_data_display_mode=grid_data_display_mode,
             active_grid_data=active_grid_data)
         output_format = output_format.lower()
         if output_format in ('vsf', 'json'):
