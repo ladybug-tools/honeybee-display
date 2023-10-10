@@ -53,15 +53,15 @@ def test_room_attr_to_vis_set():
     model_json = './tests/json/single_family_home.hbjson'
     parsed_model = Model.from_hbjson(model_json)
     attr_color = RoomAttribute(
-        name='Floor Area', attr=['floor_area'], text=False, color=True)
-    vis_set = parsed_model.to_vis_set('none', room_attr=[attr_color])
+        name='Floor Area', attrs=['floor_area'], text=False, color=True)
+    vis_set = parsed_model.to_vis_set('none', room_attrs=[attr_color])
 
     assert isinstance(vis_set[0], AnalysisGeometry)
     assert isinstance(vis_set[0][0], VisualizationData)
     assert len(vis_set[0][0].values) == 7
     attr_txt = RoomAttribute(
-        name='Floor Area', attr=['floor_area'], text=True, color=False)
-    vis_set = parsed_model.to_vis_set('none', room_attr=[attr_txt])
+        name='Floor Area', attrs=['floor_area'], text=True, color=False)
+    vis_set = parsed_model.to_vis_set('none', room_attrs=[attr_txt])
     assert isinstance(vis_set[0], ContextGeometry)
     assert len(vis_set[0]) == 7
     for item in vis_set[0]:
@@ -72,14 +72,14 @@ def test_face_attr_to_vis_set():
     """Test the face attribute argument of Model.to_vis_set()."""
     model_json = './tests/json/single_family_home.hbjson'
     parsed_model = Model.from_hbjson(model_json)
-    attr_color = FaceAttribute(name='Area', attr=['area'], color=True, text=False)
-    vis_set = parsed_model.to_vis_set('None', face_attr=[attr_color])
+    attr_color = FaceAttribute(name='Area', attrs=['area'], color=True, text=False)
+    vis_set = parsed_model.to_vis_set('None', face_attrs=[attr_color])
     assert isinstance(vis_set[0], AnalysisGeometry)
     assert isinstance(vis_set[0][0], VisualizationData)
     assert len(vis_set[0][0].values) == 140
 
-    attr_txt = FaceAttribute(name='Area', attr=['area'], color=False, text=True)
-    vis_set = parsed_model.to_vis_set('None', face_attr=[attr_txt])
+    attr_txt = FaceAttribute(name='Area', attrs=['area'], color=False, text=True)
+    vis_set = parsed_model.to_vis_set('None', face_attrs=[attr_txt])
     assert isinstance(vis_set[0], ContextGeometry)
     assert len(vis_set[0]) == 140
     for item in vis_set[0]:
