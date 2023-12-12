@@ -7,7 +7,7 @@ def aperture_to_vis_set(aperture, color_by='type'):
     """Translate a Honeybee Aperture to a VisualizationSet.
 
     Args:
-        model: A Honeybee Aperture object to be converted to a VisualizationSet.
+        aperture: A Honeybee Aperture object to be converted to a VisualizationSet.
         color_by: Text for the property that dictates the colors of the Aperture
             geometry. (Default: type). Choose from the following:
 

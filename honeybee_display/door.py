@@ -7,7 +7,7 @@ def door_to_vis_set(door, color_by='type'):
     """Translate a Honeybee Door to a VisualizationSet.
 
     Args:
-        model: A Honeybee Door object to be converted to a VisualizationSet.
+        door: A Honeybee Door object to be converted to a VisualizationSet.
         color_by: Text for the property that dictates the colors of the Door
             geometry. (Default: type). Choose from the following:
 

@@ -8,7 +8,7 @@ def room_to_vis_set(room, color_by='type'):
     """Translate a Honeybee Room to a VisualizationSet.
 
     Args:
-        model: A Honeybee Room object to be converted to a VisualizationSet.
+        room: A Honeybee Room object to be converted to a VisualizationSet.
         color_by: Text for the property that dictates the colors of the Room
             geometry. (Default: type). Choose from the following:
 

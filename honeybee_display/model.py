@@ -2,7 +2,7 @@
 import os
 import json
 
-from ladybug_geometry.geometry3d import Point3D
+from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
 from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
@@ -171,6 +171,12 @@ def model_to_vis_set(
                 type_dict['Outdoor Shade'].append(shd.geometry)
         for shd in model.indoor_shades:
             type_dict['Indoor Shade'].append(shd.geometry)
+        # add all of the shade meshes to the dictionary
+        for shd in model.shade_meshes:
+            if shd.is_detached:
+                type_dict['Context Shade'].append(shd.geometry)
+            else:
+                type_dict['Outdoor Shade'].append(shd.geometry)
     elif color_by == 'boundary_condition':
         type_dict = {
             'Outdoors': [], 'Surface': [], 'Ground': [], 'Adiabatic': [], 'Other': []}
@@ -209,6 +215,9 @@ def model_to_vis_set(
         # add all shades to the dictionary
         for shd in model.shades:
             type_dict['Other'].append(shd.geometry)
+        # add all of the shade meshes to the dictionary
+        for shd in model.shade_meshes:
+            type_dict['Other'].append(shd.geometry)
     elif color_by == 'none':
         type_dict = {}
     else:  # unrecognized property for coloring
@@ -221,12 +230,16 @@ def model_to_vis_set(
         if len(geometries) != 0:
             col = TYPE_COLORS[geo_id] if color_by == 'type' else BC_COLORS[geo_id]
             if use_mesh:
-                dis_geos = [DisplayMesh3D(f.triangulated_mesh3d, color=col)
-                            for f in geometries]
+                dis_geos = []
+                for f in geometries:
+                    c_geo = f.triangulated_mesh3d if isinstance(f, Face3D) else f
+                    dis_geos.append(DisplayMesh3D(c_geo, color=col))
             else:
                 dis_geos = []
                 for geo in geometries:
-                    dis_geos.append(DisplayFace3D(geo, col))
+                    c_geo = DisplayFace3D(geo, color=col) if isinstance(geo, Face3D) \
+                        else DisplayMesh3D(geo, color=col)
+                    dis_geos.append(c_geo)
             con_geo = ContextGeometry(geo_id.replace(' ', '_'), dis_geos)
             if hide_color_by:
                 con_geo.hidden = True
@@ -447,6 +460,10 @@ def model_to_vis_set_wireframe(model):
     for shd in model.outdoor_shades:
         lw = 2 if shd.is_detached else 1
         _process_wireframe(shd.geometry, wireframe, lw)
+    for shd_m in model.shade_meshes:
+        lw = 2 if shd_m.is_detached else 1
+        for seg in shd_m.geometry.edges:
+            wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
 
     # build the VisualizationSet and return it
     if len(wireframe) == 0:
