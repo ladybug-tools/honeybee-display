@@ -166,12 +166,7 @@ def color_face_to_vis_set(
         # loop through the faces and create the text labels
         for face_prop, f_geo in zip(color_face.attributes, color_face.flat_geometry):
             if face_prop != 'N/A':
-                cent_pt = f_geo.center if f_geo.is_convex else \
-                    f_geo.pole_of_inaccessibility(p_tol)
-                cent_pt = cent_pt.move(f_geo.normal * offset_from_base)
-                base_plane = Plane(f_geo.normal, cent_pt)
-                if base_plane.y.z < 0:  # base plane pointing downwards; rotate it
-                    base_plane = base_plane.rotate(base_plane.n, math.pi, base_plane.o)
+                # compute the text height
                 if txt_height is None:  # auto-calculate default text height
                     txt_len = len(face_prop) if len(face_prop) > 10 else 10
                     dims = [
@@ -185,12 +180,23 @@ def color_face_to_vis_set(
                 if txt_h < tolerance:
                     continue
                 txt_h = max_txt_h if txt_h > max_txt_h else txt_h
-                # move base plane origin a little to avoid overlaps of adjacent labels
-                if base_plane.n.x != 0:
-                    m_vec = base_plane.y if base_plane.n.x < 0 else -base_plane.y
-                else:
-                    m_vec = base_plane.y if base_plane.n.z < 0 else -base_plane.y
-                base_plane = base_plane.move(m_vec * txt_h)
+                # get the base plane of the geometry
+                if isinstance(f_geo, Face3D):
+                    cent_pt = f_geo.center if f_geo.is_convex else \
+                        f_geo.pole_of_inaccessibility(p_tol)
+                    cent_pt = cent_pt.move(f_geo.normal * offset_from_base)
+                    base_plane = Plane(f_geo.normal, cent_pt)
+                    if base_plane.y.z < 0:  # base plane pointing downwards; rotate it
+                        base_plane = base_plane.rotate(
+                            base_plane.n, math.pi, base_plane.o)
+                    # move base plane a little to avoid overlaps of adjacent labels
+                    if base_plane.n.x != 0:
+                        m_vec = base_plane.y if base_plane.n.x < 0 else -base_plane.y
+                    else:
+                        m_vec = base_plane.y if base_plane.n.z < 0 else -base_plane.y
+                    base_plane = base_plane.move(m_vec * txt_h)
+                else:  #it's a Mesh3D
+                    base_plane = Plane(Vector3D(0, 0, 1), f_geo.center)
                 # create the text label
                 label = DisplayText3D(
                     face_prop, base_plane, txt_h, font=font,
@@ -238,8 +244,8 @@ def _room_wireframe(rooms):
             for seg in sh_geo.boundary_segments:
                 wireframe.append(DisplayLineSegment3D(seg, line_width=1))
             if sh_geo.has_holes:
-                for hole in sh_geo.holes:
-                    for seg in sh_geo.boundary_segments:
+                for hole in sh_geo.hole_segments:
+                    for seg in hole:
                         wireframe.append(DisplayLineSegment3D(seg, line_width=1))
     con_geo = ContextGeometry('Wireframe', wireframe)
     return con_geo
@@ -250,13 +256,17 @@ def _face_wireframe(faces):
     wireframe = []
     for face in faces:
         lw = 2 if isinstance(face, Face) else 1
-        face3d = face.geometry
-        for seg in face3d.boundary_segments:
-            wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
-        if face3d.has_holes:
-            for hole in face3d.holes:
-                for seg in face3d.boundary_segments:
-                    wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
+        f_geo = face.geometry
+        if isinstance(f_geo, Face3D):
+            for seg in f_geo.boundary_segments:
+                wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
+            if f_geo.has_holes:
+                for hole in f_geo.hole_segments:
+                    for seg in hole:
+                        wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
+        else:  # it's a Mesh3D
+            for seg in f_geo.edges:
+                wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
     con_geo = ContextGeometry('Wireframe', wireframe)
     return con_geo
 
