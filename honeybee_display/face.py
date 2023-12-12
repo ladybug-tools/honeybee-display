@@ -7,7 +7,7 @@ def face_to_vis_set(face, color_by='type'):
     """Translate a Honeybee Face to a VisualizationSet.
 
     Args:
-        model: A Honeybee Face object to be converted to a VisualizationSet.
+        face: A Honeybee Face object to be converted to a VisualizationSet.
         color_by: Text for the property that dictates the colors of the Face
             geometry. (Default: type). Choose from the following:
 
