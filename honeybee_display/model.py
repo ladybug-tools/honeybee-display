@@ -511,14 +511,25 @@ def _read_sensor_grid_result(result_folder):
                 result_file = os.path.join(result_folder, f)
                 break
         if result_file is not None:
-            print(f'Loading results for {grid_id} with {sensor_count} sensors. Starting from line {st_ln}.')
+            print(
+                f'Loading results for {grid_id} with {sensor_count} sensors. '
+                f'Starting from line {st_ln}.'
+            )
             with open(result_file) as inf:
                 for _ in range(st_ln):
                     next(inf)
-                for _ in range(sensor_count):
+                for count in range(sensor_count):
                     try:
-                        results.append(float(next(inf)))
-                    except StopIteration:
+                        value = float(next(inf))
+                    except (StopIteration, ValueError):
                         content = pathlib.Path(result_file).read_text()
-                        raise ValueError(f'Failed to load the results. Here is the content of the file: {content}')
+                        ln_count = len(content.split())
+                        raise ValueError(
+                            f'Failed to load the results for {grid_id} '
+                            f'with {sensor_count} sensors. Sensor id: {count}\n'
+                            f'Here is the content of the file with {ln_count} values:\n'
+                            f'## Start of the file\n{content}\n## End of the file.'
+                        )
+                    else:
+                        results.append(value)
     return results
