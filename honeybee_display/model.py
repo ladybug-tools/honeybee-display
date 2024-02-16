@@ -1,5 +1,6 @@
 """Method to translate a Model to a VisualizationSet."""
 import os
+import pathlib
 import json
 
 from ladybug_geometry.geometry3d import Point3D, Face3D
@@ -510,9 +511,14 @@ def _read_sensor_grid_result(result_folder):
                 result_file = os.path.join(result_folder, f)
                 break
         if result_file is not None:
+            print(f'Loading results for {grid_id} with {sensor_count} sensors. Starting from line {st_ln}.')
             with open(result_file) as inf:
                 for _ in range(st_ln):
                     next(inf)
                 for _ in range(sensor_count):
-                    results.append(float(next(inf)))
+                    try:
+                        results.append(float(next(inf)))
+                    except StopIteration:
+                        content = pathlib.Path(result_file).read_text()
+                        raise ValueError(f'Failed to load the results. Here is the content of the file: {content}')
     return results
