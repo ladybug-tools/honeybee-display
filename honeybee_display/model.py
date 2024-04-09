@@ -460,10 +460,6 @@ def model_to_vis_set_wireframe(model):
     for shd in model.outdoor_shades:
         lw = 2 if shd.is_detached else 1
         _process_wireframe(shd.geometry, wireframe, lw)
-    for shd_m in model.shade_meshes:
-        lw = 2 if shd_m.is_detached else 1
-        for seg in shd_m.geometry.face_edges:
-            wireframe.append(DisplayPolyline3D(seg, line_width=lw))
 
     # build the VisualizationSet and return it
     if len(wireframe) == 0:
