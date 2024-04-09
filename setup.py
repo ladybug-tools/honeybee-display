@@ -21,6 +21,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/ladybug-tools/honeybee-display",
     packages=setuptools.find_packages(exclude=["tests*"]),
+    include_package_data=True,
     install_requires=requirements,
     extras_require={'full': extras_requirements},
     entry_points={

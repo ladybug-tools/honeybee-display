@@ -6,7 +6,7 @@ from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
 from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
-    DisplayFace3D, DisplayMesh3D
+    DisplayPolyline3D, DisplayFace3D, DisplayMesh3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
@@ -462,8 +462,8 @@ def model_to_vis_set_wireframe(model):
         _process_wireframe(shd.geometry, wireframe, lw)
     for shd_m in model.shade_meshes:
         lw = 2 if shd_m.is_detached else 1
-        for seg in shd_m.geometry.edges:
-            wireframe.append(DisplayLineSegment3D(seg, line_width=lw))
+        for seg in shd_m.geometry.face_edges:
+            wireframe.append(DisplayPolyline3D(seg, line_width=lw))
 
     # build the VisualizationSet and return it
     if len(wireframe) == 0:
