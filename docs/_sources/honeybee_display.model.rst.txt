@@ -1,0 +1,7 @@
+honeybee\_display.model module
+==============================
+
+.. automodule:: honeybee_display.model
+   :members:
+   :undoc-members:
+   :show-inheritance:
