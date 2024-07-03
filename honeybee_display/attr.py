@@ -114,7 +114,7 @@ class FaceAttribute(RoomAttribute):
 
         boundary_conditions: List of face boundary conditions to be included in the
             visualization set. This condition will be applied as a secondary check for
-            the face_types that are set using the face_types argument. Valid values 
+            the face_types that are set using the face_types argument. Valid values
             are:
 
             * Outdoors
