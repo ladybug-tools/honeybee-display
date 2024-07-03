@@ -1,6 +1,7 @@
 """Method to translate a Model to a VisualizationSet."""
 import os
 import json
+import io
 
 from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
@@ -384,7 +385,7 @@ def model_to_vis_set(
                 g_values = _read_sensor_grid_result(g_dir)
                 meta_file = os.path.join(g_dir, 'vis_metadata.json')
                 if os.path.isfile(meta_file):
-                    with open(meta_file, 'r') as mf:
+                    with io.open(meta_file, 'r', encoding='utf-8') as mf:
                         m_data = json.load(mf)
                     gm_data = VisualizationMetaData.from_dict(m_data)
                     v_data = VisualizationData(
@@ -398,7 +399,7 @@ def model_to_vis_set(
             # create the analysis geometry
             if len(data_sets) != 0:
                 ex_gi_file = os.path.join(gi_dirs[0], gi_file)
-                with open(ex_gi_file) as json_file:
+                with io.open(ex_gi_file, encoding='utf-8') as json_file:
                     grid_list = json.load(json_file)
                 grid_objs = [grids[g['full_id']] for g in grid_list]
                 grid_meshes = [g.mesh for g in grid_objs]
@@ -487,7 +488,7 @@ def _read_sensor_grid_result(result_folder):
         raise ValueError('Result folder contains no grids_info.json.')
 
     # load the list of grids and gather all of the results
-    with open(grid_json) as json_file:
+    with io.open(grid_json, encoding='utf-8') as json_file:
         grid_list = json.load(json_file)
     results = []
     for grid in grid_list:
@@ -510,14 +511,14 @@ def _read_sensor_grid_result(result_folder):
                 'Loading results for {} with {} sensors. '
                 'Starting from line {}.'.format(grid_id, sensor_count, st_ln)
             )
-            with open(result_file) as inf:
+            with io.open(result_file, encoding='utf-8') as inf:
                 for _ in range(st_ln):
                     next(inf)
                 for count in range(sensor_count):
                     try:
                         value = float(next(inf))
                     except (StopIteration, ValueError):
-                        with open(result_file, 'r') as rf:
+                        with io.open(result_file, 'r', encoding='utf-8') as rf:
                             content = rf.read()
                         ln_count = len(content.split())
                         raise ValueError(
