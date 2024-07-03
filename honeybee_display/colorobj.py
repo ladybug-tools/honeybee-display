@@ -195,7 +195,7 @@ def color_face_to_vis_set(
                     else:
                         m_vec = base_plane.y if base_plane.n.z < 0 else -base_plane.y
                     base_plane = base_plane.move(m_vec * txt_h)
-                else:  #it's a Mesh3D
+                else:  # it's a Mesh3D
                     base_plane = Plane(Vector3D(0, 0, 1), f_geo.center)
                 # create the text label
                 label = DisplayText3D(

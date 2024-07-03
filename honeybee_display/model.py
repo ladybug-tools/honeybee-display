@@ -6,7 +6,7 @@ from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
 from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
-    DisplayPolyline3D, DisplayFace3D, DisplayMesh3D
+    DisplayFace3D, DisplayMesh3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
