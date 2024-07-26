@@ -286,7 +286,7 @@ def model_to_vis_set(
                     f_faces = [
                         face for face in faces
                         if isinstance(face, face_attr_types) or
-                        isinstance(face.type, face_attr_types)
+                        (hasattr(face, 'type') and isinstance(face.type, face_attr_types))
                     ]
                 else:
                     f_faces = faces
@@ -296,7 +296,8 @@ def model_to_vis_set(
                     f_faces = [
                         face for face in f_faces if
                         isinstance(face, Shade) or
-                        isinstance(face.boundary_condition, bcs)
+                        (hasattr(face, 'boundary_condition') and
+                         isinstance(face.boundary_condition, bcs))
                     ]
 
                 if not f_faces:
