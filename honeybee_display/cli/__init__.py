@@ -57,7 +57,7 @@ def display():
     'in the resulting VisualizationSet. Multiple instances of this option can be passed '
     'and a separate VisualizationData will be added to the AnalysisGeometry that '
     'represents the attribute in the resulting VisualizationSet (or a separate '
-    'ContextGeometry layer if room_text_labels is True). Room attributes '
+    'ContextGeometry layer if --text-attr is True). Room attributes '
     'input here can have . that separates the nested attributes from '
     'one another. For example, properties.energy.program_type.',
     type=click.STRING, multiple=True, default=None, show_default=True)
@@ -67,7 +67,7 @@ def display():
     'the resulting VisualizationSet. Multiple instances of this option can be passed and'
     ' a separate VisualizationData will be added to the AnalysisGeometry that '
     'represents the attribute in the resulting VisualizationSet (or a separate '
-    'ContextGeometry layer if face_text_labels is True). Face attributes '
+    'ContextGeometry layer if --text-attr is True). Face attributes '
     'input here can have . that separates the nested attributes from '
     'one another. For example, properties.energy.construction.',
     type=click.STRING, multiple=True, default=None, show_default=True)
@@ -122,10 +122,10 @@ def display():
     'and the html format refers to a web page with the vtkjs file embedded within it.',
     type=str, default='vsf', show_default=True)
 @click.option(
-    '--output-file', help='Optional file to output the JSON string of '
-    'the config object. By default, it will be printed out to stdout',
+    '--output-file', help='Optional file to output the he string of the visualization '
+    'file contents. By default, it will be printed out to stdout',
     type=click.File('w'), default='-', show_default=True)
-def model_to_vis_set(
+def model_to_vis_set_cli(
         model_file, color_by, wireframe, mesh, show_color_by,
         room_attr, face_attr, color_attr, grid_display_mode, hide_grid,
         grid_data, grid_data_display_mode, active_grid_data, output_format, output_file):
@@ -139,76 +139,213 @@ def model_to_vis_set(
         model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file.
     """
     try:
-        model_obj = Model.from_file(model_file)
+        # process all of the CLI input so that it can be passed to the function
+        exclude_wireframe = not wireframe
+        faces = not mesh
+        hide_color_by = not show_color_by
         room_attrs = [] if len(room_attr) == 0 or room_attr[0] == '' else room_attr
         face_attrs = [] if len(face_attr) == 0 or face_attr[0] == '' else face_attr
         text_labels = not color_attr
-        hide_color_by = not show_color_by
+        show_grid = not hide_grid
 
-        face_attributes = []
-        for fa in face_attrs:
-            faa = FaceAttribute(name=fa, attrs=[fa], color=color_attr, text=text_labels)
-            face_attributes.append(faa)
-
-        room_attributes = []
-        for ra in room_attrs:
-            raa = RoomAttribute(name=ra, attrs=[ra], color=color_attr, text=text_labels)
-            room_attributes.append(raa)
-
-        vis_set = model_obj.to_vis_set(
-            color_by=color_by, include_wireframe=wireframe, use_mesh=mesh,
-            hide_color_by=hide_color_by, room_attrs=room_attributes,
-            face_attrs=face_attributes, grid_display_mode=grid_display_mode,
-            hide_grid=hide_grid, grid_data_path=grid_data,
-            grid_data_display_mode=grid_data_display_mode,
-            active_grid_data=active_grid_data)
-        output_format = output_format.lower()
-        if output_format in ('vsf', 'json'):
-            output_file.write(json.dumps(vis_set.to_dict()))
-        elif output_format == 'pkl':
-            if output_file.name != '<stdout>':
-                out_folder, out_file = os.path.split(output_file.name)
-                vis_set.to_pkl(out_file, out_folder)
-            else:
-                output_file.write(pickle.dumps(vis_set.to_dict()))
-        elif output_format in ('vtkjs', 'html'):
-            if output_file.name == '<stdout>':  # get a temporary file
-                out_file = str(uuid.uuid4())[:6]
-                out_folder = tempfile.gettempdir()
-            else:
-                out_folder, out_file = os.path.split(output_file.name)
-                if out_file.endswith('.vtkjs'):
-                    out_file = out_file[:-6]
-                elif out_file.endswith('.html'):
-                    out_file = out_file[:-5]
-            try:
-                if output_format == 'vtkjs':
-                    vis_set.to_vtkjs(output_folder=out_folder, file_name=out_file)
-                if output_format == 'html':
-                    vis_set.to_html(output_folder=out_folder, file_name=out_file)
-            except AttributeError as ae:
-                raise AttributeError(
-                    'Ladybug-vtk must be installed in order to use --output-format '
-                    'vtkjs.\n{}'.format(ae))
-            if output_file.name == '<stdout>':  # load file contents to stdout
-                out_file_ext = out_file + '.' + output_format
-                out_file_path = os.path.join(out_folder, out_file_ext)
-                if output_format == 'html':
-                    with open(out_file_path, encoding='utf-8') as of:
-                        f_contents = of.read()
-                else:  # vtkjs can only be read as binary
-                    with open(out_file_path, 'rb') as of:
-                        f_contents = of.read()
-                    b = base64.b64encode(f_contents)
-                    f_contents = b.decode('utf-8')
-                output_file.write(f_contents)
-        else:
-            raise ValueError('Unrecognized output-format "{}".'.format(output_format))
+        # pass the input to the function in order to convert the 
+        model_to_vis_set(model_file, color_by, exclude_wireframe, faces, hide_color_by,
+                         room_attrs, face_attrs, text_labels, grid_display_mode,
+                         show_grid, grid_data, grid_data_display_mode, active_grid_data,
+                         output_format, output_file)
     except Exception as e:
         _logger.exception('Failed to translate Model to VisualizationSet.\n{}'.format(e))
         sys.exit(1)
     else:
         sys.exit(0)
+
+
+def model_to_vis_set(
+    model_file, color_by='type',
+    exclude_wireframe=False, faces=False, hide_color_by=False,
+    room_attr=(), face_attr=(), text_attr=False, grid_display_mode='Default',
+    show_grid=False, grid_data=None, grid_data_display_mode='Surface',
+    active_grid_data=None, output_format='vsf', output_file=None,
+    wireframe=True, mesh=True, show_color_by=True, color_attr=True, hide_grid=True
+):
+    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
+
+    This function can also optionally translate the Honeybee Model to a .vtkjs file,
+    which can be visualized in the open source Visual ToolKit (VTK) platform.
+
+    Args:
+        model_file: Path to a Honeybee Model (HBJSON or HBpkl) file.
+        color_by: Text for the property that dictates the colors of the Model
+            geometry. Choose from: type, boundary_condition, none. If none, only
+            a wireframe of the Model will be generated (assuming the exclude_wireframe
+            option is not used). None is useful when the primary purpose of  the
+            visualization is to display results in relation to the Model geometry
+            or display some room_attr or face_attr as an AnalysisGeometry or Text labels.
+        exclude_wireframe: Boolean to note whether a ContextGeometry dedicated to
+            the Model Wireframe (in DisplayLineSegment3D) should be included in
+            the output visualization.
+        faces: Boolean to note whether the colored model geometries should be
+            represented with DisplayMesh3D objects instead of DisplayFace3D objects.
+            Meshes can usually be rendered  faster and they scale well for large models
+            but all geometry is triangulated (meaning that their wireframe in certain
+            platforms might not appear ideal).
+        hide_color_by: Boolean to note whether the color-by geometry should be
+            hidden or shown by default. Hiding the color-by geometry is useful
+            when the primary purpose of the visualization is to display grid_data
+            or room/face attributes but it is still desirable to have the option
+            to turn on the geometry.
+        room_attr: An optional text string of an attribute that the Model Rooms
+            have, which will be used to construct a visualization of this attribute
+            in the resulting VisualizationSet. A list of text can also
+            be passed and a separate VisualizationData will be added to the
+            AnalysisGeometry that represents the attribute in the resulting
+            VisualizationSet (or a separate ContextGeometry layer if text_attr
+            is True). Room attributes input here can have . that separates the nested
+            attributes from one another. For example, properties.energy.program_type.
+        face_attr: An optional text string of an attribute that the Model Faces
+            have, which will be used to construct a visualization of this attribute
+            in the resulting VisualizationSet. A list of text can also be passed and
+            a separate VisualizationData will be added to the AnalysisGeometry that '
+            represents the attribute in the resulting VisualizationSet (or a separate '
+            ContextGeometry layer if text_attr is True). Face attributes input
+            here can have . that separates the nested attributes from one another.
+            For example, properties.energy.construction.
+        text_attr: Boolean to note whether to note whether the input room_attr
+            and face_attr should be expressed as a colored AnalysisGeometry
+            or a ContextGeometry as text labels.
+        grid_display_mode: Text that dictates how the ContextGeometry for Model
+            SensorGrids should display in the resulting visualization. The Default
+            option will draw sensor points whenever there is no grid_data_path
+            and will not draw them at all when grid data is provided, assuming
+            the AnalysisGeometry of the grids is sufficient. Choose from: Default,
+            Points, Wireframe, Surface, SurfaceWithEdges, None.
+        show_grid: Boolean to note whether the SensorGrid ContextGeometry should
+            be hidden or shown by default.
+        grid_data: An optional path to a folder containing data that aligns
+            with the SensorGrids in the model. Any sub folder within this path
+            that contains a grids_into.json (and associated CSV files) will be
+            converted to an AnalysisGeometry in the resulting VisualizationSet.
+            If a vis_metadata.json file is found within this sub-folder, the
+            information contained within it will be used to customize the
+            AnalysisGeometry. Note that it is acceptable if data and
+            grids_info.json exist in the root of this grid_data_path. Also
+            note that this argument has no impact if honeybee-radiance is not
+            installed and SensorGrids cannot be decoded. (Default: None).
+        grid_data_display_mode: Optional text to set the display_mode of the
+            AnalysisGeometry that is is generated from the grid_data_path above. Note
+            that this has no effect if there are no meshes associated with the model
+            SensorGrids. (Default: Surface). Choose from the following:
+
+            * Surface
+            * SurfaceWithEdges
+            * Wireframe
+            * Points
+
+        active_grid_data: Optional text to specify the active data in the
+            AnalysisGeometry. This should match the name of the sub-folder
+            within the grid_data_path that should be active. If None, the
+            first data set in the grid_data_path with be active. (Default: None).
+        output_format: Text for the output format of the resulting VisualizationSet
+            File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note that both
+            vsf and json refer to the the JSON version of the VisualizationSet
+            file and the distinction between the two is only for help in
+            coordinating file extensions (since both .vsf and .json can be
+            acceptable). Also note that ladybug-vtk must be installed in order
+            for the vtkjs or html options to be usable and the html format
+            refers to a web page with the vtkjs file embedded within it.
+        output_file: Optional file to output the string of the visualization
+            file contents. If None, the string will simply be returned from
+            this method.
+    """
+    # load the model object and process simpler attributes
+    model_obj = Model.from_file(model_file)
+    room_attrs = [room_attr] if isinstance(room_attr, str) else room_attr
+    face_attrs = [face_attr] if isinstance(face_attr, str) else face_attr
+    wireframe = not exclude_wireframe
+    mesh = not faces
+    color_attr = not text_attr
+    hide_grid = not show_grid
+
+    # load the room and face attributes
+    face_attributes = []
+    for fa in face_attrs:
+        faa = FaceAttribute(name=fa, attrs=[fa], color=color_attr, text=text_attr)
+        face_attributes.append(faa)
+    room_attributes = []
+    for ra in room_attrs:
+        raa = RoomAttribute(name=ra, attrs=[ra], color=color_attr, text=text_attr)
+        room_attributes.append(raa)
+
+    # create the VisualizationSet
+    vis_set = model_obj.to_vis_set(
+        color_by=color_by, include_wireframe=wireframe, use_mesh=mesh,
+        hide_color_by=hide_color_by, room_attrs=room_attributes,
+        face_attrs=face_attributes, grid_display_mode=grid_display_mode,
+        hide_grid=hide_grid, grid_data_path=grid_data,
+        grid_data_display_mode=grid_data_display_mode,
+        active_grid_data=active_grid_data)
+
+    # output the visualization in the correct format
+    output_format = output_format.lower()
+    if output_format in ('vsf', 'json'):
+        if output_file is None:
+            return json.dumps(vis_set.to_dict())
+        elif isinstance(output_file, str):
+            with open(output_file, 'w') as of:
+                of.write(json.dumps(vis_set.to_dict()))
+        else:
+            output_file.write(json.dumps(vis_set.to_dict()))
+    elif output_format == 'pkl':
+        if output_file is None:
+            return pickle.dumps(vis_set.to_dict())
+        elif isinstance(output_file, str):
+            with open(output_file, 'w') as of:
+                output_file.write(pickle.dumps(vis_set.to_dict()))
+        elif output_file.name == '<stdout>':
+            output_file.write(pickle.dumps(vis_set.to_dict()))
+        else:
+            out_folder, out_file = os.path.split(output_file.name)
+            vis_set.to_pkl(out_file, out_folder)
+    elif output_format in ('vtkjs', 'html'):
+        if output_file is None or (not isinstance(output_file, str)
+                                   and output_file.name == '<stdout>'):
+            # get a temporary file
+            out_file = str(uuid.uuid4())[:6]
+            out_folder = tempfile.gettempdir()
+        else:
+            f_path = output_file if isinstance(output_file, str) else output_file.name
+            out_folder, out_file = os.path.split(f_path)
+            if out_file.endswith('.vtkjs'):
+                out_file = out_file[:-6]
+            elif out_file.endswith('.html'):
+                out_file = out_file[:-5]
+        try:
+            if output_format == 'vtkjs':
+                vis_set.to_vtkjs(output_folder=out_folder, file_name=out_file)
+            if output_format == 'html':
+                vis_set.to_html(output_folder=out_folder, file_name=out_file)
+        except AttributeError as ae:
+            raise AttributeError(
+                'Ladybug-vtk must be installed in order to use --output-format '
+                'vtkjs.\n{}'.format(ae))
+        if output_file is None or (not isinstance(output_file, str)
+                                   and output_file.name == '<stdout>'):
+            # load file contents
+            out_file_ext = out_file + '.' + output_format
+            out_file_path = os.path.join(out_folder, out_file_ext)
+            if output_format == 'html':
+                with open(out_file_path, encoding='utf-8') as of:
+                    f_contents = of.read()
+            else:  # vtkjs can only be read as binary
+                with open(out_file_path, 'rb') as of:
+                    f_contents = of.read()
+                b = base64.b64encode(f_contents)
+                f_contents = b.decode('utf-8')
+            if output_file is None:
+                return f_contents
+            output_file.write(f_contents)
+    else:
+        raise ValueError('Unrecognized output-format "{}".'.format(output_format))
 
 
 # add display sub-group to honeybee CLI
