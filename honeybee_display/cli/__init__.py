@@ -148,7 +148,7 @@ def model_to_vis_set_cli(
         text_labels = not color_attr
         show_grid = not hide_grid
 
-        # pass the input to the function in order to convert the 
+        # pass the input to the function in order to convert the model to a visualization
         model_to_vis_set(model_file, color_by, exclude_wireframe, faces, hide_color_by,
                          room_attrs, face_attrs, text_labels, grid_display_mode,
                          show_grid, grid_data, grid_data_display_mode, active_grid_data,
