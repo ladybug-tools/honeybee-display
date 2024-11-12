@@ -72,9 +72,17 @@ def display():
     'one another. For example, properties.energy.construction.',
     type=click.STRING, multiple=True, default=None, show_default=True)
 @click.option(
-    '--color-attr/--text-attr', help='Flag to note whether to note whether the '
-    'input room-attr and face-attr should be expressed as a colored AnalysisGeometry '
-    'or a ContextGeometry as text labels.', default=True, show_default=True)
+    '--color-attr', 'attr_display', flag_value='color', help='Flag to note whether the '
+    'input room-attr and face-attr should be expressed as a colored AnalysisGeometry.',
+    default=True, show_default=True)
+@click.option(
+    '--text-attr', 'attr_display', flag_value='text', help='Flag to note whether the '
+    'input room-attr and face-attr should be expressed as a ContextGeometry with '
+    'text labels.')
+@click.option(
+    '--both-attr', 'attr_display', flag_value='both', help='Flag to note whether the '
+    'input room-attr and face-attr should be expressed as both a colored AnalysisGeometry '
+    'and a ContextGeometry with text labels.')
 @click.option(
     '--grid-display-mode', '-m', help='Text that dictates how the ContextGeometry '
     'for Model SensorGrids should display in the resulting visualization. The Default '
@@ -127,7 +135,7 @@ def display():
     type=click.File('w'), default='-', show_default=True)
 def model_to_vis_set_cli(
         model_file, color_by, wireframe, mesh, show_color_by,
-        room_attr, face_attr, color_attr, grid_display_mode, hide_grid,
+        room_attr, face_attr, attr_display, grid_display_mode, hide_grid,
         grid_data, grid_data_display_mode, active_grid_data, output_format, output_file):
     """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
 
@@ -145,14 +153,19 @@ def model_to_vis_set_cli(
         hide_color_by = not show_color_by
         room_attrs = [] if len(room_attr) == 0 or room_attr[0] == '' else room_attr
         face_attrs = [] if len(face_attr) == 0 or face_attr[0] == '' else face_attr
-        text_labels = not color_attr
         show_grid = not hide_grid
+        if attr_display == 'color':
+            color_attr, text_attr, both_attr = True, False, False
+        elif attr_display == 'text':
+            color_attr, text_attr, both_attr = False, True, False
+        elif attr_display == 'both':
+            color_attr, text_attr, both_attr = False, False, True
 
         # pass the input to the function in order to convert the model to a visualization
         model_to_vis_set(model_file, color_by, exclude_wireframe, faces, hide_color_by,
-                         room_attrs, face_attrs, text_labels, grid_display_mode,
+                         room_attrs, face_attrs, text_attr, both_attr, grid_display_mode,
                          show_grid, grid_data, grid_data_display_mode, active_grid_data,
-                         output_format, output_file)
+                         output_format, output_file, color_attr=color_attr)
     except Exception as e:
         _logger.exception('Failed to translate Model to VisualizationSet.\n{}'.format(e))
         sys.exit(1)
@@ -163,9 +176,10 @@ def model_to_vis_set_cli(
 def model_to_vis_set(
     model_file, color_by='type',
     exclude_wireframe=False, faces=False, hide_color_by=False,
-    room_attr=(), face_attr=(), text_attr=False, grid_display_mode='Default',
-    show_grid=False, grid_data=None, grid_data_display_mode='Surface',
-    active_grid_data=None, output_format='vsf', output_file=None,
+    room_attr=(), face_attr=(), text_attr=False, both_attr=False,
+    grid_display_mode='Default', show_grid=False, grid_data=None,
+    grid_data_display_mode='Surface', active_grid_data=None,
+    output_format='vsf', output_file=None,
     wireframe=True, mesh=True, show_color_by=True, color_attr=True, hide_grid=True
 ):
     """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
@@ -211,8 +225,10 @@ def model_to_vis_set(
             here can have . that separates the nested attributes from one another.
             For example, properties.energy.construction.
         text_attr: Boolean to note whether to note whether the input room_attr
-            and face_attr should be expressed as a colored AnalysisGeometry
-            or a ContextGeometry as text labels.
+            and face_attr should be expressed as a ContextGeometry with text labels.
+        both_attr: Boolean to note whether to note whether the input room_attr
+            and face_attr should be expressed as both a colored AnalysisGeometry
+            and a ContextGeometry as text labels.
         grid_display_mode: Text that dictates how the ContextGeometry for Model
             SensorGrids should display in the resulting visualization. The Default
             option will draw sensor points whenever there is no grid_data_path
@@ -263,10 +279,13 @@ def model_to_vis_set(
     face_attrs = [face_attr] if isinstance(face_attr, str) else face_attr
     wireframe = not exclude_wireframe
     mesh = not faces
-    color_attr = not text_attr
     hide_grid = not show_grid
 
     # load the room and face attributes
+    if both_attr:
+        color_attr, text_attr = True, True
+    elif text_attr:
+        color_attr = False
     face_attributes = []
     for fa in face_attrs:
         faa = FaceAttribute(name=fa, attrs=[fa], color=color_attr, text=text_attr)
