@@ -2,6 +2,8 @@
 from ladybug_display.geometry3d import DisplayFace3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry
 
+from ._util import _process_wireframe
+
 
 def face_to_vis_set(face, color_by='type'):
     """Translate a Honeybee Face to a VisualizationSet.
@@ -25,6 +27,46 @@ def face_to_vis_set(face, color_by='type'):
     con_geo = ContextGeometry(face.identifier, dis_geos)
     con_geo.display_name = face.display_name
     vis_set = VisualizationSet(face.identifier, [con_geo])
+    vis_set.display_name = face.display_name
+    return vis_set
+
+
+def face_to_vis_set_wireframe(
+        face, include_sub_faces=True, include_shades=True, color=None):
+    """Get a VisualizationSet with a single ContextGeometry for the face wireframe.
+
+    Args:
+        face: A Honeybee Face object to be translated to a wireframe.
+        include_sub_faces: Boolean for whether the wireframe should include sub-faces
+            of the Face. (Default: True).
+        include_shades: Boolean for whether the wireframe should include shades
+            of the Face. (Default: True).
+        color: An optional Color object to set the color of the wireframe.
+            If None, the color will be black.
+
+    Returns:
+        A VisualizationSet with a single ContextGeometry and a list of
+        DisplayLineSegment3D for the wireframe of the Face.
+    """
+    wireframe = []
+    _process_wireframe(face.geometry, wireframe, color, 2)
+    if include_sub_faces:
+        for ap in face._apertures:
+            _process_wireframe(ap.geometry, wireframe, color)
+            if include_shades:
+                for shd in ap.shades:
+                    _process_wireframe(shd.geometry, wireframe, color)
+        for dr in face._doors:
+            _process_wireframe(dr.geometry, wireframe, color)
+            if include_shades:
+                for shd in dr.shades:
+                    _process_wireframe(shd.geometry, wireframe, color)
+        if include_shades:
+            for shd in face.shades:
+                _process_wireframe(shd.geometry, wireframe, color)
+
+    vis_set = VisualizationSet(
+        face.identifier, [ContextGeometry('Wireframe', wireframe)])
     vis_set.display_name = face.display_name
     return vis_set
 
