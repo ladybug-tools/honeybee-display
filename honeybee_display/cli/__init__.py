@@ -9,6 +9,7 @@ import pickle
 import tempfile
 import uuid
 
+from ladybug.color import Color
 from honeybee.model import Model
 from honeybee.cli import main
 
@@ -137,7 +138,7 @@ def model_to_vis_set_cli(
         model_file, color_by, wireframe, mesh, show_color_by,
         room_attr, face_attr, attr_display, grid_display_mode, hide_grid,
         grid_data, grid_data_display_mode, active_grid_data, output_format, output_file):
-    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
+    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet.
 
     This command can also optionally translate the Honeybee Model to a .vtkjs file,
     which can be visualized in the open source Visual ToolKit (VTK) platform.
@@ -182,7 +183,7 @@ def model_to_vis_set(
     output_format='vsf', output_file=None,
     wireframe=True, mesh=True, show_color_by=True, color_attr=True, hide_grid=True
 ):
-    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet file (.vsf).
+    """Translate a Honeybee Model file (.hbjson) to a VisualizationSet.
 
     This function can also optionally translate the Honeybee Model to a .vtkjs file,
     which can be visualized in the open source Visual ToolKit (VTK) platform.
@@ -304,6 +305,121 @@ def model_to_vis_set(
         grid_data_display_mode=grid_data_display_mode,
         active_grid_data=active_grid_data)
 
+    # output the VisualizationSet through the CLI
+    return _output_vis_set_to_format(vis_set, output_format, output_file)
+
+
+@display.command('model-comparison-to-vis')
+@click.argument('base-model-file', type=click.Path(
+    exists=True, file_okay=True, dir_okay=False, resolve_path=True))
+@click.argument('incoming-model-file', type=click.Path(
+    exists=True, file_okay=True, dir_okay=False, resolve_path=True))
+@click.option(
+    '--base-color', '-bc', help='An optional hexadecimal code for the color '
+    'of the base model.', type=str, default='#74eded', show_default=True)
+@click.option(
+    '--incoming-color', '-ic', help='An optional hexadecimal code for the color '
+    'of the incoming model.', type=str, default='#ed7474', show_default=True)
+@click.option(
+    '--output-format', '-of', help='Text for the output format of the resulting '
+    'VisualizationSet File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note '
+    'that both vsf and json refer to the the JSON version of the VisualizationSet '
+    'file and the distinction between the two is only for help in coordinating file '
+    'extensions (since both .vsf and .json can be acceptable). Also note that '
+    'ladybug-vtk must be installed in order for the vtkjs or html options to be usable '
+    'and the html format refers to a web page with the vtkjs file embedded within it.',
+    type=str, default='vsf', show_default=True)
+@click.option(
+    '--output-file', help='Optional file to output the he string of the visualization '
+    'file contents. By default, it will be printed out to stdout',
+    type=click.File('w'), default='-', show_default=True)
+def model_comparison_to_vis_set_cli(
+        base_model_file, incoming_model_file, base_color, incoming_color,
+        output_format, output_file):
+    """Translate two Honeybee Models to be compared to a VisualizationSet.
+
+    This command can also optionally translate the Honeybee Model to a .vtkjs file,
+    which can be visualized in the open source Visual ToolKit (VTK) platform.
+
+    \b
+    Args:
+        base_model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file
+            representing the base model used in the comparison. Typically, this
+            is the model with more data to be kept.
+        incoming_model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file
+            representing the incoming model used in the comparison. Typically,
+            this is the model with new data to be evaluated against the base model.
+    """
+    try:
+        model_comparison_to_vis_set(
+            base_model_file, incoming_model_file, base_color, incoming_color,
+            output_format, output_file)
+    except Exception as e:
+        _logger.exception('Failed to translate Model to VisualizationSet.\n{}'.format(e))
+        sys.exit(1)
+    else:
+        sys.exit(0)
+
+
+def model_comparison_to_vis_set(
+    base_model_file, incoming_model_file,
+    base_color='#74eded', incoming_color='#ed7474',
+    output_format='vsf', output_file=None,
+):
+    """Translate two Honeybee Models to be compared to a VisualizationSet.
+
+    This command can also optionally translate the Honeybee Model to a .vtkjs file,
+    which can be visualized in the open source Visual ToolKit (VTK) platform.
+
+    Args:
+        base_model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file
+            representing the base model used in the comparison. Typically, this
+            is the model with more data to be kept.
+        incoming_model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file
+            representing the incoming model used in the comparison. Typically,
+            this is the model with new data to be evaluated against the base model.
+        base_color: An optional hexadecimal code for the color of the base
+            model. (Default: #74eded).
+        incoming_color: An optional hexadecimal code for the color of the incoming
+            model. (Default: #ed7474).
+        output_format: Text for the output format of the resulting VisualizationSet
+            File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note that both
+            vsf and json refer to the the JSON version of the VisualizationSet
+            file and the distinction between the two is only for help in
+            coordinating file extensions (since both .vsf and .json can be
+            acceptable). Also note that ladybug-vtk must be installed in order
+            for the vtkjs or html options to be usable and the html format
+            refers to a web page with the vtkjs file embedded within it.
+        output_file: Optional file to output the string of the visualization
+            file contents. If None, the string will simply be returned from
+            this method.
+    """
+    # load the model objects and process the colors from the hex codes
+    base_model = Model.from_file(base_model_file)
+    incoming_model = Model.from_file(incoming_model_file)
+    base_color = Color.from_hex(base_color)
+    incoming_color = Color.from_hex(incoming_color)
+    base_color.a = 128
+    incoming_color.a = 128
+
+    # create the VisualizationSet
+    vis_set = base_model.to_vis_set_comparison(
+        incoming_model, base_color, incoming_color)
+
+    # output the VisualizationSet through the CLI
+    return _output_vis_set_to_format(vis_set, output_format, output_file)
+
+
+def _output_vis_set_to_format(vis_set, output_format, output_file):
+    """Process a VisualizationSet for output from the CLI.
+
+    Args:
+        vis_set: The VisualizationSet to be output form the CLI.
+        output_format: Text for the output format of the resulting VisualizationSet File.
+        output_file: Optional file to output the string of the visualization
+            file contents. If None, the string will simply be returned from
+            this method.
+    """
     # output the visualization in the correct format
     output_format = output_format.lower()
     if output_format in ('vsf', 'json'):

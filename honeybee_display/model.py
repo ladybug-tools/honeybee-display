@@ -6,8 +6,7 @@ import io
 from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
-from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
-    DisplayFace3D, DisplayMesh3D
+from ladybug_display.geometry3d import DisplayPoint3D, DisplayFace3D, DisplayMesh3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
@@ -16,6 +15,7 @@ from honeybee.colorobj import ColorRoom, ColorFace
 from honeybee.shade import Shade
 from honeybee.typing import clean_string
 
+from ._util import _process_wireframe
 from .colorobj import color_room_to_vis_set, color_face_to_vis_set
 
 TYPE_COLORS = {
@@ -426,42 +426,35 @@ def model_to_vis_set(
     return vis_set
 
 
-def model_to_vis_set_wireframe(model):
+def model_to_vis_set_wireframe(model, color=None):
     """Get a VisualizationSet with a single ContextGeometry for the model wireframe.
 
     Args:
         model: A Honeybee Model object to be translated to a wireframe.
+        color: An optional Color object to set the color of the wireframe.
+            If None, the color will be black.
 
     Returns:
         A VisualizationSet with a single ContextGeometry and a list of
         DisplayLineSegment3D for the wireframe of the Model.
     """
-    def _process_wireframe(face3d, wireframe, line_width=1):
-        """Process the boundary and holes into DisplayLinesegment3D."""
-        for seg in face3d.boundary_segments:
-            wireframe.append(DisplayLineSegment3D(seg, line_width=line_width))
-        if face3d.has_holes:
-            for hole in face3d.hole_segments:
-                for seg in hole:
-                    wireframe.append(DisplayLineSegment3D(seg, line_width=line_width))
-
     # loop through all of the objects and add their wire frames
     wireframe = []
     for face in model.faces:
-        _process_wireframe(face.geometry, wireframe, 2)
+        _process_wireframe(face.geometry, wireframe, color, 2)
         for ap in face._apertures:
-            _process_wireframe(ap.geometry, wireframe)
+            _process_wireframe(ap.geometry, wireframe, color)
         for dr in face._doors:
-            _process_wireframe(dr.geometry, wireframe)
+            _process_wireframe(dr.geometry, wireframe, color)
     for ap in model._orphaned_apertures:
-        _process_wireframe(ap.geometry, wireframe)
+        _process_wireframe(ap.geometry, wireframe, color)
     for dr in model._orphaned_doors:
-        _process_wireframe(dr.geometry, wireframe)
+        _process_wireframe(dr.geometry, wireframe, color)
     for shd in model.indoor_shades:
-        _process_wireframe(shd.geometry, wireframe)
+        _process_wireframe(shd.geometry, wireframe, color)
     for shd in model.outdoor_shades:
         lw = 2 if shd.is_detached else 1
-        _process_wireframe(shd.geometry, wireframe, lw)
+        _process_wireframe(shd.geometry, wireframe, color, lw)
 
     # build the VisualizationSet and return it
     if len(wireframe) == 0:
@@ -469,6 +462,79 @@ def model_to_vis_set_wireframe(model):
     vis_set = VisualizationSet(
         model.identifier, [ContextGeometry('Wireframe', wireframe)])
     vis_set.display_name = model.display_name
+    return vis_set
+
+
+def model_comparison_to_vis_set(
+        base_model, incoming_model, base_color=None, incoming_color=None):
+    """Translate two Honeybee Models to be compared to a VisualizationSet.
+
+    Args:
+        base_model: A Honeybee Model object for the base model used in the
+            comparison. Typically, this is the model with more data to be kept.
+        incoming_model: A Honeybee Model object for the incoming model used in the
+            comparison. Typically, this is the model with new data to be
+            evaluated against the base model.
+        base_color: An optional ladybug Color to set the color of the base model.
+            If None, a default blue color will be used. (Default: None).
+        incoming_color: An optional ladybug Color to set the color of the incoming model.
+            If None, a default red color will be used. (Default: None).
+    """
+    # set the default colors if not provided
+    if base_color is None:
+        base_color = Color(98, 190, 190, 128)
+    if incoming_color is None:
+        incoming_color = Color(190, 98, 98, 128)
+
+    # initialize the VisualizationSet to hold everything
+    vs_id = 'Compare_{}_{}'.format(base_model.identifier[:30],
+                                   incoming_model.identifier[:30])
+    vis_set = VisualizationSet(vs_id, [])
+    vis_set.display_name = 'Compare "{}" to "{}"'.format(
+        base_model.display_name, incoming_model.display_name)
+
+    # get the wireframe of the base model
+    base_geos = []
+    for room in base_model.rooms:
+        room_wire = room.to_vis_set_wireframe(False, False, base_color)
+        base_geos.extend(room_wire[0].geometry)
+    base_id = 'Base_Wireframe_{}'.format(base_model.identifier)
+    base_wireframe = ContextGeometry(base_id, base_geos)
+    base_wireframe.display_name = 'Base Wireframe'
+    vis_set.add_geometry(base_wireframe)
+
+    # get the wireframe of the incoming model
+    incoming_geos = []
+    for room in incoming_model.rooms:
+        room_wire = room.to_vis_set_wireframe(False, False, incoming_color)
+        incoming_geos.extend(room_wire[0].geometry)
+    incoming_id = 'Incoming_Wireframe_{}'.format(incoming_model.identifier)
+    incoming_wireframe = ContextGeometry(incoming_id, incoming_geos)
+    incoming_wireframe.display_name = 'Incoming Wireframe'
+    for vis_geo in incoming_wireframe.geometry:
+        vis_geo.color = incoming_color
+    vis_set.add_geometry(incoming_wireframe)
+
+    # get the apertures of the base model
+    base_geos = []
+    for aperture in base_model.apertures + base_model.doors:
+        dis_geo = DisplayFace3D(aperture.geometry, base_color, 'SurfaceWithEdges')
+        base_geos.append(dis_geo)
+    base_id = 'Base_Windows_{}'.format(base_model.identifier)
+    base_windows = ContextGeometry(base_id, base_geos)
+    base_windows.display_name = 'Base Windows'
+    vis_set.add_geometry(base_windows)
+
+    # get the apertures of the incoming model
+    incoming_geos = []
+    for aperture in incoming_model.apertures + incoming_model.doors:
+        dis_geo = DisplayFace3D(aperture.geometry, incoming_color, 'SurfaceWithEdges')
+        incoming_geos.append(dis_geo)
+    incoming_id = 'Incoming_Windows_{}'.format(incoming_model.identifier)
+    incoming_windows = ContextGeometry(incoming_id, incoming_geos)
+    incoming_windows.display_name = 'Incoming Windows'
+    vis_set.add_geometry(incoming_windows)
+
     return vis_set
 
 
