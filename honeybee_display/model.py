@@ -480,6 +480,12 @@ def model_comparison_to_vis_set(
         incoming_color: An optional ladybug Color to set the color of the incoming model.
             If None, a default red color will be used. (Default: None).
     """
+    # make sure that both models have the same units system
+    original_units = None
+    if base_model.units != incoming_model.units:
+        original_units = incoming_model.units
+        incoming_model.convert_to_units(base_model.units)
+
     # set the default colors if not provided
     if base_color is None:
         base_color = Color(98, 190, 190, 128)
@@ -535,6 +541,9 @@ def model_comparison_to_vis_set(
     incoming_windows.display_name = 'Incoming Windows'
     vis_set.add_geometry(incoming_windows)
 
+    # put back the original units if different
+    if original_units is not None:
+        incoming_model.convert_to_units(original_units)
     return vis_set
 
 
