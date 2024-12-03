@@ -1,0 +1,7 @@
+honeybee\_display.colorobj module
+=================================
+
+.. automodule:: honeybee_display.colorobj
+   :members:
+   :undoc-members:
+   :show-inheritance:
