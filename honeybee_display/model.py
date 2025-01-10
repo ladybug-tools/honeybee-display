@@ -358,13 +358,14 @@ def model_to_vis_set(
 
     # add grid data if requested
     if grid_data_path is not None and os.path.isdir(grid_data_path):
-        # first try to get all of the Model sensor grids
-        try:
-            grids = {g.full_identifier: g for g in
-                     model.properties.radiance.sensor_grids}
-        except AttributeError:  # honeybee-radiance is not installed
-            grids = {}
-        if len(grids) != 0:
+        if len(model.properties.radiance.sensor_grids) != 0:
+            # first try to get all of the Model sensor grids
+            model.properties.radiance.merge_duplicate_identifier_grids()
+            try:
+                grids = {g.full_identifier: g for g in
+                         model.properties.radiance.sensor_grids}
+            except AttributeError:  # honeybee-radiance is not installed
+                grids = {}
             # gather all of the directories with results
             gi_dirs, gi_file, act_data, cur_data = [], 'grids_info.json', 0, 0
             root_gi_file = os.path.join(grid_data_path, gi_file)
