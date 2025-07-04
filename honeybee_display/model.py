@@ -121,6 +121,7 @@ def model_to_vis_set(
         A VisualizationSet object that represents the model.
     """
     # group the geometries according to typical ContextGeometry layers
+    tol = model.tolerance
     color_by = str(color_by).lower()
     if color_by == 'type':
         # set up a dictionary to hold all geometries
@@ -140,21 +141,21 @@ def model_to_vis_set(
                 else:
                     type_dict['Door'].append(dr.geometry)
             if isinstance(face.type, AirBoundary):
-                type_dict['Air Boundary'].append(face.punched_geometry)
+                type_dict['Air Boundary'].append(_clean_punched_geo(face, tol))
             elif isinstance(face.boundary_condition, (Outdoors, Ground)):
                 if isinstance(face.type, Wall):
-                    type_dict['Wall'].append(face.punched_geometry)
+                    type_dict['Wall'].append(_clean_punched_geo(face, tol))
                 elif isinstance(face.type, RoofCeiling):
-                    type_dict['Roof'].append(face.punched_geometry)
+                    type_dict['Roof'].append(_clean_punched_geo(face, tol))
                 elif isinstance(face.type, Floor):
-                    type_dict['Floor'].append(face.punched_geometry)
+                    type_dict['Floor'].append(_clean_punched_geo(face, tol))
             else:
                 if isinstance(face.type, Wall):
-                    type_dict['Interior Wall'].append(face.punched_geometry)
+                    type_dict['Interior Wall'].append(_clean_punched_geo(face, tol))
                 elif isinstance(face.type, RoofCeiling):
-                    type_dict['Ceiling'].append(face.punched_geometry)
+                    type_dict['Ceiling'].append(_clean_punched_geo(face, tol))
                 elif isinstance(face.type, Floor):
-                    type_dict['Interior Floor'].append(face.punched_geometry)
+                    type_dict['Interior Floor'].append(_clean_punched_geo(face, tol))
         # add orphaned apertures to the dictionary
         for ap in model._orphaned_apertures:
             type_dict['Aperture'].append(ap.geometry)
@@ -184,13 +185,13 @@ def model_to_vis_set(
         # add all faces to the dictionary
         for face in model.faces:
             if isinstance(face.boundary_condition, Outdoors):
-                type_dict['Outdoors'].append(face.punched_geometry)
+                type_dict['Outdoors'].append(_clean_punched_geo(face, tol))
                 for ap in face._apertures:
                     type_dict['Outdoors'].append(ap.geometry)
                 for dr in face._doors:
                     type_dict['Outdoors'].append(dr.geometry)
             elif isinstance(face.boundary_condition, Surface):
-                type_dict['Surface'].append(face.punched_geometry)
+                type_dict['Surface'].append(_clean_punched_geo(face, tol))
                 for ap in face._apertures:
                     type_dict['Surface'].append(ap.geometry)
                 for dr in face._doors:
@@ -252,7 +253,7 @@ def model_to_vis_set(
         for rm_attr in room_attrs:
             attrs = rm_attr.attrs
             if rm_attr.text:
-                units, tol = model.units, model.tolerance
+                units = model.units
                 for r_attr in attrs:
                     ra_col_obj = ColorRoom(model.rooms, r_attr, rm_attr.legend_par)
                     geo_objs.append(
@@ -546,6 +547,19 @@ def model_comparison_to_vis_set(
     if original_units is not None:
         incoming_model.convert_to_units(original_units)
     return vis_set
+
+
+def _clean_punched_geo(face, tolerance):
+    """Get Face punched_geometry in a way that has touching sub-face holes merged."""
+    _sub_faces = tuple(sub_f.geometry for sub_f in face._apertures + face._doors)
+    if len(_sub_faces) != 0:
+        try:
+            holes = Face3D.join_coplanar_faces(_sub_faces, tolerance)
+            return Face3D.from_punched_geometry(face.geometry, holes)
+        except Exception:
+            return face.punched_geometry
+    else:
+        return face.geometry
 
 
 def _read_sensor_grid_result(result_folder):
