@@ -1,0 +1,7 @@
+honeybee\_display.face module
+=============================
+
+.. automodule:: honeybee_display.face
+   :members:
+   :undoc-members:
+   :show-inheritance:
