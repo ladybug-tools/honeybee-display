@@ -234,8 +234,9 @@ def model_to_vis_set(
             if use_mesh:
                 dis_geos = []
                 for f in geometries:
-                    c_geo = f.triangulated_mesh3d if isinstance(f, Face3D) else f
-                    dis_geos.append(DisplayMesh3D(c_geo, color=col))
+                    if f.area != 0:
+                        c_geo = f.triangulated_mesh3d if isinstance(f, Face3D) else f
+                        dis_geos.append(DisplayMesh3D(c_geo, color=col))
             else:
                 dis_geos = []
                 for geo in geometries:
