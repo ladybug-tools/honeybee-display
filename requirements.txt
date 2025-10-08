@@ -1,2 +1,2 @@
-ladybug-display>=0.11.2
+ladybug-display>=0.11.3
 honeybee-core>=1.58.63
