@@ -11,7 +11,7 @@ from honeybee.colorobj import ColorRoom, ColorFace
 
 # import the extension functions
 from .model import model_to_vis_set, model_to_vis_set_wireframe, \
-    model_comparison_to_vis_set
+    model_envelope_edges_to_vis_set, model_comparison_to_vis_set
 from .room import room_to_vis_set, room_to_vis_set_wireframe
 from .face import face_to_vis_set, face_to_vis_set_wireframe
 from .aperture import aperture_to_vis_set, aperture_to_vis_set_wireframe
@@ -24,6 +24,7 @@ from .colorobj import color_room_to_vis_set, color_face_to_vis_set
 Model.to_vis_set = model_to_vis_set
 Model.to_vis_set_wireframe = model_to_vis_set_wireframe
 Model.to_vis_set_comparison = model_comparison_to_vis_set
+Model.to_vis_set_envelope_edges = model_envelope_edges_to_vis_set
 Room.to_vis_set = room_to_vis_set
 Room.to_vis_set_wireframe = room_to_vis_set_wireframe
 Face.to_vis_set = face_to_vis_set

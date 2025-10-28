@@ -6,7 +6,8 @@ import io
 from ladybug_geometry.geometry3d import Point3D, Face3D
 from ladybug.datatype.generic import GenericType
 from ladybug.color import Color
-from ladybug_display.geometry3d import DisplayPoint3D, DisplayFace3D, DisplayMesh3D
+from ladybug_display.geometry3d import DisplayPoint3D, DisplayLineSegment3D, \
+    DisplayFace3D, DisplayMesh3D
 from ladybug_display.visualization import VisualizationSet, ContextGeometry, \
     AnalysisGeometry, VisualizationData, VisualizationMetaData
 from honeybee.boundarycondition import Outdoors, Ground, Surface
@@ -39,6 +40,19 @@ BC_COLORS = {
     'Ground': Color(165, 82, 0),
     'Adiabatic': Color(255, 128, 128),
     'Other': Color(255, 255, 200)
+}
+EDGE_COLORS = {
+    'Roofs_to_Walls': Color(255, 0, 0),
+    'Slabs_to_Walls': Color(0, 175, 0),
+    'Exposed_Floors_to_Walls': Color(75, 255, 75),
+    'Walls_to_Walls': Color(255, 221, 0),
+    'Roof_Ridges': Color(196, 77, 255),
+    'Exposed_Floors_to_Floors': Color(75, 255, 75),
+    'Underground': Color(128, 128, 128),
+    'Window_Frames': Color(35, 164, 250),
+    'Window_Mullions': Color(199, 233, 255),
+    'Door_Frames': Color(178, 110, 0),
+    'Door_Mullions': Color(250, 154, 0)
 }
 
 
@@ -465,6 +479,115 @@ def model_to_vis_set_wireframe(model, color=None):
     vis_set = VisualizationSet(
         model.identifier, [ContextGeometry('Wireframe', wireframe)])
     vis_set.display_name = model.display_name
+    return vis_set
+
+
+def model_envelope_edges_to_vis_set(model, exclude_coplanar=True, mullion_thickness=None):
+    """Translate a Honeybee Model to a VisualizationSet with edges highlighted.
+
+    Args:
+        model: A Honeybee Model object which will have its edges converted to
+            a VisualizationSet.
+        exclude_coplanar: Boolean to note whether edges falling between two
+            coplanar Faces in the building envelope should be included
+            in the result (False) or excluded from it (True). (Default: True).
+        mullion_thickness: The maximum difference that apertures or doors can be from
+            one another for the edges to be considered a mullion rather than
+            a frame. If None, all edges of apertures and doors will be considered
+            frames rather than mullions.
+
+    Returns:
+        A VisualizationSet object that represents the model. This includes these
+        objects in the following order, though certain layers may be removed if
+        the model contains none of a certain case or if they are not relevant
+        given the input options.
+
+        -   Roofs_to_Walls -- A ContextGeometry for the envelope edges where
+            roofs meet exterior walls (or exterior floors).
+
+        -   Slabs_to_Walls -- A ContextGeometry for the envelope edges where
+            floor slabs meet exterior walls (or roofs).
+
+        -   Exposed_Floors_to_Walls -- A ContextGeometry for the envelope edges
+            where exposed floors meet exterior wall.
+
+        -   Walls_to_Walls -- A ContextGeometry for the envelope edges where
+            exterior walls meet.
+
+        -   Roof_Ridges -- A ContextGeometry for the envelope edges where exterior
+            roofs meet.
+
+        -   Exposed_Floors_to_Floors -- A ContextGeometry for the envelope edges
+            where exposed floors meet.
+
+        -   Underground -- A ContextGeometry for the envelope edges where
+            underground faces meet.
+
+        -   Window_Frames -- A ContextGeometry for the edges where apertures meet
+            their parent exterior wall or roof.
+
+        -   Window_Mullions -- A ContextGeometry for the edges where apertures
+            meet one another.
+
+        -   Door_Frames -- A ContextGeometry for the edges where doors meet
+            their parent exterior wall or roof.
+
+        -   Door_Mullions -- A ContextGeometry for the edges where doors meet
+            one another.
+    """
+    # get all of the edges from the model
+    roof_to_exterior, slab_to_exterior, ex_floor_to_wall, \
+        wall_to_wall, roof_ridge, ex_floor_to_floor, underground = \
+        model.classified_envelope_edges(exclude_coplanar=exclude_coplanar)
+    if mullion_thickness is not None:
+        aperture_frames, aperture_mullions, door_frames, door_mullions = \
+            model.classified_sub_face_edges(mullion_thickness=mullion_thickness)
+    else:
+        aperture_frames = model.exterior_aperture_edges
+        aperture_mullions = []
+        door_frames = model.exterior_door_edges
+        door_mullions = []
+
+    def _edges_con_geo(edge_id, edge_geo, line_width=1):
+        """Create a ContextGeometry of colored edges."""
+        display_edges = [DisplayLineSegment3D(seg, EDGE_COLORS[edge_id], line_width)
+                         for seg in edge_geo]
+        con_geo = ContextGeometry(edge_id, display_edges)
+        con_geo.display_name = edge_id.replace('_', ' ')
+        return con_geo
+
+    # establish the VisualizationSet object
+    vis_set = VisualizationSet('{}_Edges'.format(model.identifier), ())
+    vis_set.display_name = '{} Edges'.format(model.display_name)
+
+    # add all of the relevant edges to the VisualizationSet
+    if len(roof_to_exterior) != 0:
+        vis_set.add_geometry(_edges_con_geo('Roofs_to_Walls', roof_to_exterior, 2))
+    if len(slab_to_exterior) != 0:
+        vis_set.add_geometry(_edges_con_geo('Slabs_to_Walls', slab_to_exterior, 2))
+    if len(ex_floor_to_wall) != 0:
+        vis_set.add_geometry(
+            _edges_con_geo('Exposed_Floors_to_Walls', ex_floor_to_wall, 2)
+        )
+    if len(wall_to_wall) != 0:
+        vis_set.add_geometry(_edges_con_geo('Walls_to_Walls', wall_to_wall, 2))
+    if len(roof_ridge) != 0:
+        vis_set.add_geometry(_edges_con_geo('Roof_Ridges', roof_ridge, 2))
+    if len(ex_floor_to_floor) != 0:
+        vis_set.add_geometry(
+            _edges_con_geo('Exposed_Floors_to_Floors', ex_floor_to_floor, 2)
+        )
+    if len(underground) != 0:
+        vis_set.add_geometry(_edges_con_geo('Underground', underground, 2))
+    if len(aperture_frames) != 0:
+        vis_set.add_geometry(_edges_con_geo('Window_Frames', aperture_frames))
+    if len(aperture_mullions) != 0:
+        vis_set.add_geometry(_edges_con_geo('Window_Mullions', aperture_mullions))
+    if len(door_frames) != 0:
+        vis_set.add_geometry(_edges_con_geo('Door_Frames', door_frames))
+    if len(door_mullions) != 0:
+        vis_set.add_geometry(_edges_con_geo('Door_Mullions', door_mullions))
+
     return vis_set
 
 
