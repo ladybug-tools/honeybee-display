@@ -10,6 +10,7 @@ import tempfile
 import uuid
 
 from ladybug.color import Color
+from honeybee.units import parse_distance_string
 from honeybee.model import Model
 from honeybee.cli import main
 
@@ -305,6 +306,95 @@ def model_to_vis_set(
         grid_data_display_mode=grid_data_display_mode,
         active_grid_data=active_grid_data)
 
+    # output the VisualizationSet through the CLI
+    return _output_vis_set_to_format(vis_set, output_format, output_file)
+
+
+@display.command('model-envelope-edges-to-vis')
+@click.argument('model-file', type=click.Path(
+    exists=True, file_okay=True, dir_okay=False, resolve_path=True))
+@click.option(
+    '--exclude-coplanar/--include-coplanar', ' /-c', help='Flag to note whether '
+    'edges falling between two coplanar Faces in the building envelope should '
+    'be included in the result or excluded from it.', default=True, show_default=True)
+@click.option(
+    '--mullion-thickness', '-m', help='An optional positive number that sets the '
+    'maximum difference that apertures or doors can be from one another for the '
+    'edges to be considered a mullion rather than a frame. This can include '
+    'the units of the distance (eg. 0.3ft) or, if no units are provided, '
+    'the value will be interpreted in the honeybee model units. If unspecified, all '
+    'edges of apertures and doors will be considered frames rather than mullions.',
+    type=str, default=None, show_default=True)
+@click.option(
+    '--output-format', '-of', help='Text for the output format of the resulting '
+    'VisualizationSet File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note '
+    'that both vsf and json refer to the the JSON version of the VisualizationSet '
+    'file and the distinction between the two is only for help in coordinating file '
+    'extensions (since both .vsf and .json can be acceptable). Also note that '
+    'ladybug-vtk must be installed in order for the vtkjs or html options to be usable '
+    'and the html format refers to a web page with the vtkjs file embedded within it.',
+    type=str, default='vsf', show_default=True)
+@click.option(
+    '--output-file', help='Optional file to output the he string of the visualization '
+    'file contents. By default, it will be printed out to stdout',
+    type=click.File('w'), default='-', show_default=True)
+def model_envelope_edges_to_vis_set_cli(
+        model_file, exclude_coplanar, mullion_thickness, output_format, output_file):
+    """Translate a Honeybee Model to a VisualizationSet with edges highlighted.
+
+    \b
+    Args:
+        model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file,
+            which will have its envelope edges converted to a VisualizationSet.
+    """
+    try:
+        include_coplanar = not exclude_coplanar
+        model_envelope_edges_to_vis_set(
+            model_file, include_coplanar, mullion_thickness, output_format, output_file)
+    except Exception as e:
+        _logger.exception('Failed to translate Model to VisualizationSet.\n{}'.format(e))
+        sys.exit(1)
+    else:
+        sys.exit(0)
+
+
+def model_envelope_edges_to_vis_set(
+    model_file, include_coplanar=False, mullion_thickness=None,
+    output_format='vsf', output_file=None, exclude_coplanar=True
+):
+    """Translate a Honeybee Model to a VisualizationSet with edges highlighted.
+
+    Args:
+        model_file: Full path to a Honeybee Model (HBJSON or HBpkl) file,
+            which will have its envelope edges converted to a VisualizationSet.
+        include_coplanar: Boolean to note whether edges falling between two
+            coplanar Faces in the building envelope should be included
+            in the result or excluded from it. (Default: False).
+        mullion_thickness: The maximum difference that apertures or doors can be from
+            one another for the edges to be considered a mullion rather than
+            a frame. This can include the units of the distance (eg. 0.3ft) or,
+            if no units are provided, the value will be interpreted in the honeybee
+            model units. If None, all edges of apertures and doors will be considered
+            frames rather than mullions.
+        output_format: Text for the output format of the resulting VisualizationSet
+            File (.vsf). Choose from: vsf, json, pkl, vtkjs, html. Note that both
+            vsf and json refer to the the JSON version of the VisualizationSet
+            file and the distinction between the two is only for help in
+            coordinating file extensions (since both .vsf and .json can be
+            acceptable). Also note that ladybug-vtk must be installed in order
+            for the vtkjs or html options to be usable and the html format
+            refers to a web page with the vtkjs file embedded within it.
+        output_file: Optional file to output the string of the visualization
+            file contents. If None, the string will simply be returned from
+            this method.
+    """
+    # load the model object
+    model = Model.from_file(model_file)
+    exclude_coplanar = not include_coplanar
+    if mullion_thickness is not None:
+        mullion_thickness = parse_distance_string(mullion_thickness, model.units)
+    # create the VisualizationSet
+    vis_set = model.to_vis_set_envelope_edges(exclude_coplanar, mullion_thickness)
     # output the VisualizationSet through the CLI
     return _output_vis_set_to_format(vis_set, output_format, output_file)
 
