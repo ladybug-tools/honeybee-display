@@ -1,0 +1,36 @@
+honeybee\_display package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   honeybee_display.cli
+   honeybee_display.energy
+   honeybee_display.radiance
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   honeybee_display.aperture
+   honeybee_display.attr
+   honeybee_display.colorobj
+   honeybee_display.door
+   honeybee_display.face
+   honeybee_display.model
+   honeybee_display.room
+   honeybee_display.shade
+   honeybee_display.shademesh
+
+Module contents
+---------------
+
+.. automodule:: honeybee_display
+   :members:
+   :undoc-members:
+   :show-inheritance:

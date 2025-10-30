@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>honeybee_display.model &#8212; honeybee display  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css?v=0bf093e7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e6365d57" />
+    <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<link rel="icon" type="image/x-icon" href="https://github.com/ladybug-tools/artwork/raw/refs/heads/master/icons_bugs/ico/honeybee.ico">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          honeybee display</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/index.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cli/index.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../cli/main.html">main</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../cli/main.html#honeybee-display">honeybee-display</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../cli/main.html#honeybee-display-model-to-vis">model-to-vis</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../cli/main.html#honeybee-display-model-envelope-edges-to-vis">model-envelope-edges-to-vis</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../cli/main.html#honeybee-display-model-comparison-to-vis">model-comparison-to-vis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">honeybee_display</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../honeybee_display.html">honeybee_display package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../honeybee_display.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.cli.html">honeybee_display.cli package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.cli.html#module-honeybee_display.cli">Module contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.cli.html#honeybee_display.cli.model_comparison_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_comparison_to_vis_set()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.cli.html#honeybee_display.cli.model_envelope_edges_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_envelope_edges_to_vis_set()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.cli.html#honeybee_display.cli.model_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_to_vis_set()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.energy.html">honeybee_display.energy package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.energy.html#submodules">Submodules</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.energy.colorobj.html">honeybee_display.energy.colorobj module</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../honeybee_display.energy.colorobj.html#honeybee_display.energy.colorobj.color_face_to_vis_set"><code class="docutils literal notranslate"><span class="pre">color_face_to_vis_set()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../honeybee_display.energy.colorobj.html#honeybee_display.energy.colorobj.energy_color_room_to_vis_set"><code class="docutils literal notranslate"><span class="pre">energy_color_room_to_vis_set()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.energy.html#module-honeybee_display.energy">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.radiance.html">honeybee_display.radiance package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.radiance.html#module-honeybee_display.radiance">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../honeybee_display.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.aperture.html">honeybee_display.aperture module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.aperture.html#honeybee_display.aperture.aperture_to_vis_set"><code class="docutils literal notranslate"><span class="pre">aperture_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.aperture.html#honeybee_display.aperture.aperture_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">aperture_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.attr.html">honeybee_display.attr module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute"><code class="docutils literal notranslate"><span class="pre">FaceAttribute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.attrs"><code class="docutils literal notranslate"><span class="pre">attrs</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.boundary_conditions"><code class="docutils literal notranslate"><span class="pre">boundary_conditions</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.face_types"><code class="docutils literal notranslate"><span class="pre">face_types</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.legend_par"><code class="docutils literal notranslate"><span class="pre">legend_par</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.FaceAttribute.text"><code class="docutils literal notranslate"><span class="pre">text</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute"><code class="docutils literal notranslate"><span class="pre">RoomAttribute</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute.attrs"><code class="docutils literal notranslate"><span class="pre">attrs</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute.color"><code class="docutils literal notranslate"><span class="pre">color</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute.legend_par"><code class="docutils literal notranslate"><span class="pre">legend_par</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute.name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../honeybee_display.attr.html#honeybee_display.attr.RoomAttribute.text"><code class="docutils literal notranslate"><span class="pre">text</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.colorobj.html">honeybee_display.colorobj module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.colorobj.html#honeybee_display.colorobj.color_face_to_vis_set"><code class="docutils literal notranslate"><span class="pre">color_face_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.colorobj.html#honeybee_display.colorobj.color_room_to_vis_set"><code class="docutils literal notranslate"><span class="pre">color_room_to_vis_set()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.door.html">honeybee_display.door module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.door.html#honeybee_display.door.door_to_vis_set"><code class="docutils literal notranslate"><span class="pre">door_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.door.html#honeybee_display.door.door_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">door_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.face.html">honeybee_display.face module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.face.html#honeybee_display.face.face_to_vis_set"><code class="docutils literal notranslate"><span class="pre">face_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.face.html#honeybee_display.face.face_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">face_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.model.html">honeybee_display.model module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.model.html#honeybee_display.model.model_comparison_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_comparison_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.model.html#honeybee_display.model.model_envelope_edges_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_envelope_edges_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.model.html#honeybee_display.model.model_to_vis_set"><code class="docutils literal notranslate"><span class="pre">model_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.model.html#honeybee_display.model.model_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">model_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.room.html">honeybee_display.room module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.room.html#honeybee_display.room.room_to_vis_set"><code class="docutils literal notranslate"><span class="pre">room_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.room.html#honeybee_display.room.room_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">room_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.shade.html">honeybee_display.shade module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.shade.html#honeybee_display.shade.shade_to_vis_set"><code class="docutils literal notranslate"><span class="pre">shade_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.shade.html#honeybee_display.shade.shade_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">shade_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../honeybee_display.shademesh.html">honeybee_display.shademesh module</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.shademesh.html#honeybee_display.shademesh.shade_mesh_to_vis_set"><code class="docutils literal notranslate"><span class="pre">shade_mesh_to_vis_set()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../honeybee_display.shademesh.html#honeybee_display.shademesh.shade_mesh_to_vis_set_wireframe"><code class="docutils literal notranslate"><span class="pre">shade_mesh_to_vis_set_wireframe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../honeybee_display.html#module-honeybee_display">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">honeybee_display</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-4">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cli/index.html">CLI Docs</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">honeybee_display</a></li>
+</ul>
+
+        </div>
+      </div>
+    <div class="body col-md-8 content" role="main">
+      
+  <h1>Source code for honeybee_display.model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Method to translate a Model to a VisualizationSet.&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_geometry.geometry3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Point3D</span><span class="p">,</span> <span class="n">Face3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug.datatype.generic</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenericType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug.color</span><span class="w"> </span><span class="kn">import</span> <span class="n">Color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_display.geometry3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">DisplayPoint3D</span><span class="p">,</span> <span class="n">DisplayLineSegment3D</span><span class="p">,</span> \
+    <span class="n">DisplayFace3D</span><span class="p">,</span> <span class="n">DisplayMesh3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ladybug_display.visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualizationSet</span><span class="p">,</span> <span class="n">ContextGeometry</span><span class="p">,</span> \
+    <span class="n">AnalysisGeometry</span><span class="p">,</span> <span class="n">VisualizationData</span><span class="p">,</span> <span class="n">VisualizationMetaData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.boundarycondition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Outdoors</span><span class="p">,</span> <span class="n">Ground</span><span class="p">,</span> <span class="n">Surface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.facetype</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wall</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">,</span> <span class="n">Floor</span><span class="p">,</span> <span class="n">AirBoundary</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.colorobj</span><span class="w"> </span><span class="kn">import</span> <span class="n">ColorRoom</span><span class="p">,</span> <span class="n">ColorFace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.shade</span><span class="w"> </span><span class="kn">import</span> <span class="n">Shade</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">honeybee.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">clean_string</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">._util</span><span class="w"> </span><span class="kn">import</span> <span class="n">_process_wireframe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.colorobj</span><span class="w"> </span><span class="kn">import</span> <span class="n">color_room_to_vis_set</span><span class="p">,</span> <span class="n">color_face_to_vis_set</span>
+
+<span class="n">TYPE_COLORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Wall&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span>
+    <span class="s1">&#39;Roof&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+    <span class="s1">&#39;Floor&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Air Boundary&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;Interior Wall&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="mi">150</span><span class="p">),</span>
+    <span class="s1">&#39;Ceiling&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Interior Floor&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Aperture&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;Door&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;Glass Door&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+    <span class="s1">&#39;Outdoor Shade&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">190</span><span class="p">),</span>
+    <span class="s1">&#39;Context Shade&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Indoor Shade&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">159</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">BC_COLORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Outdoors&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s1">&#39;Surface&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Ground&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">165</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Adiabatic&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Other&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">EDGE_COLORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Roofs_to_Walls&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Slabs_On_Grade_to_Walls&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Exposed_Floors_to_Walls&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">75</span><span class="p">),</span>
+    <span class="s1">&#39;Interior_Floors_to_Walls&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span>
+    <span class="s1">&#39;Walls_to_Walls&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">221</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Roof_Ridges&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">196</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s1">&#39;Roofs_to_Roofs&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">196</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s1">&#39;Exposed_Floors_to_Floors&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">75</span><span class="p">),</span>
+    <span class="s1">&#39;Underground&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+    <span class="s1">&#39;Window_Frames&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">250</span><span class="p">),</span>
+    <span class="s1">&#39;Window_Mullions&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">199</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+    <span class="s1">&#39;Door_Frames&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">178</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;Door_Mullions&#39;</span><span class="p">:</span> <span class="n">Color</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="model_to_vis_set">
+<a class="viewcode-back" href="../../honeybee_display.model.html#honeybee_display.model.model_to_vis_set">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">model_to_vis_set</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">color_by</span><span class="o">=</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">include_wireframe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_mesh</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">hide_color_by</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">room_attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">face_attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">grid_display_mode</span><span class="o">=</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="n">hide_grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">grid_data_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grid_data_display_mode</span><span class="o">=</span><span class="s1">&#39;Surface&#39;</span><span class="p">,</span> <span class="n">active_grid_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translate a Honeybee Model to a VisualizationSet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model: A Honeybee Model object to be converted to a VisualizationSet.</span>
+<span class="sd">        color_by: Text that dictates the colors of the Model geometry.</span>
+<span class="sd">            If none, only a wireframe of the Model will be generated, assuming</span>
+<span class="sd">            include_wireframe is True. This is useful when the primary purpose of</span>
+<span class="sd">            the visualization is to display results in relation to the Model</span>
+<span class="sd">            geometry or display some room_attrs or face_attrs as an AnalysisGeometry</span>
+<span class="sd">            or Text labels. (Default: type). Choose from the following:</span>
+
+<span class="sd">            * type</span>
+<span class="sd">            * boundary_condition</span>
+<span class="sd">            * None</span>
+
+<span class="sd">        include_wireframe: Boolean to note whether a ContextGeometry dedicated to</span>
+<span class="sd">            the Model Wireframe (in DisplayLineSegment3D) should be included</span>
+<span class="sd">            in the output VisualizationSet. (Default: True).</span>
+<span class="sd">        use_mesh: Boolean to note whether the colored model geometries should</span>
+<span class="sd">            be represented with DisplayMesh3D objects (True) instead of DisplayFace3D</span>
+<span class="sd">            objects (False). Meshes can usually be rendered faster and they scale</span>
+<span class="sd">            well for large models but all geometry is triangulated (meaning that</span>
+<span class="sd">            the wireframe in certain platforms might not appear ideal). (Default: True).</span>
+<span class="sd">        hide_color_by: Boolean to note whether the color_by geometry should be</span>
+<span class="sd">            hidden or shown by default. Hiding the color-by geometry is useful</span>
+<span class="sd">            when the primary purpose of the visualization is to display grid_data</span>
+<span class="sd">            or room/face attributes but it is still desirable to have the option</span>
+<span class="sd">            to turn on the geometry.</span>
+<span class="sd">        room_attrs: An optional list of room attribute objects.</span>
+<span class="sd">        face_attrs: An optional list of face attribute objects.</span>
+<span class="sd">        grid_display_mode: Text that dictates how the ContextGeometry for Model</span>
+<span class="sd">            SensorGrids should display in the resulting visualization. The Default</span>
+<span class="sd">            option will draw sensor points whenever there is no grid_data_path and</span>
+<span class="sd">            won&#39;t draw them at all when grid data is provided, assuming the</span>
+<span class="sd">            AnalysisGeometry of the grids is sufficient. Choose from the following:</span>
+
+<span class="sd">            * Default</span>
+<span class="sd">            * Points</span>
+<span class="sd">            * Wireframe</span>
+<span class="sd">            * Surface</span>
+<span class="sd">            * SurfaceWithEdges</span>
+<span class="sd">            * None</span>
+
+<span class="sd">        hide_grid: Boolean to note whether the SensorGrid ContextGeometry should be</span>
+<span class="sd">            hidden or shown by default. (Default: True).</span>
+<span class="sd">        grid_data_path: An optional path to a folder containing data that aligns</span>
+<span class="sd">            with the SensorGrids in the model. Any sub folder within this path</span>
+<span class="sd">            that contains a grids_into.json (and associated CSV files) will be</span>
+<span class="sd">            converted to an AnalysisGeometry in the resulting VisualizationSet.</span>
+<span class="sd">            If a vis_metadata.json file is found within this sub-folder, the</span>
+<span class="sd">            information contained within it will be used to customize the</span>
+<span class="sd">            AnalysisGeometry. Note that it is acceptable if data and</span>
+<span class="sd">            grids_info.json exist in the root of this grid_data_path. Also</span>
+<span class="sd">            note that this argument has no impact if honeybee-radiance is not</span>
+<span class="sd">            installed and SensorGrids cannot be decoded. (Default: None).</span>
+<span class="sd">        grid_data_display_mode: Optional text to set the display_mode of the</span>
+<span class="sd">            AnalysisGeometry that is is generated from the grid_data_path above. Note</span>
+<span class="sd">            that this has no effect if there are no meshes associated with the model</span>
+<span class="sd">            SensorGrids. (Default: Surface). Choose from the following:</span>
+
+<span class="sd">            * Surface</span>
+<span class="sd">            * SurfaceWithEdges</span>
+<span class="sd">            * Wireframe</span>
+<span class="sd">            * Points</span>
+
+<span class="sd">        active_grid_data: Optional text to specify the active data in the</span>
+<span class="sd">            AnalysisGeometry. This should match the name of the sub-folder</span>
+<span class="sd">            within the grid_data_path that should be active. If None, the</span>
+<span class="sd">            first data set in the grid_data_path with be active. (Default: None).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A VisualizationSet object that represents the model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># group the geometries according to typical ContextGeometry layers</span>
+    <span class="n">tol</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">tolerance</span>
+    <span class="n">color_by</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">color_by</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">color_by</span> <span class="o">==</span> <span class="s1">&#39;type&#39;</span><span class="p">:</span>
+        <span class="c1"># set up a dictionary to hold all geometries</span>
+        <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Wall&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Roof&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Floor&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Air Boundary&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;Interior Wall&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Ceiling&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Interior Floor&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;Aperture&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Door&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Glass Door&#39;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s1">&#39;Outdoor Shade&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Context Shade&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Indoor Shade&#39;</span><span class="p">:</span> <span class="p">[]</span>
+        <span class="p">}</span>
+        <span class="c1"># add all faces to the dictionary</span>
+        <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">faces</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_apertures</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Aperture&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_doors</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dr</span><span class="o">.</span><span class="n">is_glass</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Glass Door&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Door&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">AirBoundary</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Air Boundary&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="p">(</span><span class="n">Outdoors</span><span class="p">,</span> <span class="n">Ground</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Wall</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Wall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Roof&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Floor</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Floor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Wall</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Interior Wall&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">RoofCeiling</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Ceiling&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Floor</span><span class="p">):</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Interior Floor&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+        <span class="c1"># add orphaned apertures to the dictionary</span>
+        <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_apertures</span><span class="p">:</span>
+            <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Aperture&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all doors to the dictionary</span>
+        <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_doors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dr</span><span class="o">.</span><span class="n">is_glass</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Glass Door&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Door&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all shades to the dictionary</span>
+        <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">outdoor_shades</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">shd</span><span class="o">.</span><span class="n">is_detached</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Context Shade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoor Shade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">indoor_shades</span><span class="p">:</span>
+            <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Indoor Shade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all of the shade meshes to the dictionary</span>
+        <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">shade_meshes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">shd</span><span class="o">.</span><span class="n">is_detached</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Context Shade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoor Shade&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">color_by</span> <span class="o">==</span> <span class="s1">&#39;boundary_condition&#39;</span><span class="p">:</span>
+        <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Outdoors&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Surface&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Ground&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Adiabatic&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Other&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="c1"># add all faces to the dictionary</span>
+        <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">faces</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">Outdoors</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_apertures</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_doors</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">Surface</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tol</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_apertures</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_doors</span><span class="p">:</span>
+                    <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">Ground</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Ground&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Adiabatic&#39;</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Adiabatic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Other&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add orphaned apertures to the dictionary</span>
+        <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_apertures</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">Outdoors</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all doors to the dictionary</span>
+        <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_doors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">Outdoors</span><span class="p">):</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Outdoors&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Surface&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all shades to the dictionary</span>
+        <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">shades</span><span class="p">:</span>
+            <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Other&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+        <span class="c1"># add all of the shade meshes to the dictionary</span>
+        <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">shade_meshes</span><span class="p">:</span>
+            <span class="n">type_dict</span><span class="p">[</span><span class="s1">&#39;Other&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">color_by</span> <span class="o">==</span> <span class="s1">&#39;none&#39;</span><span class="p">:</span>
+        <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># unrecognized property for coloring</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Unrecognized color_by input &quot;</span><span class="si">{}</span><span class="s1">&quot; for model_to_vis_set.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color_by</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="c1"># loop through the dictionary and add a ContextGeometry for each group</span>
+    <span class="n">geo_objs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">geo_id</span><span class="p">,</span> <span class="n">geometries</span> <span class="ow">in</span> <span class="n">type_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">geometries</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">TYPE_COLORS</span><span class="p">[</span><span class="n">geo_id</span><span class="p">]</span> <span class="k">if</span> <span class="n">color_by</span> <span class="o">==</span> <span class="s1">&#39;type&#39;</span> <span class="k">else</span> <span class="n">BC_COLORS</span><span class="p">[</span><span class="n">geo_id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">use_mesh</span><span class="p">:</span>
+                <span class="n">dis_geos</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">geometries</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">area</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">c_geo</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">triangulated_mesh3d</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">Face3D</span><span class="p">)</span> <span class="k">else</span> <span class="n">f</span>
+                        <span class="n">dis_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DisplayMesh3D</span><span class="p">(</span><span class="n">c_geo</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dis_geos</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">geo</span> <span class="ow">in</span> <span class="n">geometries</span><span class="p">:</span>
+                    <span class="n">c_geo</span> <span class="o">=</span> <span class="n">DisplayFace3D</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="n">Face3D</span><span class="p">)</span> \
+                        <span class="k">else</span> <span class="n">DisplayMesh3D</span><span class="p">(</span><span class="n">geo</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+                    <span class="n">dis_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c_geo</span><span class="p">)</span>
+            <span class="n">con_geo</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">geo_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">),</span> <span class="n">dis_geos</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hide_color_by</span><span class="p">:</span>
+                <span class="n">con_geo</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">con_geo</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">geo_id</span>
+            <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con_geo</span><span class="p">)</span>
+
+    <span class="c1"># add room attributes to the VisualizationSet if requested</span>
+    <span class="k">if</span> <span class="n">room_attrs</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rooms</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">rm_attr</span> <span class="ow">in</span> <span class="n">room_attrs</span><span class="p">:</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">attrs</span>
+            <span class="k">if</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                <span class="n">units</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">units</span>
+                <span class="k">for</span> <span class="n">r_attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
+                    <span class="n">ra_col_obj</span> <span class="o">=</span> <span class="n">ColorRoom</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">r_attr</span><span class="p">,</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                    <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">color_room_to_vis_set</span><span class="p">(</span><span class="n">ra_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">tol</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">color</span><span class="p">:</span>
+                <span class="n">ra_col_obj</span> <span class="o">=</span> <span class="n">ColorRoom</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                <span class="n">geo_obj</span> <span class="o">=</span> <span class="n">color_room_to_vis_set</span><span class="p">(</span><span class="n">ra_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">geo_obj</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">geo_obj</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">rm_attr</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">r_attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                    <span class="n">ra_col_obj</span> <span class="o">=</span> <span class="n">ColorRoom</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">r_attr</span><span class="p">,</span> <span class="n">rm_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                    <span class="n">ra_a_geo</span> <span class="o">=</span> <span class="n">color_room_to_vis_set</span><span class="p">(</span><span class="n">ra_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">geo_obj</span><span class="o">.</span><span class="n">add_data_set</span><span class="p">(</span><span class="n">ra_a_geo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_obj</span><span class="p">)</span>
+
+    <span class="c1"># add face attributes to the VisualizationSet if requested</span>
+    <span class="k">if</span> <span class="n">face_attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">face_attrs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">faces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">rooms</span><span class="p">:</span>
+            <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span>
+            <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">apertures</span><span class="p">)</span>
+            <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">room</span><span class="o">.</span><span class="n">shades</span><span class="p">)</span>
+        <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">orphaned_faces</span><span class="p">)</span>
+        <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">orphaned_apertures</span><span class="p">)</span>
+        <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">orphaned_doors</span><span class="p">)</span>
+        <span class="n">faces</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">orphaned_shades</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">faces</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">ff_attr</span> <span class="ow">in</span> <span class="n">face_attrs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">face_types</span><span class="p">:</span>
+                    <span class="n">face_attr_types</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ff_attr</span><span class="o">.</span><span class="n">face_types</span><span class="p">)</span>
+                    <span class="n">f_faces</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">face</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">faces</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">face_attr_types</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">face_attr_types</span><span class="p">))</span>
+                    <span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">f_faces</span> <span class="o">=</span> <span class="n">faces</span>
+
+                <span class="k">if</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">boundary_conditions</span><span class="p">:</span>
+                    <span class="n">bcs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">ff_attr</span><span class="o">.</span><span class="n">boundary_conditions</span><span class="p">)</span>
+                    <span class="n">f_faces</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">face</span> <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">f_faces</span> <span class="k">if</span>
+                        <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">Shade</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="s1">&#39;boundary_condition&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                         <span class="nb">isinstance</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">boundary_condition</span><span class="p">,</span> <span class="n">bcs</span><span class="p">))</span>
+                    <span class="p">]</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">f_faces</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="k">if</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
+                    <span class="n">units</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">units</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">tolerance</span>
+                    <span class="k">for</span> <span class="n">f_attr</span> <span class="ow">in</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">attrs</span><span class="p">:</span>
+                        <span class="n">fa_col_obj</span> <span class="o">=</span> <span class="n">ColorFace</span><span class="p">(</span><span class="n">f_faces</span><span class="p">,</span> <span class="n">f_attr</span><span class="p">,</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                        <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="n">color_face_to_vis_set</span><span class="p">(</span>
+                                <span class="n">fa_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">tol</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="p">)</span>
+                <span class="k">if</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">color</span><span class="p">:</span>
+                    <span class="n">fa_col_obj</span> <span class="o">=</span> <span class="n">ColorFace</span><span class="p">(</span><span class="n">f_faces</span><span class="p">,</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                    <span class="n">geo_obj</span> <span class="o">=</span> <span class="n">color_face_to_vis_set</span><span class="p">(</span><span class="n">fa_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">geo_obj</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">clean_string</span><span class="p">(</span><span class="n">ff_attr</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="n">geo_obj</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">name</span>
+                    <span class="k">for</span> <span class="n">r_attr</span> <span class="ow">in</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                        <span class="n">fa_col_obj</span> <span class="o">=</span> <span class="n">ColorFace</span><span class="p">(</span><span class="n">f_faces</span><span class="p">,</span> <span class="n">r_attr</span><span class="p">,</span> <span class="n">ff_attr</span><span class="o">.</span><span class="n">legend_par</span><span class="p">)</span>
+                        <span class="n">ra_a_geo</span> <span class="o">=</span> <span class="n">color_face_to_vis_set</span><span class="p">(</span><span class="n">fa_col_obj</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">geo_obj</span><span class="o">.</span><span class="n">add_data_set</span><span class="p">(</span><span class="n">ra_a_geo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_obj</span><span class="p">)</span>
+
+    <span class="c1"># add the sensor grid geometry if requested</span>
+    <span class="n">gdm</span> <span class="o">=</span> <span class="n">grid_display_mode</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">default_exclude</span> <span class="o">=</span> <span class="n">gdm</span> <span class="o">==</span> <span class="s1">&#39;default&#39;</span> <span class="ow">and</span> <span class="n">grid_data_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gdm</span> <span class="o">!=</span> <span class="s1">&#39;none&#39;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">default_exclude</span><span class="p">:</span>
+        <span class="c1"># get the sensor grids and evaluate whether they have meshes</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">grid_objs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">radiance</span><span class="o">.</span><span class="n">sensor_grids</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># honeybee-radiance is not installed</span>
+            <span class="n">grid_objs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid_objs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">grid_meshes</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">mesh</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grid_objs</span><span class="p">]</span>
+            <span class="n">g_meshes_avail</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">grid_meshes</span><span class="p">)</span>
+            <span class="c1"># create the context geometry for the sensor grids</span>
+            <span class="n">dis_geos</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">gdm</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">g_meshes_avail</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">grid</span> <span class="ow">in</span> <span class="n">grid_objs</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">grid</span><span class="o">.</span><span class="n">positions</span><span class="p">:</span>
+                        <span class="n">dis_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DisplayPoint3D</span><span class="p">(</span><span class="n">Point3D</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">)))</span>
+            <span class="k">elif</span> <span class="n">gdm</span> <span class="o">==</span> <span class="s1">&#39;wireframe&#39;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">grid_meshes</span><span class="p">:</span>
+                    <span class="n">dis_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DisplayMesh3D</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">display_mode</span><span class="o">=</span><span class="s1">&#39;Wireframe&#39;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">gdm</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;surfacewithedges&#39;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">grid_meshes</span><span class="p">:</span>
+                    <span class="n">grey</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+                    <span class="n">d_mesh</span> <span class="o">=</span> <span class="n">DisplayMesh3D</span><span class="p">(</span>
+                        <span class="n">mesh</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">grey</span><span class="p">,</span> <span class="n">display_mode</span><span class="o">=</span><span class="n">grid_display_mode</span><span class="p">)</span>
+                    <span class="n">dis_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_mesh</span><span class="p">)</span>
+            <span class="n">con_geo</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="s1">&#39;Sensor_Grids&#39;</span><span class="p">,</span> <span class="n">dis_geos</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hide_grid</span><span class="p">:</span>
+                <span class="n">con_geo</span><span class="o">.</span><span class="n">hidden</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">con_geo</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Sensor Grids&#39;</span>
+            <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">con_geo</span><span class="p">)</span>
+
+    <span class="c1"># add grid data if requested</span>
+    <span class="k">if</span> <span class="n">grid_data_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">radiance</span><span class="o">.</span><span class="n">sensor_grids</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># first try to get all of the Model sensor grids</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">radiance</span><span class="o">.</span><span class="n">merge_duplicate_identifier_grids</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">grids</span> <span class="o">=</span> <span class="p">{</span><span class="n">g</span><span class="o">.</span><span class="n">full_identifier</span><span class="p">:</span> <span class="n">g</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span>
+                         <span class="n">model</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">radiance</span><span class="o">.</span><span class="n">sensor_grids</span><span class="p">}</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>  <span class="c1"># honeybee-radiance is not installed</span>
+                <span class="n">grids</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="c1"># gather all of the directories with results</span>
+            <span class="n">gi_dirs</span><span class="p">,</span> <span class="n">gi_file</span><span class="p">,</span> <span class="n">act_data</span><span class="p">,</span> <span class="n">cur_data</span> <span class="o">=</span> <span class="p">[],</span> <span class="s1">&#39;grids_info.json&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="n">root_gi_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">,</span> <span class="n">gi_file</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">root_gi_file</span><span class="p">):</span>
+                <span class="n">gi_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">sub_f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">):</span>
+                <span class="n">sub_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">grid_data_path</span><span class="p">,</span> <span class="n">sub_f</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">sub_dir</span><span class="p">):</span>
+                    <span class="n">sub_gi_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sub_dir</span><span class="p">,</span> <span class="n">gi_file</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">sub_gi_file</span><span class="p">):</span>
+                        <span class="n">gi_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_dir</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">active_grid_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> \
+                                <span class="n">sub_f</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">active_grid_data</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                            <span class="n">act_data</span> <span class="o">=</span> <span class="n">cur_data</span>
+                        <span class="n">cur_data</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># loop through the result directories and load the results</span>
+            <span class="n">data_sets</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">g_dir</span> <span class="ow">in</span> <span class="n">gi_dirs</span><span class="p">:</span>
+                <span class="n">g_values</span> <span class="o">=</span> <span class="n">_read_sensor_grid_result</span><span class="p">(</span><span class="n">g_dir</span><span class="p">)</span>
+                <span class="n">meta_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">g_dir</span><span class="p">,</span> <span class="s1">&#39;vis_metadata.json&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">meta_file</span><span class="p">):</span>
+                    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">meta_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mf</span><span class="p">:</span>
+                        <span class="n">m_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>
+                    <span class="n">gm_data</span> <span class="o">=</span> <span class="n">VisualizationMetaData</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">m_data</span><span class="p">)</span>
+                    <span class="n">v_data</span> <span class="o">=</span> <span class="n">VisualizationData</span><span class="p">(</span>
+                        <span class="n">g_values</span><span class="p">,</span> <span class="n">gm_data</span><span class="o">.</span><span class="n">legend_parameters</span><span class="p">,</span>
+                        <span class="n">gm_data</span><span class="o">.</span><span class="n">data_type</span><span class="p">,</span> <span class="n">gm_data</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+                    <span class="n">data_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_data</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">generic_type</span> <span class="o">=</span> <span class="n">GenericType</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">g_dir</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="n">v_data</span> <span class="o">=</span> <span class="n">VisualizationData</span><span class="p">(</span><span class="n">g_values</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="n">generic_type</span><span class="p">)</span>
+                    <span class="n">data_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_data</span><span class="p">)</span>
+            <span class="c1"># create the analysis geometry</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_sets</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ex_gi_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gi_dirs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gi_file</span><span class="p">)</span>
+                <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">ex_gi_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+                    <span class="n">grid_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+                <span class="n">grid_objs</span> <span class="o">=</span> <span class="p">[</span><span class="n">grids</span><span class="p">[</span><span class="n">g</span><span class="p">[</span><span class="s1">&#39;full_id&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grid_list</span><span class="p">]</span>
+                <span class="n">grid_meshes</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">mesh</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grid_objs</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">grid_meshes</span><span class="p">):</span>
+                    <span class="n">a_geo</span> <span class="o">=</span> <span class="n">AnalysisGeometry</span><span class="p">(</span><span class="s1">&#39;Grid_Data&#39;</span><span class="p">,</span> <span class="n">grid_meshes</span><span class="p">,</span> <span class="n">data_sets</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">gr_pts</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point3D</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">)</span> <span class="k">for</span> <span class="n">gr</span> <span class="ow">in</span> <span class="n">grid_objs</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">gr</span><span class="o">.</span><span class="n">positions</span><span class="p">]</span>
+                    <span class="n">a_geo</span> <span class="o">=</span> <span class="n">AnalysisGeometry</span><span class="p">(</span><span class="s1">&#39;Grid_Data&#39;</span><span class="p">,</span> <span class="n">gr_pts</span><span class="p">,</span> <span class="n">data_sets</span><span class="p">)</span>
+                <span class="n">a_geo</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Grid Data&#39;</span>
+                <span class="n">a_geo</span><span class="o">.</span><span class="n">display_mode</span> <span class="o">=</span> <span class="n">grid_data_display_mode</span>
+                <span class="n">a_geo</span><span class="o">.</span><span class="n">active_data</span> <span class="o">=</span> <span class="n">act_data</span>
+                <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_geo</span><span class="p">)</span>
+
+    <span class="c1"># add the wireframe if requested</span>
+    <span class="k">if</span> <span class="n">include_wireframe</span><span class="p">:</span>
+        <span class="n">wf_geo</span> <span class="o">=</span> <span class="n">model_to_vis_set_wireframe</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wf_geo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">geo_objs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wf_geo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># build the VisualizationSet and return it</span>
+    <span class="n">vis_set</span> <span class="o">=</span> <span class="n">VisualizationSet</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="n">geo_objs</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">display_name</span>
+    <span class="k">return</span> <span class="n">vis_set</span></div>
+
+
+
+<div class="viewcode-block" id="model_to_vis_set_wireframe">
+<a class="viewcode-back" href="../../honeybee_display.model.html#honeybee_display.model.model_to_vis_set_wireframe">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">model_to_vis_set_wireframe</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a VisualizationSet with a single ContextGeometry for the model wireframe.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model: A Honeybee Model object to be translated to a wireframe.</span>
+<span class="sd">        color: An optional Color object to set the color of the wireframe.</span>
+<span class="sd">            If None, the color will be black.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A VisualizationSet with a single ContextGeometry and a list of</span>
+<span class="sd">        DisplayLineSegment3D for the wireframe of the Model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># loop through all of the objects and add their wire frames</span>
+    <span class="n">wireframe</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">faces</span><span class="p">:</span>
+        <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_apertures</span><span class="p">:</span>
+            <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_doors</span><span class="p">:</span>
+            <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ap</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_apertures</span><span class="p">:</span>
+        <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">ap</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">_orphaned_doors</span><span class="p">:</span>
+        <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">dr</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">indoor_shades</span><span class="p">:</span>
+        <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">shd</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">outdoor_shades</span><span class="p">:</span>
+        <span class="n">lw</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">shd</span><span class="o">.</span><span class="n">is_detached</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="n">_process_wireframe</span><span class="p">(</span><span class="n">shd</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="p">)</span>
+
+    <span class="c1"># build the VisualizationSet and return it</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wireframe</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">vis_set</span> <span class="o">=</span> <span class="n">VisualizationSet</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="p">[</span><span class="n">ContextGeometry</span><span class="p">(</span><span class="s1">&#39;Wireframe&#39;</span><span class="p">,</span> <span class="n">wireframe</span><span class="p">)])</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">display_name</span>
+    <span class="k">return</span> <span class="n">vis_set</span></div>
+
+
+
+<div class="viewcode-block" id="model_envelope_edges_to_vis_set">
+<a class="viewcode-back" href="../../honeybee_display.model.html#honeybee_display.model.model_envelope_edges_to_vis_set">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">model_envelope_edges_to_vis_set</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">exclude_coplanar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mullion_thickness</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translate a Honeybee Model to a VisualizationSet with edges highlighted.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model: A Honeybee Model object which will have its edges converted to</span>
+<span class="sd">            a VisualizationSet.</span>
+<span class="sd">        exclude_coplanar: Boolean to note whether edges falling between two</span>
+<span class="sd">            coplanar Faces in the building envelope should be included</span>
+<span class="sd">            in the result (False) or excluded from it (True). (Default: True).</span>
+<span class="sd">        mullion_thickness: The maximum difference that apertures or doors can be from</span>
+<span class="sd">            one another for the edges to be considered a mullion rather than</span>
+<span class="sd">            a frame. If None, all edges of apertures and doors will be considered</span>
+<span class="sd">            frames rather than mullions.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A VisualizationSet object that represents the model. This includes these</span>
+<span class="sd">        objects in the following order, though certain layers may be removed if</span>
+<span class="sd">        the model contains none of a certain case or if they are not relevant</span>
+<span class="sd">        given the input options.</span>
+
+<span class="sd">        -   Roofs_to_Walls -- A ContextGeometry for the envelope edges where</span>
+<span class="sd">            roofs meet exterior walls (or exterior floors).</span>
+
+<span class="sd">        -   Slabs_On_Grade_to_Walls -- A ContextGeometry for the envelope edges where</span>
+<span class="sd">            floor slabs meet exterior walls (or roofs).</span>
+
+<span class="sd">        -   Exposed_Floors_to_Walls -- A ContextGeometry for the envelope edges</span>
+<span class="sd">            where exposed floors meet exterior wall.</span>
+
+<span class="sd">        -   Walls_to_Walls -- A ContextGeometry for the envelope edges where</span>
+<span class="sd">            exterior walls meet.</span>
+
+<span class="sd">        -   Roof_Ridges -- A ContextGeometry for the envelope edges where exterior</span>
+<span class="sd">            roofs meet.</span>
+
+<span class="sd">        -   Exposed_Floors_to_Floors -- A ContextGeometry for the envelope edges</span>
+<span class="sd">            where exposed floors meet.</span>
+
+<span class="sd">        -   Underground -- A ContextGeometry for the envelope edges where</span>
+<span class="sd">            underground faces meet.</span>
+
+<span class="sd">        -   Window_Frames -- A ContextGeometry for the edges where apertures meet</span>
+<span class="sd">            their parent exterior wall or roof.</span>
+
+<span class="sd">        -   Window_Mullions -- A ContextGeometry for the edges where apertures</span>
+<span class="sd">            meet one another.</span>
+
+<span class="sd">        -   Door_Frames -- A ContextGeometry for the edges where doors meet</span>
+<span class="sd">            their parent exterior wall or roof.</span>
+
+<span class="sd">        -   Door_Mullions -- A ContextGeometry for the edges where doors meet</span>
+<span class="sd">            one another.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># get all of the edges from the model</span>
+    <span class="n">roof_to_exterior</span><span class="p">,</span> <span class="n">slab_to_exterior</span><span class="p">,</span> <span class="n">ex_floor_to_wall</span><span class="p">,</span> \
+        <span class="n">wall_to_wall</span><span class="p">,</span> <span class="n">roof_ridge</span><span class="p">,</span> <span class="n">ex_floor_to_floor</span><span class="p">,</span> <span class="n">underground</span> <span class="o">=</span> \
+        <span class="n">model</span><span class="o">.</span><span class="n">classified_envelope_edges</span><span class="p">(</span><span class="n">exclude_coplanar</span><span class="o">=</span><span class="n">exclude_coplanar</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mullion_thickness</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mullion_thickness</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">aperture_frames</span><span class="p">,</span> <span class="n">aperture_mullions</span><span class="p">,</span> <span class="n">door_frames</span><span class="p">,</span> <span class="n">door_mullions</span> <span class="o">=</span> \
+            <span class="n">model</span><span class="o">.</span><span class="n">classified_sub_face_edges</span><span class="p">(</span><span class="n">mullion_thickness</span><span class="o">=</span><span class="n">mullion_thickness</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">aperture_frames</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">exterior_aperture_edges</span>
+        <span class="n">aperture_mullions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">door_frames</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">exterior_door_edges</span>
+        <span class="n">door_mullions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_edges_con_geo</span><span class="p">(</span><span class="n">edge_id</span><span class="p">,</span> <span class="n">edge_geo</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a ContextGeometry of colored edges.&quot;&quot;&quot;</span>
+        <span class="n">display_edges</span> <span class="o">=</span> <span class="p">[</span><span class="n">DisplayLineSegment3D</span><span class="p">(</span><span class="n">seg</span><span class="p">,</span> <span class="n">EDGE_COLORS</span><span class="p">[</span><span class="n">edge_id</span><span class="p">],</span> <span class="n">line_width</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">seg</span> <span class="ow">in</span> <span class="n">edge_geo</span><span class="p">]</span>
+        <span class="n">con_geo</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">edge_id</span><span class="p">,</span> <span class="n">display_edges</span><span class="p">)</span>
+        <span class="n">con_geo</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="n">edge_id</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">con_geo</span>
+
+    <span class="c1"># establish the VisualizationSet object</span>
+    <span class="n">vis_set</span> <span class="o">=</span> <span class="n">VisualizationSet</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_Edges&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">identifier</span><span class="p">),</span> <span class="p">())</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> Edges&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+
+    <span class="c1"># add all of the relevant edges to the VisualizationSet</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">roof_to_exterior</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Roofs_to_Walls&#39;</span><span class="p">,</span> <span class="n">roof_to_exterior</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slab_to_exterior</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Slabs_On_Grade_to_Walls&#39;</span><span class="p">,</span> <span class="n">slab_to_exterior</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ex_floor_to_wall</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span>
+            <span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Exposed_Floors_to_Walls&#39;</span><span class="p">,</span> <span class="n">ex_floor_to_wall</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wall_to_wall</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Walls_to_Walls&#39;</span><span class="p">,</span> <span class="n">wall_to_wall</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">roof_ridge</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">roof_id</span> <span class="o">=</span> <span class="s1">&#39;Roof_Ridges&#39;</span> <span class="k">if</span> <span class="n">exclude_coplanar</span> <span class="k">else</span> <span class="s1">&#39;Roofs_to_Roofs&#39;</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="n">roof_id</span><span class="p">,</span> <span class="n">roof_ridge</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ex_floor_to_floor</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span>
+            <span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Exposed_Floors_to_Floors&#39;</span><span class="p">,</span> <span class="n">ex_floor_to_floor</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">underground</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Underground&#39;</span><span class="p">,</span> <span class="n">underground</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">aperture_frames</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Window_Frames&#39;</span><span class="p">,</span> <span class="n">aperture_frames</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">aperture_mullions</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Window_Mullions&#39;</span><span class="p">,</span> <span class="n">aperture_mullions</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">door_frames</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Door_Frames&#39;</span><span class="p">,</span> <span class="n">door_frames</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">door_mullions</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">_edges_con_geo</span><span class="p">(</span><span class="s1">&#39;Door_Mullions&#39;</span><span class="p">,</span> <span class="n">door_mullions</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">vis_set</span></div>
+
+
+
+<div class="viewcode-block" id="model_comparison_to_vis_set">
+<a class="viewcode-back" href="../../honeybee_display.model.html#honeybee_display.model.model_comparison_to_vis_set">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">model_comparison_to_vis_set</span><span class="p">(</span>
+        <span class="n">base_model</span><span class="p">,</span> <span class="n">incoming_model</span><span class="p">,</span> <span class="n">base_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">incoming_color</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Translate two Honeybee Models to be compared to a VisualizationSet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        base_model: A Honeybee Model object for the base model used in the</span>
+<span class="sd">            comparison. Typically, this is the model with more data to be kept.</span>
+<span class="sd">        incoming_model: A Honeybee Model object for the incoming model used in the</span>
+<span class="sd">            comparison. Typically, this is the model with new data to be</span>
+<span class="sd">            evaluated against the base model.</span>
+<span class="sd">        base_color: An optional ladybug Color to set the color of the base model.</span>
+<span class="sd">            If None, a default blue color will be used. (Default: None).</span>
+<span class="sd">        incoming_color: An optional ladybug Color to set the color of the incoming model.</span>
+<span class="sd">            If None, a default red color will be used. (Default: None).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># make sure that both models have the same units system</span>
+    <span class="n">original_units</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">base_model</span><span class="o">.</span><span class="n">units</span> <span class="o">!=</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">units</span><span class="p">:</span>
+        <span class="n">original_units</span> <span class="o">=</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">units</span>
+        <span class="n">incoming_model</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="n">base_model</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+
+    <span class="c1"># set the default colors if not provided</span>
+    <span class="k">if</span> <span class="n">base_color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">base_color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">98</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">incoming_color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">incoming_color</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="mi">190</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+
+    <span class="c1"># initialize the VisualizationSet to hold everything</span>
+    <span class="n">vs_id</span> <span class="o">=</span> <span class="s1">&#39;Compare_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">[:</span><span class="mi">30</span><span class="p">],</span>
+                                   <span class="n">incoming_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">[:</span><span class="mi">30</span><span class="p">])</span>
+    <span class="n">vis_set</span> <span class="o">=</span> <span class="n">VisualizationSet</span><span class="p">(</span><span class="n">vs_id</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Compare &quot;</span><span class="si">{}</span><span class="s1">&quot; to &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">base_model</span><span class="o">.</span><span class="n">display_name</span><span class="p">,</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">display_name</span><span class="p">)</span>
+
+    <span class="c1"># get the wireframe of the base model</span>
+    <span class="n">base_geos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">base_model</span><span class="o">.</span><span class="n">rooms</span><span class="p">:</span>
+        <span class="n">room_wire</span> <span class="o">=</span> <span class="n">room</span><span class="o">.</span><span class="n">to_vis_set_wireframe</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">base_color</span><span class="p">)</span>
+        <span class="n">base_geos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">room_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+    <span class="n">base_id</span> <span class="o">=</span> <span class="s1">&#39;Base_Wireframe_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="n">base_wireframe</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">base_id</span><span class="p">,</span> <span class="n">base_geos</span><span class="p">)</span>
+    <span class="n">base_wireframe</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Base Wireframe&#39;</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">base_wireframe</span><span class="p">)</span>
+
+    <span class="c1"># get the wireframe of the incoming model</span>
+    <span class="n">incoming_geos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">room</span> <span class="ow">in</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">rooms</span><span class="p">:</span>
+        <span class="n">room_wire</span> <span class="o">=</span> <span class="n">room</span><span class="o">.</span><span class="n">to_vis_set_wireframe</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">incoming_color</span><span class="p">)</span>
+        <span class="n">incoming_geos</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">room_wire</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+    <span class="n">incoming_id</span> <span class="o">=</span> <span class="s1">&#39;Incoming_Wireframe_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">incoming_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="n">incoming_wireframe</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">incoming_id</span><span class="p">,</span> <span class="n">incoming_geos</span><span class="p">)</span>
+    <span class="n">incoming_wireframe</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Incoming Wireframe&#39;</span>
+    <span class="k">for</span> <span class="n">vis_geo</span> <span class="ow">in</span> <span class="n">incoming_wireframe</span><span class="o">.</span><span class="n">geometry</span><span class="p">:</span>
+        <span class="n">vis_geo</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">incoming_color</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">incoming_wireframe</span><span class="p">)</span>
+
+    <span class="c1"># get the apertures of the base model</span>
+    <span class="n">base_geos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">aperture</span> <span class="ow">in</span> <span class="n">base_model</span><span class="o">.</span><span class="n">apertures</span> <span class="o">+</span> <span class="n">base_model</span><span class="o">.</span><span class="n">doors</span><span class="p">:</span>
+        <span class="n">dis_geo</span> <span class="o">=</span> <span class="n">DisplayFace3D</span><span class="p">(</span><span class="n">aperture</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">base_color</span><span class="p">,</span> <span class="s1">&#39;SurfaceWithEdges&#39;</span><span class="p">)</span>
+        <span class="n">base_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dis_geo</span><span class="p">)</span>
+    <span class="n">base_id</span> <span class="o">=</span> <span class="s1">&#39;Base_Windows_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="n">base_windows</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">base_id</span><span class="p">,</span> <span class="n">base_geos</span><span class="p">)</span>
+    <span class="n">base_windows</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Base Windows&#39;</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">base_windows</span><span class="p">)</span>
+
+    <span class="c1"># get the apertures of the incoming model</span>
+    <span class="n">incoming_geos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">aperture</span> <span class="ow">in</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">apertures</span> <span class="o">+</span> <span class="n">incoming_model</span><span class="o">.</span><span class="n">doors</span><span class="p">:</span>
+        <span class="n">dis_geo</span> <span class="o">=</span> <span class="n">DisplayFace3D</span><span class="p">(</span><span class="n">aperture</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">incoming_color</span><span class="p">,</span> <span class="s1">&#39;SurfaceWithEdges&#39;</span><span class="p">)</span>
+        <span class="n">incoming_geos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dis_geo</span><span class="p">)</span>
+    <span class="n">incoming_id</span> <span class="o">=</span> <span class="s1">&#39;Incoming_Windows_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">incoming_model</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
+    <span class="n">incoming_windows</span> <span class="o">=</span> <span class="n">ContextGeometry</span><span class="p">(</span><span class="n">incoming_id</span><span class="p">,</span> <span class="n">incoming_geos</span><span class="p">)</span>
+    <span class="n">incoming_windows</span><span class="o">.</span><span class="n">display_name</span> <span class="o">=</span> <span class="s1">&#39;Incoming Windows&#39;</span>
+    <span class="n">vis_set</span><span class="o">.</span><span class="n">add_geometry</span><span class="p">(</span><span class="n">incoming_windows</span><span class="p">)</span>
+
+    <span class="c1"># put back the original units if different</span>
+    <span class="k">if</span> <span class="n">original_units</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">incoming_model</span><span class="o">.</span><span class="n">convert_to_units</span><span class="p">(</span><span class="n">original_units</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vis_set</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_clean_punched_geo</span><span class="p">(</span><span class="n">face</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get Face punched_geometry in a way that has touching sub-face holes merged.&quot;&quot;&quot;</span>
+    <span class="n">_sub_faces</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sub_f</span><span class="o">.</span><span class="n">geometry</span> <span class="k">for</span> <span class="n">sub_f</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">_apertures</span> <span class="o">+</span> <span class="n">face</span><span class="o">.</span><span class="n">_doors</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">_sub_faces</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">holes</span> <span class="o">=</span> <span class="n">Face3D</span><span class="o">.</span><span class="n">join_coplanar_faces</span><span class="p">(</span><span class="n">_sub_faces</span><span class="p">,</span> <span class="n">tolerance</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Face3D</span><span class="o">.</span><span class="n">from_punched_geometry</span><span class="p">(</span><span class="n">face</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">holes</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">face</span><span class="o">.</span><span class="n">punched_geometry</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">face</span><span class="o">.</span><span class="n">geometry</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_read_sensor_grid_result</span><span class="p">(</span><span class="n">result_folder</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Read results from files that align with sensor grids.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        result_folder: Path to the folder containing the results.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A matrix with each sub-list containing the values for each of the sensor grids.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that the required files are present</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">result_folder</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid result folder: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">result_folder</span><span class="p">)</span>
+    <span class="n">grid_json</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_folder</span><span class="p">,</span> <span class="s1">&#39;grids_info.json&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">grid_json</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Result folder contains no grids_info.json.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># load the list of grids and gather all of the results</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">grid_json</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="n">grid_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">grid</span> <span class="ow">in</span> <span class="n">grid_list</span><span class="p">:</span>
+        <span class="n">grid_id</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;full_id&#39;</span><span class="p">]</span>
+        <span class="n">sensor_count</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">st_ln</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="s1">&#39;start_ln&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="c1"># older version of sensor info</span>
+            <span class="n">st_ln</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># find the result file and append the results</span>
+        <span class="n">result_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">result_folder</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">grid_id</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+                <span class="n">result_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_folder</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">result_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s1">&#39;Loading results for </span><span class="si">{}</span><span class="s1"> with </span><span class="si">{}</span><span class="s1"> sensors. &#39;</span>
+                <span class="s1">&#39;Starting from line </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grid_id</span><span class="p">,</span> <span class="n">sensor_count</span><span class="p">,</span> <span class="n">st_ln</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">result_file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">inf</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">st_ln</span><span class="p">):</span>
+                    <span class="nb">next</span><span class="p">(</span><span class="n">inf</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sensor_count</span><span class="p">):</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">inf</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="p">(</span><span class="ne">StopIteration</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+                        <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">result_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rf</span><span class="p">:</span>
+                            <span class="n">content</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">ln_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s1">&#39;Failed to load the results for </span><span class="si">{}</span><span class="s1"> &#39;</span>
+                            <span class="s1">&#39;with </span><span class="si">{}</span><span class="s1"> sensors. Sensor id: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                            <span class="s1">&#39;Here is the content of the file with </span><span class="si">{}</span><span class="s1"> values:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                            <span class="s1">&#39;## Start of the file</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">## End of the file.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">grid_id</span><span class="p">,</span> <span class="n">sensor_count</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">ln_count</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2025, Ladybug Tools.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.0.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
