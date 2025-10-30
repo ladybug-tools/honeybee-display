@@ -43,10 +43,12 @@ BC_COLORS = {
 }
 EDGE_COLORS = {
     'Roofs_to_Walls': Color(255, 0, 0),
-    'Slabs_to_Walls': Color(0, 175, 0),
+    'Slabs_On_Grade_to_Walls': Color(0, 175, 0),
     'Exposed_Floors_to_Walls': Color(75, 255, 75),
+    'Interior_Floors_to_Walls': Color(200, 255, 200),
     'Walls_to_Walls': Color(255, 221, 0),
     'Roof_Ridges': Color(196, 77, 255),
+    'Roofs_to_Roofs': Color(196, 77, 255),
     'Exposed_Floors_to_Floors': Color(75, 255, 75),
     'Underground': Color(128, 128, 128),
     'Window_Frames': Color(35, 164, 250),
@@ -505,7 +507,7 @@ def model_envelope_edges_to_vis_set(model, exclude_coplanar=True, mullion_thickn
         -   Roofs_to_Walls -- A ContextGeometry for the envelope edges where
             roofs meet exterior walls (or exterior floors).
 
-        -   Slabs_to_Walls -- A ContextGeometry for the envelope edges where
+        -   Slabs_On_Grade_to_Walls -- A ContextGeometry for the envelope edges where
             floor slabs meet exterior walls (or roofs).
 
         -   Exposed_Floors_to_Walls -- A ContextGeometry for the envelope edges
@@ -539,7 +541,7 @@ def model_envelope_edges_to_vis_set(model, exclude_coplanar=True, mullion_thickn
     roof_to_exterior, slab_to_exterior, ex_floor_to_wall, \
         wall_to_wall, roof_ridge, ex_floor_to_floor, underground = \
         model.classified_envelope_edges(exclude_coplanar=exclude_coplanar)
-    if mullion_thickness is not None:
+    if mullion_thickness is not None and mullion_thickness != 0:
         aperture_frames, aperture_mullions, door_frames, door_mullions = \
             model.classified_sub_face_edges(mullion_thickness=mullion_thickness)
     else:
@@ -564,7 +566,7 @@ def model_envelope_edges_to_vis_set(model, exclude_coplanar=True, mullion_thickn
     if len(roof_to_exterior) != 0:
         vis_set.add_geometry(_edges_con_geo('Roofs_to_Walls', roof_to_exterior, 2))
     if len(slab_to_exterior) != 0:
-        vis_set.add_geometry(_edges_con_geo('Slabs_to_Walls', slab_to_exterior, 2))
+        vis_set.add_geometry(_edges_con_geo('Slabs_On_Grade_to_Walls', slab_to_exterior, 2))
     if len(ex_floor_to_wall) != 0:
         vis_set.add_geometry(
             _edges_con_geo('Exposed_Floors_to_Walls', ex_floor_to_wall, 2)
@@ -572,7 +574,8 @@ def model_envelope_edges_to_vis_set(model, exclude_coplanar=True, mullion_thickn
     if len(wall_to_wall) != 0:
         vis_set.add_geometry(_edges_con_geo('Walls_to_Walls', wall_to_wall, 2))
     if len(roof_ridge) != 0:
-        vis_set.add_geometry(_edges_con_geo('Roof_Ridges', roof_ridge, 2))
+        roof_id = 'Roof_Ridges' if exclude_coplanar else 'Roofs_to_Roofs'
+        vis_set.add_geometry(_edges_con_geo(roof_id, roof_ridge, 2))
     if len(ex_floor_to_floor) != 0:
         vis_set.add_geometry(
             _edges_con_geo('Exposed_Floors_to_Floors', ex_floor_to_floor, 2)
