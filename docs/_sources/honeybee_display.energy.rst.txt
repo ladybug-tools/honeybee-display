@@ -1,0 +1,18 @@
+honeybee\_display.energy package
+================================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   honeybee_display.energy.colorobj
+
+Module contents
+---------------
+
+.. automodule:: honeybee_display.energy
+   :members:
+   :undoc-members:
+   :show-inheritance:

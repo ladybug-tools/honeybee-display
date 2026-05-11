@@ -1,0 +1,7 @@
+honeybee\_display.shademesh module
+==================================
+
+.. automodule:: honeybee_display.shademesh
+   :members:
+   :undoc-members:
+   :show-inheritance:

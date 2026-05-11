@@ -1,0 +1,7 @@
+main
+====
+
+.. click:: honeybee_display.cli.__init__:display
+   :prog: honeybee-display
+   :show-nested:
+   :commands: model-to-vis ,model-envelope-edges-to-vis ,model-comparison-to-vis
