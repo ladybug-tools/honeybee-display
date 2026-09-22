@@ -1,0 +1,7 @@
+honeybee\_display.shade module
+==============================
+
+.. automodule:: honeybee_display.shade
+   :members:
+   :undoc-members:
+   :show-inheritance:

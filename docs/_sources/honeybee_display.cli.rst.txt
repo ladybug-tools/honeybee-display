@@ -1,0 +1,10 @@
+honeybee\_display.cli package
+=============================
+
+Module contents
+---------------
+
+.. automodule:: honeybee_display.cli
+   :members:
+   :undoc-members:
+   :show-inheritance:
